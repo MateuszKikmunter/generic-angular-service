@@ -1,19 +1,24 @@
-﻿using GenericAngularService.Api.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GenericAngularService.Api.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace GenericAngularService.Api.Data.Extensions
+namespace GenericAngularService.Api.Data.Helpers
 {
-    public static class ApplicationDbContextExtensions
+    public static class Seed
     {
-        public static void EnsureSeedDataForContext(this ApplicationDbContext context)
+        public static void Initialize(IServiceProvider serviceProvider)
         {
-            context.Employees.RemoveRange(context.Employees);
-            context.Companies.RemoveRange(context.Companies);
-            context.SaveChanges();
+            using (var context = new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
+            {
+                context.Database.EnsureCreated();
+                context.Employees.RemoveRange(context.Employees);
+                context.Companies.RemoveRange(context.Companies);
+                context.SaveChanges();
 
-            var companies = new List<Company>
+                var companies = new List<Company>
             {
                 new Company
                 {
@@ -32,10 +37,10 @@ namespace GenericAngularService.Api.Data.Extensions
                     Name = "Oracle",
                     Industry = "IT",
                     Founded = new DateTimeOffset(1977, 6, 16, 0, 0, 0, new TimeSpan())
-                },
+                }
             };
 
-            var employees = new List<Employee>
+                var employees = new List<Employee>
             {
                 new Employee
                 {
@@ -87,9 +92,10 @@ namespace GenericAngularService.Api.Data.Extensions
                 }
             };
 
-            context.Companies.AddRange(companies);
-            context.Employees.AddRange(employees);
-            context.SaveChanges();
+                context.Companies.AddRange(companies);
+                context.Employees.AddRange(employees);
+                context.SaveChanges();
+            }
         }
     }
 }
