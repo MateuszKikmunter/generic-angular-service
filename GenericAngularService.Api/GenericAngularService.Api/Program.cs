@@ -1,11 +1,11 @@
 ﻿using GenericAngularService.Api.Data;
-using GenericAngularService.Api.Data.Extensions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using GenericAngularService.Api.Data.Helpers;
 
 namespace GenericAngularService.Api
 {
@@ -16,16 +16,18 @@ namespace GenericAngularService.Api
             var host = BuildWebHost(args).Build();
             using (var scope = host.Services.CreateScope())
             {
+                var services = scope.ServiceProvider;
+
                 try
                 {
-                    var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+                    var context = services.GetRequiredService<ApplicationDbContext>();
                     context.Database.Migrate();
-                    context.EnsureSeedDataForContext();
+                    Seed.Initialize(services);
                 }
                 catch (Exception ex)
                 {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred with migrating or seeding the DB.");
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding the DB.");
                 }
             }
 
