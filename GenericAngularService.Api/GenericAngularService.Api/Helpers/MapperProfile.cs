@@ -9,6 +9,8 @@ namespace GenericAngularService.Api.Helpers
         public MapperProfile()
         {
             CreateMap<Employee, EmployeeDto>().ForMember(e => e.Company, opts => opts.MapFrom(e => e.Company.Name));
+            CreateMap<EmployeeForCreationDto, Employee>();
+            CreateMap<EmployeeForUpdateDto, Employee>();
         }
     }
 }
