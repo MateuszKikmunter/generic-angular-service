@@ -1,4 +1,4 @@
-﻿namespace GenericAngularService.Api.Dtos
+﻿namespace GenericAngularService.Api.Dtos.Employee
 {
     public class EmployeeDto : EmployeeBase
     {

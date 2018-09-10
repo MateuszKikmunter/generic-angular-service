@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GenericAngularService.Api.Dtos
+namespace GenericAngularService.Api.Dtos.Employee
 {
     public abstract class EmployeeBase
     {

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using GenericAngularService.Api.Data.Abstract;
-using GenericAngularService.Api.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GenericAngularService.Api.Dtos.Employee;
 using GenericAngularService.Api.Entities;
 
 namespace GenericAngularService.Api.Controllers
