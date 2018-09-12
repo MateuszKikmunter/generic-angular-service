@@ -35,6 +35,7 @@ namespace GenericAngularService.Api
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ApiConnection")));
             services.AddAutoMapper();
+            services.AddCors();
 
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
@@ -51,6 +52,8 @@ namespace GenericAngularService.Api
             {
                 app.UseHsts();
             }
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
             app.UseHttpsRedirection();
             app.UseMvc();
