@@ -9,12 +9,12 @@ import { EmployeeBase } from './shared/employee-base';
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent implements OnInit {
-  private employees: EmployeeBase[] = [];
+  private employees: Employee[] = [];
 
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit() {
-    this.employeeService.getAll().subscribe(e => this.employees = e);
+    this.employeeService.getAll().subscribe(e => this.employees = e as Employee[]);
   }
 
 }

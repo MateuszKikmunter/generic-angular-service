@@ -10,6 +10,7 @@ import { EmployeeComponent } from './employee/employee.component';
 import { CompanyComponent } from './company/company.component';
 import { EmployeeService } from './employee/shared/employee-service';
 import { appRoutes } from './routes';
+import { HandleHttpErrorInterceptor } from './common/handle-http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,11 @@ import { appRoutes } from './routes';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: EnsureAcceptHeaderInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HandleHttpErrorInterceptor,
       multi: true
     },
     EmployeeService
