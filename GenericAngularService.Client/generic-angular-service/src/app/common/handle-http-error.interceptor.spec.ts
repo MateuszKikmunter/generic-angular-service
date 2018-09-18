@@ -1,4 +1,4 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed, inject, async } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
@@ -27,7 +27,7 @@ describe("handle-http-error-interceptor", () => {
         mockHttp.verify();
     }));
 
-    it("should handle error", inject([HttpTestingController, HttpClient], (mockHttp: HttpTestingController, mockHttpClient: HttpClient) => {
+    it("should handle error", async(inject([HttpTestingController, HttpClient], (mockHttp: HttpTestingController, mockHttpClient: HttpClient) => {
         mockHttpClient.get("/error").subscribe((next) => {
             expect(next["status"]).toBe(404);
             expect(next["statusText"]).toBe("Not Found");
@@ -39,5 +39,5 @@ describe("handle-http-error-interceptor", () => {
         });
 
         expect(console.log).toHaveBeenCalled();
-    }));
+    })));
 });
