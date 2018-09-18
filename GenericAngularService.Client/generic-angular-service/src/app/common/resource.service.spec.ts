@@ -5,6 +5,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FakeService } from './fake.service';
 import { Employee } from './../employee/shared/employee';
 import { EnsureAcceptHeaderInterceptor } from './ensure-accept-header.interceptor';
+import { HandleHttpErrorInterceptor } from './handle-http-error.interceptor';
 
 describe("ResourceService", () => {
 
@@ -18,6 +19,11 @@ describe("ResourceService", () => {
         {
           provide: HTTP_INTERCEPTORS,
           useClass: EnsureAcceptHeaderInterceptor,
+          multi: true
+        },
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: HandleHttpErrorInterceptor,
           multi: true
         }
       ]
