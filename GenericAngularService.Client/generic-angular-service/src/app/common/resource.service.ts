@@ -27,7 +27,7 @@ export abstract class ResourceService<T> {
     return this.http.post<T>(`${this.apiUrl}/${this.endpoint}`, item);
   }
 
-  public update(id:any, item: T): Observable<T> {
+  public update(id:any, item: T) {
     return this.http.put<T>(`${this.apiUrl}/${this.endpoint}/${id}`, item);
   }
 }
