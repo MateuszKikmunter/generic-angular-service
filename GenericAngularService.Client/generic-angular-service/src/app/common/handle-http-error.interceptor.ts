@@ -12,10 +12,9 @@ export class HandleHttpErrorInterceptor implements HttpInterceptor {
             if (error.error instanceof Error) {
                 // client-side or network error
                 const errorToLog = `Http error (client/network). ${error.message}`;
-                console.log("errorToLog");
-            }
-            else {
-                // unsuccesful response code                   
+                console.log(errorToLog);
+            } else {
+                // unsuccesful response code
                 const errorToLog = `Http error (unsuccessful reponse). Message: ${error.message}, status code: ${(error).status}, body: ${JSON.stringify(error.error)} `;
                 console.log(errorToLog);
             }
@@ -23,8 +22,7 @@ export class HandleHttpErrorInterceptor implements HttpInterceptor {
             if (error.status === 422) {
                 // throw the error body
                 return Observable.throw(error.error);
-            }
-            else {
+            } else {
                 return of(new HttpResponse());
             }
         }));
