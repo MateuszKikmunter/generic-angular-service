@@ -19,6 +19,8 @@ describe("handle-http-error-interceptor", () => {
                 }
             ]
         });
+
+        spyOn(console, "log");
     });
 
     afterEach(inject([HttpTestingController], (mockHttp: HttpTestingController) => {
@@ -26,10 +28,16 @@ describe("handle-http-error-interceptor", () => {
     }));
 
     it("should handle error", inject([HttpTestingController, HttpClient], (mockHttp: HttpTestingController, mockHttpClient: HttpClient) => {
-        mockHttpClient.get("/error").subscribe();
+        mockHttpClient.get("/error").subscribe((next) => {
+            expect(next["status"]).toBe(404);
+            expect(next["statusText"]).toBe("Not Found");
+        });
+
         mockHttp.expectOne("/error").error(new ErrorEvent("Not Found"), {
             status: 404,
             statusText: "Not Found"
         });
+
+        expect(console.log).toHaveBeenCalled();
     }));
 });
