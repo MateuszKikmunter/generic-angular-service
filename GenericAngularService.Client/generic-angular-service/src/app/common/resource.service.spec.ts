@@ -1,10 +1,10 @@
-import { EnsureAcceptHeaderInterceptor } from './ensure-accept-header.interceptor';
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { FakeService } from './fake.service';
 import { Employee } from './../employee/shared/employee';
+import { EnsureAcceptHeaderInterceptor } from './ensure-accept-header.interceptor';
 
 describe("ResourceService", () => {
 
