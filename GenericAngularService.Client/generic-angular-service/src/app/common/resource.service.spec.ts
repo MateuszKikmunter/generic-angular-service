@@ -1,5 +1,7 @@
+import { EnsureAcceptHeaderInterceptor } from './ensure-accept-header.interceptor';
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { FakeService } from './fake.service';
 import { Employee } from './../employee/shared/employee';
@@ -11,7 +13,14 @@ describe("ResourceService", () => {
       imports: [
         HttpClientTestingModule
       ],
-      providers: [FakeService]
+      providers: [
+        FakeService,
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: EnsureAcceptHeaderInterceptor,
+          multi: true
+        }
+      ]
     })
   });
 
@@ -30,6 +39,8 @@ describe("ResourceService", () => {
 
     const req = httpMock.expectOne("/api/fake/1");
     expect(req.request.method).toEqual("GET");
+    expect(req.request.headers.has("Accept")).toBeTruthy();
+    expect(req.request.headers.get("Accept")).toBe("application/json");
 
     req.flush({ id: 1, firstName: "Luke", lastName: "Skywalker", company: "Star Wars" });
   }));
@@ -41,10 +52,13 @@ describe("ResourceService", () => {
 
     const req = httpMock.expectOne("/api/fake");
     expect(req.request.method).toEqual("GET");
+    expect(req.request.headers.has("Accept")).toBeTruthy();
+    expect(req.request.headers.get("Accept")).toBe("application/json");
+
     req.flush([{ id: 1 }, { id: 2 }]);
   }));
 
-  it("it should call http.delete with the right URL", inject([HttpTestingController, FakeService], (httpMock: HttpTestingController, service: FakeService) => {
+  it("should call http.delete with the right URL", inject([HttpTestingController, FakeService], (httpMock: HttpTestingController, service: FakeService) => {
 
     service.delete(1).subscribe(data => {
       expect(data["status"]).toBe(204);
@@ -53,6 +67,8 @@ describe("ResourceService", () => {
 
     const req = httpMock.expectOne("/api/fake/1");
     expect(req.request.method).toEqual("DELETE");
+    expect(req.request.headers.has("Accept")).toBeTruthy();
+    expect(req.request.headers.get("Accept")).toBe("application/json");
 
     req.flush(null, { status: 204, statusText: "No-Content" });
   }));
@@ -64,6 +80,8 @@ describe("ResourceService", () => {
 
     const req = mockHttp.expectOne("/api/fake");
     expect(req.request.method).toEqual("POST");
+    expect(req.request.headers.has("Accept")).toBeTruthy();
+    expect(req.request.headers.get("Accept")).toBe("application/json");
 
     req.flush(new Employee());
   }));
@@ -77,6 +95,8 @@ describe("ResourceService", () => {
 
     const req = mockHttp.expectOne("/api/fake/1");
     expect(req.request.method).toEqual("PUT");
+    expect(req.request.headers.has("Accept")).toBeTruthy();
+    expect(req.request.headers.get("Accept")).toBe("application/json");
 
     req.flush({ status: 200, statusText: "OK" });
   }));
