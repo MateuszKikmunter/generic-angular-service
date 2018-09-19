@@ -1,13 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 
-
 import { EmployeeService } from './shared/employee-service';
 import { Employee } from './shared/employee';
-import { EmployeeBase } from './shared/employee-base';
-import * as $ from 'jquery';
-import 'datatables.net';
-// import 'datatables.net-bs4';
 
 @Component({
   selector: 'app-employee',
