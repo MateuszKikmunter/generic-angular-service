@@ -1,6 +1,6 @@
 import { TestBed, inject, async } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { HandleHttpErrorInterceptor } from './handle-http-error.interceptor';
 
@@ -28,9 +28,8 @@ describe("handle-http-error-interceptor", () => {
     }));
 
     it("should handle error", async(inject([HttpTestingController, HttpClient], (mockHttp: HttpTestingController, mockHttpClient: HttpClient) => {
-        mockHttpClient.get("/error").subscribe((next) => {
-            expect(next["status"]).toBe(404);
-            expect(next["statusText"]).toBe("Not Found");
+        mockHttpClient.get("/error").subscribe(() => { }, errorResponse => {
+            expect(errorResponse).toBeTruthy();
         });
 
         mockHttp.expectOne("/error").error(new ErrorEvent("Not Found"), {
@@ -38,6 +37,7 @@ describe("handle-http-error-interceptor", () => {
             statusText: "Not Found"
         });
 
-        expect(console.log).toHaveBeenCalled();
+        expect(console.log).toHaveBeenCalledTimes(1);
+        expect(console.log).toHaveBeenCalledWith("Http error (client/network). Http failure response for /error: 404 Not Found");
     })));
 });
