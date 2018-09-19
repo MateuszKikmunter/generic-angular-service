@@ -1,20 +1,23 @@
 <h1>List of all employees</h1>
 
-<table style="border: 1px solid black">
-  <thead>
-    <tr>
-      <td>Id</td>
-      <td>First Name</td>
-      <td>Last Name</td>
-      <td>Company</td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let employee of employees">
-      <td>{{ employee.id }}</td>
-      <td>{{ employee.firstName }}</td>
-      <td>{{ employee.lastName }}</td>
-      <td>{{ employee.company }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Company</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employees">
+            <td>{{ employee.id }}</td>
+            <td>{{ employee.firstName }}</td>
+            <td>{{ employee.lastName }}</td>
+            <td>{{ employee.company }}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+

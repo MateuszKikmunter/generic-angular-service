@@ -11,6 +11,7 @@ import { CompanyComponent } from './company/company.component';
 import { EmployeeService } from './employee/shared/employee-service';
 import { appRoutes } from './routes';
 import { HandleHttpErrorInterceptor } from './common/handle-http-error.interceptor';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HandleHttpErrorInterceptor } from './common/handle-http-error.intercept
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    DataTablesModule
   ],
   providers: [
     {
