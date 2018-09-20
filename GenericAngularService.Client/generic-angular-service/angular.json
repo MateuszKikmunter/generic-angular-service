@@ -28,11 +28,13 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/datatables.net-dt/css/jquery.dataTables.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
-              "node_modules/datatables.net/js/jquery.dataTables.js"
+              "node_modules/datatables.net/js/jquery.dataTables.js",
+              "node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js"
             ]
           },
           "configurations": {

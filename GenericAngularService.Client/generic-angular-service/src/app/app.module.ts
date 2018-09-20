@@ -12,6 +12,7 @@ import { EmployeeService } from './employee/shared/employee-service';
 import { appRoutes } from './routes';
 import { HandleHttpErrorInterceptor } from './common/handle-http-error.interceptor';
 import { DataTablesModule } from 'angular-datatables';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { DataTablesModule } from 'angular-datatables';
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
-    DataTablesModule
+    DataTablesModule,
+    NgbModule
   ],
   providers: [
     {
@@ -41,5 +43,5 @@ import { DataTablesModule } from 'angular-datatables';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor() {}
- }
+  constructor() { }
+}

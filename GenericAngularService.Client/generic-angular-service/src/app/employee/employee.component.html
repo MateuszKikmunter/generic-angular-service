@@ -1,22 +1,22 @@
-<h1>List of all employees</h1>
-
 <div class="container">
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Company</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let employee of employees">
-            <td>{{ employee.id }}</td>
-            <td>{{ employee.firstName }}</td>
-            <td>{{ employee.lastName }}</td>
-            <td>{{ employee.company }}</td>
-          </tr>
-        </tbody>
-      </table>
+  <h1>List of all employees</h1>
+
+  <table id="employee-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Company</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees">
+        <td>{{ employee.id }}</td>
+        <td>{{ employee.firstName }}</td>
+        <td>{{ employee.lastName }}</td>
+        <td>{{ employee.company }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
