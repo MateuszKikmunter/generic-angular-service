@@ -1,3 +1,13 @@
+@import '../../styles.scss';
+
+.container {
+    font-family: $georgia-cambria-tnr-serif;
+}
+
+p {
+    font-size: $font-size-eighteen-px;
+}
+
 #employee-table {
     cursor: pointer;
 }

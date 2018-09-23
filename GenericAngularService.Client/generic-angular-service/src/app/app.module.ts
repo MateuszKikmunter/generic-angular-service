@@ -16,6 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './nav/nav.component';
 import { AboutComponent } from './about/about.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     DataTablesModule,
-    NgbModule
+    NgbModule,
+    FontAwesomeModule
   ],
   providers: [
     {
