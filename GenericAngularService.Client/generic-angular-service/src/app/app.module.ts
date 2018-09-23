@@ -15,6 +15,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './nav/nav.component';
 import { AboutComponent } from './about/about.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AboutComponent } from './about/about.component';
     EmployeeComponent,
     CompanyComponent,
     NavComponent,
-    AboutComponent
+    AboutComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

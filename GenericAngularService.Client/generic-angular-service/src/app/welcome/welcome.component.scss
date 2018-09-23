@@ -1,0 +1,13 @@
+@import '../../styles.scss';
+
+section {
+    font-family: $georgia-cambria-tnr-serif;
+
+    h3 {
+        font-weight: bold;
+    }
+
+    p {
+        font-size: $font-size-eighteen-px;
+    }
+}
