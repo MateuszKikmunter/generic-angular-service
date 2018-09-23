@@ -13,12 +13,14 @@ import { appRoutes } from './routes';
 import { HandleHttpErrorInterceptor } from './common/handle-http-error.interceptor';
 import { DataTablesModule } from 'angular-datatables';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavComponent } from './nav/nav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeeComponent,
-    CompanyComponent
+    CompanyComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
