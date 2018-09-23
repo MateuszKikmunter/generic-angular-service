@@ -14,13 +14,15 @@ import { HandleHttpErrorInterceptor } from './common/handle-http-error.intercept
 import { DataTablesModule } from 'angular-datatables';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './nav/nav.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeeComponent,
     CompanyComponent,
-    NavComponent
+    NavComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
