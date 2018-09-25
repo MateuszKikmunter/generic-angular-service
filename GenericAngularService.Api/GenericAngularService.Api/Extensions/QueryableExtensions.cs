@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq;
 using GenericAngularService.Api.Helpers.DataTablesServerSideHelpers;
 using System.Linq.Dynamic.Core;
 

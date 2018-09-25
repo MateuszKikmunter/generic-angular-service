@@ -2,7 +2,7 @@
 
 namespace GenericAngularService.Api.Dtos.Company
 {
-    public class CompanyBase
+    public abstract class CompanyBase
     {
         public virtual string Name { get; set; }
 

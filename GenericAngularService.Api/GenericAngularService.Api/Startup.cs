@@ -4,7 +4,6 @@ using GenericAngularService.Api.Data.Abstract;
 using GenericAngularService.Api.Data.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -60,7 +59,6 @@ namespace GenericAngularService.Api
                 app.UseHsts();
             }
 
-            //app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
             app.UseCors("DefaultPolicy");
 
             app.UseHttpsRedirection();
