@@ -7,3 +7,5 @@ GenericAngularService.Api/.vs/config/applicationhost.config
 GenericAngularService.Api/.vs/GenericAngularService.Api/v15/Server/sqlite3/storage.ide-wal
 GenericAngularService.Api/.vs/GenericAngularService.Api/v15/Server/sqlite3/storage.ide-shm
 GenericAngularService.Api/.vs/GenericAngularService.Api/v15/Server/sqlite3/storage.ide
+/GenericAngularService.Api/GenericAngularService.Api.UnitTests/obj
+/GenericAngularService.Api/GenericAngularService.Api.UnitTests/bin/Debug/netcoreapp2.1

@@ -1,5 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
+import { environment } from './../../environments/environment';
+import { DataTablesResponse } from './../common/datatables.response';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 
 import { EmployeeService } from './shared/employee-service';
 import { Employee } from './shared/employee';
@@ -9,28 +11,38 @@ import { Employee } from './shared/employee';
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss']
 })
-export class EmployeeComponent implements OnInit, OnDestroy {
+export class EmployeeComponent implements OnInit {
   private employees: Employee[] = [];
   private dtOptions: DataTables.Settings = {};
-  private dtTrigger = new Subject();
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService, private http: HttpClient) { }
 
   ngOnInit() {
+    var that = this;
+
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 5,
-      processing: true
+      serverSide: true,
+      processing: true,
+      ajax: (dataTablesParameters: any, callback) => {
+        that.http
+          .post<DataTablesResponse>(`${environment.apiUrl}/employees/GetTableData`, dataTablesParameters, {})
+          .subscribe(resp => {
+            that.employees = resp.data as Employee[];
+
+            callback({
+              recordsTotal: resp.recordsTotal,
+              recordsFiltered: resp.recordsFiltered,
+              data: [],
+            });
+          });
+      },
+      columns: [
+        { data: "id" },
+        { data: "firstName" },
+        { data: "lastName" },
+        { data: "company" }
+      ]
     };
-
-    this.employeeService.getAll().subscribe(e => {
-      this.employees = e as Employee[];
-      this.dtTrigger.next();
-    });
-
-  }
-
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
   }
 }

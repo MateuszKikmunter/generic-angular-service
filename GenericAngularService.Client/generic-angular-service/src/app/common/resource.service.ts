@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 export abstract class ResourceService<T> {
   protected apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private endpoint: string) { }
+  constructor(protected http: HttpClient, protected endpoint: string) { }
 
   public getSingle(id: any): Observable<T> {
     return this.http.get<T>(`${this.apiUrl}/${this.endpoint}/${id}`);

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using GenericAngularService.Api.Data.Abstract;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper.QueryableExtensions;
 using GenericAngularService.Api.Dtos.Employee;
 using GenericAngularService.Api.Entities;
+using GenericAngularService.Api.Extensions;
+using GenericAngularService.Api.Helpers.DataTablesServerSideHelpers;
 
 namespace GenericAngularService.Api.Controllers
 {
@@ -17,12 +19,17 @@ namespace GenericAngularService.Api.Controllers
             _employeeRepository = employeeRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetEmployees()
+        [HttpPost]
+        [Route("GetTableData")]
+        public IActionResult GetEmployees([FromBody] DataTableAjaxPostModel model)
         {
-            var employees = await _employeeRepository.GetAllWithDependenciesAsync();
-            var result = _mapper.Map<List<EmployeeDto>>(employees);
-            return Ok(result);
+            var employees = _employeeRepository.GetEmployees()
+             //   .ApplySearch(model)
+                .ApplySort(model)
+                .ProjectTo<EmployeeDto>(_mapper.ConfigurationProvider);
+                //.ToPagedList(model);
+
+            return DataTablesResult(employees.ToPagedList(model));
         }
 
         [HttpGet("{id}", Name = "GetEmployee")]
@@ -52,7 +59,7 @@ namespace GenericAngularService.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEmployee([FromBody] EmployeeForCreationDto employee)
+        public async Task<IActionResult> CreateEmployee([FromBody] EmployeeForManipulationDto employee)
         {
             if (employee == null)
             {
@@ -71,7 +78,7 @@ namespace GenericAngularService.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] EmployeeForUpdateDto employee)
+        public async Task<IActionResult> Update(int id, [FromBody] EmployeeForManipulationDto employee)
         {
             var employeeToUpdate = await _employeeRepository.GetSingleAsync(id);
             if (employeeToUpdate == null)
@@ -89,7 +96,7 @@ namespace GenericAngularService.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-             _mapper.Map(employee, employeeToUpdate);
+            _mapper.Map(employee, employeeToUpdate);
             await _employeeRepository.UpdateAsync(employeeToUpdate);
 
             return Ok();

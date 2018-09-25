@@ -9,6 +9,7 @@ export class EnsureAcceptHeaderInterceptor implements HttpInterceptor {
         if (!request.headers.has('Accept')) {
             request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
         }
+
         return next.handle(request);
     }
 }

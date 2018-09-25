@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="text-center my-3">- List of all employees -</h1>
 
-  <table id="employee-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-bordered">
+  <table id="employee-table" datatable [dtOptions]="dtOptions" class="table table-hover table-bordered">
     <thead>
       <tr>
         <th>ID</th>
@@ -17,6 +17,9 @@
         <td>{{ employee.lastName }}</td>
         <td>{{ employee.company }}</td>
       </tr>
+      <tr *ngIf="employees?.length == 0">
+        <td colspan="4" class="no-data-available">No data!</td>
+    </tr>
     </tbody>
   </table>
 </div>

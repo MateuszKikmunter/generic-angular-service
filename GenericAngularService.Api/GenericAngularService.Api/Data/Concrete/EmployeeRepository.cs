@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GenericAngularService.Api.Data.Abstract;
 using GenericAngularService.Api.Entities;
@@ -15,6 +16,11 @@ namespace GenericAngularService.Api.Data.Concrete
         public Task<List<Employee>> GetAllWithDependenciesAsync()
         {
             return _context.Employees.Include(e => e.Company).ToListAsync();
+        }
+
+        public IQueryable<Employee> GetEmployees()
+        {
+            return _context.Employees.Include(e => e.Company);
         }
     }
 }

@@ -1,24 +1,98 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using GenericAngularService.Api.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using GenericAngularService.Api.Extensions;
+using GenericAngularService.Api.Helpers.DataTablesServerSideHelpers;
+using NUnit.Framework;
 
-namespace GenericAngularService.Api.Data.Helpers
+namespace GenericAngularService.Api.UnitTests
 {
-    public static class Seed
+    [TestFixture]
+    public class PagedListTests
     {
-        public static void Initialize(IServiceProvider serviceProvider)
-        {
-            using (var context = new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
-            {
-                context.Database.EnsureCreated();
-                context.Employees.RemoveRange(context.Employees);
-                context.Companies.RemoveRange(context.Companies);
-                context.SaveChanges();
+        private List<Employee> _employees;
 
-                var companies = new List<Company>
+        [SetUp]
+        public void SetUp()
+        {
+            _employees = new List<Employee>();
+            Seed();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _employees.Clear();
+            _employees = null;
+        }
+
+
+        [Test]
+        public void ToPagedList_Should_CreatePagedListWithDataOnlyForTheFirstPage()
+        {
+            //arrange
+            var paginationData = new DataTableAjaxPostModel
+            {
+                Length = 5,
+                Start = 0
+            };
+
+            //act
+            var result = _employees.AsQueryable().ToPagedList(paginationData);
+
+            //assert
+            result.Count.Should().Be(paginationData.Length);
+            result.PageSize.Should().Be(paginationData.Length);
+            result.PageNumber.Should().Be(1);
+            result.TotalCount.Should().Be(_employees.Count);
+        }
+
+        [Test]
+        public void ToPagedList_Should_CreatePagedListWithDataForTheNextPage()
+        {
+            //arrange
+            var paginationData = new DataTableAjaxPostModel
+            {
+                Length = 5,
+                Start = 5
+            };
+
+            //act
+            var result = _employees.AsQueryable().ToPagedList(paginationData);
+
+            //assert
+            result.Count.Should().Be(paginationData.Length);
+            result.PageSize.Should().Be(paginationData.Length);
+            result.PageNumber.Should().Be(2);
+            result.TotalCount.Should().Be(_employees.Count);
+        }
+
+        [Test]
+        public void ToPagedList_ShouldReturnDataForTheLastPage()
+        {
+            //arrange
+            var sourceCount = _employees.Count;
+            var paginationData = new DataTableAjaxPostModel
+            {
+                Length = 5,
+                Start = 15
+            };
+
+            //act
+            var result = _employees.AsQueryable().ToPagedList(paginationData);
+
+            //assert
+            result.Count.Should().Be(sourceCount - paginationData.Start);
+            result.PageSize.Should().Be(paginationData.Length);
+            result.PageNumber.Should().Be(4);
+            result.TotalCount.Should().Be(sourceCount);
+        }
+
+        private void Seed()
+        {
+            var companies = new List<Company>
             {
                 new Company
                 {
@@ -58,7 +132,7 @@ namespace GenericAngularService.Api.Data.Helpers
                 }
             };
 
-                var employees = new List<Employee>
+            var employees = new List<Employee>
             {
                 new Employee
                 {
@@ -86,25 +160,9 @@ namespace GenericAngularService.Api.Data.Helpers
                 },
                 new Employee
                 {
-                    FirstName = "Steve",
-                    LastName = "Stevenson",
-                    Email = "steve.stevenson@microsoft.com",
-                    Active = true,
-                    Company = companies.First(c => c.Name.Equals("Microsoft"))
-                },
-                new Employee
-                {
                     FirstName = "Kathy",
                     LastName = "Apple",
                     Email = "kathy.apple@appleinc.com",
-                    Active = true,
-                    Company = companies.First(c => c.Name.Equals("Apple"))
-                },
-                new Employee
-                {
-                    FirstName = "James",
-                    LastName = "Jones",
-                    Email = "james.jones@appleinc.com",
                     Active = true,
                     Company = companies.First(c => c.Name.Equals("Apple"))
                 },
@@ -158,14 +216,6 @@ namespace GenericAngularService.Api.Data.Helpers
                 },
                 new Employee
                 {
-                    FirstName = "Andy",
-                    LastName = "Anderson",
-                    Email = "andy.anderson@ibm.com",
-                    Active = true,
-                    Company = companies.First(c => c.Name.Equals("IBM"))
-                },
-                new Employee
-                {
                     FirstName = "Mike",
                     LastName = "Hannigan",
                     Email = "mike.Hannigan@ibm.com",
@@ -206,14 +256,6 @@ namespace GenericAngularService.Api.Data.Helpers
                 },
                 new Employee
                 {
-                    FirstName = "Denise",
-                    LastName = "Lawrence",
-                    Email = "denise.lawrence@facebook.com",
-                    Active = true,
-                    Company = companies.First(c => c.Name.Equals("Facebook"))
-                },
-                new Employee
-                {
                     FirstName = "Jeff",
                     LastName = "Keff",
                     Email = "jeff.keff@amazon.com",
@@ -235,21 +277,13 @@ namespace GenericAngularService.Api.Data.Helpers
                     Email = "bud.weiser@amazon.com",
                     Active = true,
                     Company = companies.First(c => c.Name.Equals("Amazon"))
-                },
-                new Employee
-                {
-                    FirstName = "Don",
-                    LastName = "Douglas",
-                    Email = "don.douglas@amazon.com",
-                    Active = true,
-                    Company = companies.First(c => c.Name.Equals("Amazon"))
                 }
             };
 
-                context.Companies.AddRange(companies);
-                context.Employees.AddRange(employees);
-                context.SaveChanges();
-            }
+            _employees.AddRange(employees);
         }
     }
+
+
 }
+

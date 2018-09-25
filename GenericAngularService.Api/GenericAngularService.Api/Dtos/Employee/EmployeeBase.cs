@@ -1,23 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace GenericAngularService.Api.Dtos.Employee
+﻿namespace GenericAngularService.Api.Dtos.Employee
 {
     public abstract class EmployeeBase
     {
-        [Required(AllowEmptyStrings = false)]
-        [MaxLength(255)]
-        public string FirstName { get; set; }
+        public virtual string FirstName { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
-        [MaxLength(255)]
-        public string LastName { get; set; }
+        public virtual string LastName { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
-        [MaxLength(255)]
-        [EmailAddress]
-        public string Email { get; set; }
+        public virtual string Email { get; set; }
 
-        [Required]
-        public bool Active { get; set; }
+        public virtual bool Active { get; set; }
     }
 }
