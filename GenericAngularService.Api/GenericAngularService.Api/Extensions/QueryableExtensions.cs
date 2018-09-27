@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using GenericAngularService.Api.Helpers.DataTablesServerSideHelpers;
 using System.Linq.Dynamic.Core;
+using GenericAngularService.Api.Services;
 
 namespace GenericAngularService.Api.Extensions
 {
@@ -16,17 +19,17 @@ namespace GenericAngularService.Api.Extensions
             return query;
         }
 
-        public static IQueryable<T> ApplySort<T>(this IQueryable<T> query, DataTableAjaxPostModel dataTableAjaxPostModel)
+        public static IQueryable<T> ApplySort<T>(this IQueryable<T> query, DataTableAjaxPostModel dataTableAjaxPostModel, IList<IPropertyMapping> mappings)
         {
             if (!dataTableAjaxPostModel.Order.Any())
             {
                 return query;
             }
 
-            var columnsToSort = dataTableAjaxPostModel.Columns.Where(c => c.Orderable).ToArray();
+            var sortableColumns = dataTableAjaxPostModel.Columns.Where(c => c.Orderable).ToArray();
             var sortOptions = dataTableAjaxPostModel.Order.Select(order => new
             {
-                sortBy = columnsToSort[order.Column].Data,
+                sortBy = mappings.FirstOrDefault(m => string.Equals(m.DestinationProperty, sortableColumns[order.Column].Data, StringComparison.OrdinalIgnoreCase))?.SourceProperty,
                 sortDirection = order.GetSortDirection().ToString()
             });
 

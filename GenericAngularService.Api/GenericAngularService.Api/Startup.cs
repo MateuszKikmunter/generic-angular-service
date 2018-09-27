@@ -2,6 +2,9 @@
 using GenericAngularService.Api.Data;
 using GenericAngularService.Api.Data.Abstract;
 using GenericAngularService.Api.Data.Concrete;
+using GenericAngularService.Api.Dtos.Employee;
+using GenericAngularService.Api.Entities;
+using GenericAngularService.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +48,8 @@ namespace GenericAngularService.Api
 
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IPropertyMappingCollection, EmployeeToEmployeeDtoMappingCollection<Employee, EmployeeDto>>();
+            services.AddScoped<IPropertyMappingService, PropertyMappingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

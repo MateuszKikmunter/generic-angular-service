@@ -7,6 +7,7 @@ using GenericAngularService.Api.Dtos.Employee;
 using GenericAngularService.Api.Entities;
 using GenericAngularService.Api.Extensions;
 using GenericAngularService.Api.Helpers.DataTablesServerSideHelpers;
+using GenericAngularService.Api.Services;
 
 namespace GenericAngularService.Api.Controllers
 {
@@ -14,18 +15,22 @@ namespace GenericAngularService.Api.Controllers
     public class EmployeesController : BaseController
     {
         private readonly IEmployeeRepository _employeeRepository;
-        public EmployeesController(IMapper mapper, IEmployeeRepository employeeRepository) : base(mapper)
+        private readonly IPropertyMappingService _propertyMappingService;
+
+        public EmployeesController(IMapper mapper, IEmployeeRepository employeeRepository, IPropertyMappingService propertyMappingService) : base(mapper)
         {
             _employeeRepository = employeeRepository;
+            _propertyMappingService = propertyMappingService;
         }
 
         [HttpPost]
         [Route("GetTableData")]
         public IActionResult GetEmployees([FromBody] DataTableAjaxPostModel model)
         {
+            var propertyMappings = _propertyMappingService.GetMappings<Employee, EmployeeDto>();
             var employees = _employeeRepository.GetEmployees()
              //   .ApplySearch(model)
-                .ApplySort(model)
+                .ApplySort(model, propertyMappings)
                 .ProjectTo<EmployeeDto>(_mapper.ConfigurationProvider);
                 //.ToPagedList(model);
 
