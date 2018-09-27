@@ -4,7 +4,7 @@ using FluentAssertions;
 using GenericAngularService.Api.Entities;
 using GenericAngularService.Api.Extensions;
 using GenericAngularService.Api.Helpers.DataTablesServerSideHelpers;
-using GenericAngularService.Api.UnitTests.Helpers;
+using GenericAngularService.Api.UnitTests.TestHelpers;
 using NUnit.Framework;
 
 namespace GenericAngularService.Api.UnitTests.HelpersTests

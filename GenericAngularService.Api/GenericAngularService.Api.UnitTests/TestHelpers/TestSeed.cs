@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GenericAngularService.Api.Entities;
 
-namespace GenericAngularService.Api.UnitTests.Helpers
+namespace GenericAngularService.Api.UnitTests.TestHelpers
 {
     internal static class TestSeed
     {

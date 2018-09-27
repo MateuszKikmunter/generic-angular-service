@@ -5,7 +5,7 @@ using GenericAngularService.Api.Extensions;
 using GenericAngularService.Api.Helpers.DataTablesServerSideHelpers;
 using GenericAngularService.Api.Services.Abstract;
 using GenericAngularService.Api.Services.Concrete;
-using GenericAngularService.Api.UnitTests.Helpers;
+using GenericAngularService.Api.UnitTests.TestHelpers;
 using NUnit.Framework;
 
 namespace GenericAngularService.Api.UnitTests.ExtensionsTests
@@ -13,12 +13,12 @@ namespace GenericAngularService.Api.UnitTests.ExtensionsTests
     [TestFixture]
     public class QueryableExtensionsTests
     {
-        private IList<IPropertyMapping> _propetMappings;
+        private IList<IPropertyMapping> _propertyMappings;
 
         [SetUp]
         public void SetUp()
         {
-            _propetMappings = new List<IPropertyMapping>
+            _propertyMappings = new List<IPropertyMapping>
             {
                 new PropertyMapping("Id", "Id"),
                 new PropertyMapping("FirstName", "FirstName"),
@@ -30,8 +30,8 @@ namespace GenericAngularService.Api.UnitTests.ExtensionsTests
         [TearDown]
         public void TearDown()
         {
-            _propetMappings.Clear();
-            _propetMappings = null;
+            _propertyMappings.Clear();
+            _propertyMappings = null;
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace GenericAngularService.Api.UnitTests.ExtensionsTests
             var dtPostModel = new DataTableAjaxPostModel();
 
             //act
-            var result = query.ApplySort(dtPostModel, _propetMappings).ToList();
+            var result = query.ApplySort(dtPostModel, _propertyMappings).ToList();
 
 
             //assert
@@ -75,7 +75,7 @@ namespace GenericAngularService.Api.UnitTests.ExtensionsTests
             };
 
             //act
-            var result = query.ApplySort(dtPostModel, _propetMappings).ToList();
+            var result = query.ApplySort(dtPostModel, _propertyMappings).ToList();
 
             //assert
             result.Should().BeInDescendingOrder(e => e.FirstName);
@@ -107,7 +107,7 @@ namespace GenericAngularService.Api.UnitTests.ExtensionsTests
             };
 
             //act
-            var result = query.ApplySort(dtPostModel, _propetMappings).ToList();
+            var result = query.ApplySort(dtPostModel, _propertyMappings).ToList();
 
             //assert
             result.Should().BeInAscendingOrder(e => e.FirstName);
@@ -139,7 +139,7 @@ namespace GenericAngularService.Api.UnitTests.ExtensionsTests
             };
 
             //act
-            var result = query.ApplySort(dtPostModel, _propetMappings).ToList();
+            var result = query.ApplySort(dtPostModel, _propertyMappings).ToList();
 
             //assert
             result.Should().BeInAscendingOrder(e => e.Company.Name);
@@ -171,7 +171,7 @@ namespace GenericAngularService.Api.UnitTests.ExtensionsTests
             };
 
             //act
-            var result = query.ApplySort(dtPostModel, _propetMappings).ToList();
+            var result = query.ApplySort(dtPostModel, _propertyMappings).ToList();
 
             //assert
             result.Should().BeInDescendingOrder(e => e.Company.Name);
