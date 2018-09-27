@@ -1,4 +1,4 @@
-﻿namespace GenericAngularService.Api.Services
+﻿namespace GenericAngularService.Api.Services.Abstract
 {
     public interface IPropertyMapping
     {

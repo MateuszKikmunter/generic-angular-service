@@ -7,7 +7,7 @@ using GenericAngularService.Api.Dtos.Employee;
 using GenericAngularService.Api.Entities;
 using GenericAngularService.Api.Extensions;
 using GenericAngularService.Api.Helpers.DataTablesServerSideHelpers;
-using GenericAngularService.Api.Services;
+using GenericAngularService.Api.Services.Abstract;
 
 namespace GenericAngularService.Api.Controllers
 {
@@ -31,10 +31,10 @@ namespace GenericAngularService.Api.Controllers
             var employees = _employeeRepository.GetEmployees()
              //   .ApplySearch(model)
                 .ApplySort(model, propertyMappings)
-                .ProjectTo<EmployeeDto>(_mapper.ConfigurationProvider);
-                //.ToPagedList(model);
+                .ProjectTo<EmployeeDto>(_mapper.ConfigurationProvider)
+                .ToPagedList(model);
 
-            return DataTablesResult(employees.ToPagedList(model));
+            return DataTablesResult(employees);
         }
 
         [HttpGet("{id}", Name = "GetEmployee")]

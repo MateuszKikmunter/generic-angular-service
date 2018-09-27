@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GenericAngularService.Api.Services
+namespace GenericAngularService.Api.Services.Abstract
 {
     public interface IPropertyMappingService
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GenericAngularService.Api.Helpers.DataTablesServerSideHelpers;
 using System.Linq.Dynamic.Core;
-using GenericAngularService.Api.Services;
+using GenericAngularService.Api.Services.Abstract;
 
 namespace GenericAngularService.Api.Extensions
 {
