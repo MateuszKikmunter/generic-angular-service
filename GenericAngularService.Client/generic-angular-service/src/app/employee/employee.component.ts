@@ -27,6 +27,7 @@ export class EmployeeComponent implements OnInit {
       pagingType: 'full_numbers',
       serverSide: true,
       processing: true,
+      searchDelay: 500,
       ajax: (dataTablesParameters: any, callback) => {
         that.http
           .post<DataTablesResponse>(`${environment.apiUrl}/employees/GetTableData`, dataTablesParameters, {})
@@ -45,7 +46,10 @@ export class EmployeeComponent implements OnInit {
         { data: "firstName" },
         { data: "lastName" },
         { data: "company" },
-        { data: "active" }
+        {
+          data: "active",
+          searchable: false
+        }
       ]
     };
   }

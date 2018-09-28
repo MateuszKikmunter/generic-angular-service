@@ -29,7 +29,7 @@ namespace GenericAngularService.Api.Controllers
         {
             var propertyMappings = _propertyMappingService.GetMappings<Employee, EmployeeDto>();
             var employees = _employeeRepository.GetEmployees()
-             //   .ApplySearch(model)
+                .ApplySearch(model, propertyMappings)
                 .ApplySort(model, propertyMappings)
                 .ProjectTo<EmployeeDto>(_mapper.ConfigurationProvider)
                 .ToPagedList(model);
