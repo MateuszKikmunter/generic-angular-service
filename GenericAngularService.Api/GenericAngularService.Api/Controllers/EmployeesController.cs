@@ -25,7 +25,7 @@ namespace GenericAngularService.Api.Controllers
 
         [HttpPost]
         [Route("GetTableData")]
-        public IActionResult GetEmployees([FromBody] DataTableAjaxPostModel model)
+        public IActionResult GetEmployees([FromBody] DataTablesOptions model)
         {
             var propertyMappings = _propertyMappingService.GetMappings<Employee, EmployeeDto>();
             var employees = _employeeRepository.GetEmployees()

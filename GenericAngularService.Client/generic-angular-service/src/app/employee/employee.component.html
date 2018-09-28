@@ -8,6 +8,7 @@
         <th>First name</th>
         <th>Last name</th>
         <th>Company</th>
+        <th>Active</th>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +17,7 @@
         <td>{{ employee.firstName }}</td>
         <td>{{ employee.lastName }}</td>
         <td>{{ employee.company }}</td>
+        <td><fa-icon [icon]="renderEmployeeActive(employee.active)"></fa-icon></td>
       </tr>
       <tr *ngIf="employees?.length == 0">
         <td colspan="4" class="no-data-available">No data!</td>

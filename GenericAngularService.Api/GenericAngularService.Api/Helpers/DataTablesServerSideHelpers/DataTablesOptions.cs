@@ -2,7 +2,7 @@
 
 namespace GenericAngularService.Api.Helpers.DataTablesServerSideHelpers
 {
-    public class DataTableAjaxPostModel
+    public class DataTablesOptions
     {
         public int Draw { get; set; }
         public int Start { get; set; }

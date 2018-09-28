@@ -10,6 +10,10 @@ p {
 
 #employee-table {
     cursor: pointer;
+
+    tr, td {
+        text-align: center;
+    }
 }
 
 .no-data-available {

@@ -11,7 +11,7 @@ namespace GenericAngularService.Api.Helpers.DataTablesServerSideHelpers
         public int PageSize { get; set; }
         public int PagesCount { get; set; }
 
-        private PagedList(IQueryable<T> query, DataTableAjaxPostModel paginationData)
+        private PagedList(IQueryable<T> query, DataTablesOptions paginationData)
         {
             TotalCount = query.Count();
             PageNumber = (int)Math.Ceiling(paginationData.Start / (double)paginationData.Length) + 1;
@@ -21,7 +21,7 @@ namespace GenericAngularService.Api.Helpers.DataTablesServerSideHelpers
             AddRange(query.Skip(paginationData.Start).Take(PageSize).ToList());
         }
 
-        public static PagedList<T> Create(IQueryable<T> source, DataTableAjaxPostModel paginationData)
+        public static PagedList<T> Create(IQueryable<T> source, DataTablesOptions paginationData)
         {
             return new PagedList<T>(source, paginationData);
         }

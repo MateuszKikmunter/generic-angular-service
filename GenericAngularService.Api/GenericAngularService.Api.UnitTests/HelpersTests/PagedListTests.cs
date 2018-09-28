@@ -32,7 +32,7 @@ namespace GenericAngularService.Api.UnitTests.HelpersTests
         public void ToPagedList_Should_CreatePagedListWithDataOnlyForTheFirstPage()
         {
             //arrange
-            var paginationData = new DataTableAjaxPostModel
+            var paginationData = new DataTablesOptions
             {
                 Length = 5,
                 Start = 0
@@ -52,7 +52,7 @@ namespace GenericAngularService.Api.UnitTests.HelpersTests
         public void ToPagedList_Should_CreatePagedListWithDataForTheNextPage()
         {
             //arrange
-            var paginationData = new DataTableAjaxPostModel
+            var paginationData = new DataTablesOptions
             {
                 Length = 5,
                 Start = 5
@@ -73,7 +73,7 @@ namespace GenericAngularService.Api.UnitTests.HelpersTests
         {
             //arrange
             var sourceCount = _employees.Count;
-            var paginationData = new DataTableAjaxPostModel
+            var paginationData = new DataTablesOptions
             {
                 Length = 5,
                 Start = 15

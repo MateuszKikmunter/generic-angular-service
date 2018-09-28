@@ -1,10 +1,11 @@
-import { environment } from './../../environments/environment';
-import { DataTablesResponse } from './../common/datatables.response';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { EmployeeService } from './shared/employee-service';
 import { Employee } from './shared/employee';
+import { environment } from './../../environments/environment';
+import { DataTablesResponse } from './../common/datatables.response';
+import { faTimes, faCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-employee',
@@ -14,6 +15,8 @@ import { Employee } from './shared/employee';
 export class EmployeeComponent implements OnInit {
   private employees: Employee[] = [];
   private dtOptions: DataTables.Settings = {};
+  private employeeActive = faCheck;
+  private employeeInactive = faTimes;
 
   constructor(private employeeService: EmployeeService, private http: HttpClient) { }
 
@@ -41,8 +44,13 @@ export class EmployeeComponent implements OnInit {
         { data: "id" },
         { data: "firstName" },
         { data: "lastName" },
-        { data: "company" }
+        { data: "company" },
+        { data: "active" }
       ]
     };
+  }
+
+  private renderEmployeeActive(isActive: boolean): IconDefinition {
+    return isActive ? this.employeeActive : this.employeeInactive;
   }
 }

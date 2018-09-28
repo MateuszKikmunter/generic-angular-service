@@ -39,7 +39,7 @@ namespace GenericAngularService.Api.UnitTests.ExtensionsTests
         {
             //arrange
             var query = TestSeed.GetQueryableEmployees();
-            var dtPostModel = new DataTableAjaxPostModel();
+            var dtPostModel = new DataTablesOptions();
 
             //act
             var result = query.ApplySort(dtPostModel, _propertyMappings).ToList();
@@ -50,11 +50,42 @@ namespace GenericAngularService.Api.UnitTests.ExtensionsTests
         }
 
         [Test]
+        public void ApplySort_NoOrderableColumnsDefined_ShouldReturnQuery()
+        {
+            //arrange
+            var query = TestSeed.GetQueryableEmployees();
+            var dtPostModel = new DataTablesOptions
+            {
+                Order = new List<Order>
+                {
+                    new Order
+                    {
+                        Column = 0,
+                        Dir = "asc"
+                    }
+                },
+                Columns = new List<Column>
+                {
+                    new Column
+                    {
+                        Orderable = false
+                    }
+                }
+            };
+
+            //act
+            var result = query.ApplySort(dtPostModel, _propertyMappings).ToList();
+
+            //assert
+            result.Should().BeEquivalentTo(query);
+        }
+
+        [Test]
         public void ApplySort_SortByDescending_ShouldReturnSortedEntities()
         {
             //arrange
             var query = TestSeed.GetQueryableEmployees();
-            var dtPostModel = new DataTableAjaxPostModel
+            var dtPostModel = new DataTablesOptions
             {
                 Columns = new List<Column>
                 {
@@ -86,7 +117,7 @@ namespace GenericAngularService.Api.UnitTests.ExtensionsTests
         {
             //arrange
             var query = TestSeed.GetQueryableEmployees();
-            var dtPostModel = new DataTableAjaxPostModel
+            var dtPostModel = new DataTablesOptions
             {
                 Columns = new List<Column>
                 {
@@ -118,7 +149,7 @@ namespace GenericAngularService.Api.UnitTests.ExtensionsTests
         {
             //arrange
             var query = TestSeed.GetQueryableEmployees();
-            var dtPostModel = new DataTableAjaxPostModel
+            var dtPostModel = new DataTablesOptions
             {
                 Columns = new List<Column>
                 {
@@ -150,7 +181,7 @@ namespace GenericAngularService.Api.UnitTests.ExtensionsTests
         {
             //arrange
             var query = TestSeed.GetQueryableEmployees();
-            var dtPostModel = new DataTableAjaxPostModel
+            var dtPostModel = new DataTablesOptions
             {
                 Columns = new List<Column>
                 {
