@@ -15,7 +15,8 @@ namespace GenericAngularService.Api.Services.Concrete
 
         public IList<IPropertyMapping> GetMappings<TSource, TDestination>()
         {
-            return _mappingCollections.First(c => c.IsApplicable<TSource, TDestination>()).GetAssociatedMappings();
+            return _mappingCollections.FirstOrDefault(c => c.IsApplicable<TSource, TDestination>())?.GetAssociatedMappings() 
+                   ?? new List<IPropertyMapping>();
         }
     }
 }

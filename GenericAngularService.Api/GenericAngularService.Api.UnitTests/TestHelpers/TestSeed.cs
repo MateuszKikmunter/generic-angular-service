@@ -53,6 +53,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
             {
                 new Employee
                 {
+                    Id = 1,
                     FirstName = "Matt",
                     LastName = "Kick",
                     Email = "matt.kick@microsoft.com",
@@ -61,6 +62,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 2,
                     FirstName = "Marcy",
                     LastName = "Grape",
                     Email = "marcy.grape@microsoft.com",
@@ -69,6 +71,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 3,
                     FirstName = "John",
                     LastName = "Micro",
                     Email = "john.micro@microsoft.com",
@@ -77,6 +80,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 4,
                     FirstName = "Kathy",
                     LastName = "Apple",
                     Email = "kathy.apple@appleinc.com",
@@ -85,6 +89,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 5,
                     FirstName = "Conor",
                     LastName = "Bundy",
                     Email = "conor.bundy@appleinc.com",
@@ -93,6 +98,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 6,
                     FirstName = "Tony",
                     LastName = "Goodman",
                     Email = "tony.Goodman@appleinc.com",
@@ -101,6 +107,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 7,
                     FirstName = "Bill",
                     LastName = "Bell",
                     Email = "bill.bell@oracle.com",
@@ -109,6 +116,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 8,
                     FirstName = "John",
                     LastName = "Kemper",
                     Email = "john.kemper@oracle.com",
@@ -117,6 +125,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 9,
                     FirstName = "Mia",
                     LastName = "Oracleson",
                     Email = "Mia.Oracleson@microsoft.com",
@@ -125,6 +134,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 10,
                     FirstName = "Foo",
                     LastName = "Bar",
                     Email = "foo.bar@ibm.com",
@@ -133,6 +143,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 11,
                     FirstName = "Mike",
                     LastName = "Hannigan",
                     Email = "mike.Hannigan@ibm.com",
@@ -141,6 +152,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 12,
                     FirstName = "Phoebe",
                     LastName = "Gardner",
                     Email = "phoebe.gardner@ibm.com",
@@ -149,6 +161,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 13,
                     FirstName = "Markus",
                     LastName = "Zucker",
                     Email = "markus.zucker@facebook.com",
@@ -157,6 +170,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 14,
                     FirstName = "Zoe",
                     LastName = "Zuckerman",
                     Email = "zoe.zuckerman@facebook.com",
@@ -165,6 +179,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 15,
                     FirstName = "Bob",
                     LastName = "Bobbatron",
                     Email = "bob.bobbatron@facebook.com",
@@ -173,6 +188,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 16,
                     FirstName = "Jeff",
                     LastName = "Keff",
                     Email = "jeff.keff@amazon.com",
@@ -181,6 +197,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 17,
                     FirstName = "Kelly",
                     LastName = "Mills",
                     Email = "kelly.mills@amazon.com",
@@ -189,6 +206,7 @@ namespace GenericAngularService.Api.UnitTests.TestHelpers
                 },
                 new Employee
                 {
+                    Id = 18,
                     FirstName = "Bud",
                     LastName = "Weiser",
                     Email = "bud.weiser@amazon.com",

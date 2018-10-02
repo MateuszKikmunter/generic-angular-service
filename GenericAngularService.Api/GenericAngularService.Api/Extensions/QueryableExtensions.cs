@@ -18,46 +18,23 @@ namespace GenericAngularService.Api.Extensions
 
         public static IQueryable<TEntity> ApplySearch<TEntity>(this IQueryable<TEntity> query, DataTablesOptions options, IList<IPropertyMapping> mappings)
         {
-            Expression<Func<TEntity, bool>> expression = null;
-            var typeOfString = typeof(string);
-            var valueToSearch = options.Search.Value;
-            var searchableColumns = options.Columns.Where(c => c.Searchable).ToArray();
-            var searchOptions = searchableColumns.Select(c => new
+            if (!mappings.Any())
             {
-                searchFor = mappings.FirstOrDefault(m => m.DestinationProperty.Equals(c.Data, StringComparison.OrdinalIgnoreCase))?.SourceProperty
-            });
-
-            foreach (var option in searchOptions)
-            {
-                Expression<Func<TEntity, bool>> lambda = null;
-                var parameterExpression = Expression.Parameter(typeof(TEntity), "param");
-                var member = option.searchFor.Split('.').Aggregate<string, Expression>(parameterExpression, Expression.PropertyOrField);
-                var canConvert = CanConvertToType(valueToSearch, member.Type.FullName);
-
-                if (canConvert)
-                {
-                    var value = ConvertToType(valueToSearch, member.Type.FullName);
-                    if (member.Type == typeOfString)
-                    {
-                        var constant = Expression.Constant(value);
-                        var methodInfo = typeOfString.GetMethod("StartsWith", new[] { typeOfString });
-                        var call = Expression.Call(member, methodInfo, constant);
-
-                        lambda = Expression.Lambda<Func<TEntity, bool>>(call, parameterExpression);
-                    }
-                    else
-                    {
-                        lambda = Expression.Lambda<Func<TEntity, bool>>(Expression.Equal(member, Expression.Constant(value)), parameterExpression);
-                    }
-                }
-
-                if (lambda != null)
-                {
-                    expression = expression == null ? lambda : expression.Or(lambda);
-                }
+                return query;
             }
 
-            return expression != null ? query.Where(expression) : query;
+            var searchableColumns = options.GetSearchableColums();
+            if (!searchableColumns.Any())
+            {
+                return query;
+            }
+
+            var expression = GetSearchableProperties(mappings, searchableColumns)
+                .Select(property => BuildLambaExpression<TEntity>(options.Search.Value, property))
+                .Where(lambda => lambda != null)
+                .Aggregate<Expression<Func<TEntity, bool>>, Expression<Func<TEntity, bool>>>(null, (current, lambda) => current == null ? lambda : current.Or(lambda));
+
+            return expression == null ? query : query.Where(expression);
         }
 
         public static IQueryable<T> ApplySort<T>(this IQueryable<T> query, DataTablesOptions options, IList<IPropertyMapping> mappings)
@@ -67,7 +44,12 @@ namespace GenericAngularService.Api.Extensions
                 return query;
             }
 
-            var sortableColumns = options.Columns.Where(c => c.Orderable).ToArray();
+            if (!mappings.Any())
+            {
+                return query;
+            }
+
+            var sortableColumns = options.GetSortableColumns().ToArray();
             if (!sortableColumns.Any())
             {
                 return query;
@@ -75,11 +57,42 @@ namespace GenericAngularService.Api.Extensions
 
             var sortOptions = options.Order.Select(order => new
             {
-                sortBy = mappings.FirstOrDefault(m => string.Equals(m.DestinationProperty, sortableColumns[order.Column].Data, StringComparison.OrdinalIgnoreCase))?.SourceProperty,
+                sortBy = mappings.First(m => m.DestinationProperty.Equals(sortableColumns[order.Column].Data, StringComparison.OrdinalIgnoreCase)).SourceProperty,
                 sortDirection = order.GetSortDirection().ToString()
             });
 
             return sortOptions.Aggregate(query, (current, option) => current.OrderBy($"{option.sortBy} {option.sortDirection}"));
+        }
+
+        private static IEnumerable<string> GetSearchableProperties(IList<IPropertyMapping> mappings, IEnumerable<Column> searchColumns)
+        {
+            return searchColumns
+                .Select(c => mappings.First(m => m.DestinationProperty.Equals(c.Data, StringComparison.OrdinalIgnoreCase)).SourceProperty)
+                .Where(match => !string.IsNullOrWhiteSpace(match));
+        }
+
+        private static Expression<Func<TEntity, bool>> BuildLambaExpression<TEntity>(string valueToSearch, string property)
+        {
+            var typeOfString = typeof(string);
+            var parameterExpression = Expression.Parameter(typeof(TEntity), "TEntity");
+            var member = property.Split('.').Aggregate<string, Expression>(parameterExpression, Expression.PropertyOrField);
+
+            var canConvert = CanConvertToType(valueToSearch, member.Type.FullName);
+            if (canConvert)
+            {
+                var value = ConvertToType(valueToSearch, member.Type.FullName);
+                var constant = Expression.Constant(value);
+                if (member.Type == typeOfString)
+                {
+                    var methodInfo = typeOfString.GetMethod("StartsWith", new[] { typeOfString });
+                    var call = Expression.Call(member, methodInfo, constant);
+                    return Expression.Lambda<Func<TEntity, bool>>(call, parameterExpression);
+                }
+
+                return Expression.Lambda<Func<TEntity, bool>>(Expression.Equal(member, constant), parameterExpression);
+            }
+
+            return null;
         }
 
         private static bool CanConvertToType(object value, string type)
