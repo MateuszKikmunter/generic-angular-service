@@ -55,11 +55,11 @@ export class EmployeeComponent implements OnInit {
     };
   }
 
-  selectRow(employee: Employee): void {
+  private selectRow(employee: Employee): void {
     this.selectedEmployee = (this.selectedEmployee === employee ? null : employee);
   }
 
-  rowSelected(employee: Employee): boolean {
+  private rowSelected(employee: Employee): boolean {
     return this.selectedEmployee === employee;
   }
 
