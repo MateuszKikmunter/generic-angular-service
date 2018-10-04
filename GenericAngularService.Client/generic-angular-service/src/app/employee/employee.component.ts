@@ -14,14 +14,14 @@ import { faTimes, faCheck, IconDefinition } from '@fortawesome/free-solid-svg-ic
 })
 export class EmployeeComponent implements OnInit {
   private employees: Employee[] = [];
-  private dtOptions: DataTables.Settings = {};
+  private dtOptions: any = {};
   private employeeActive = faCheck;
   private employeeInactive = faTimes;
+  private selectedEmployee: Employee;
 
   constructor(private employeeService: EmployeeService, private http: HttpClient) { }
 
   ngOnInit() {
-    var that = this;
 
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -29,15 +29,15 @@ export class EmployeeComponent implements OnInit {
       processing: true,
       searchDelay: 500,
       ajax: (dataTablesParameters: any, callback) => {
-        that.http
+        this.http
           .post<DataTablesResponse>(`${environment.apiUrl}/employees/GetTableData`, dataTablesParameters, {})
           .subscribe(resp => {
-            that.employees = resp.data as Employee[];
+            this.employees = resp.data as Employee[];
 
             callback({
               recordsTotal: resp.recordsTotal,
               recordsFiltered: resp.recordsFiltered,
-              data: [],
+              data: []
             });
           });
       },
@@ -50,11 +50,20 @@ export class EmployeeComponent implements OnInit {
           data: "active",
           searchable: false
         }
-      ]
+      ],
+      select: true
     };
   }
 
-  private renderEmployeeActive(isActive: boolean): IconDefinition {
-    return isActive ? this.employeeActive : this.employeeInactive;
+  selectRow(employee: Employee): void {
+    this.selectedEmployee = (this.selectedEmployee === employee ? null : employee);
+  }
+
+  rowSelected(employee: Employee): boolean {
+    return this.selectedEmployee === employee;
+  }
+
+  private renderEmployeeActive(employeeActive: boolean): IconDefinition {
+    return employeeActive ? this.employeeActive : this.employeeInactive;
   }
 }
