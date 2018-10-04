@@ -1,10 +1,13 @@
+import { DataTableDirective } from 'angular-datatables';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import { EmployeeService } from './shared/employee-service';
 import { Employee } from './shared/employee';
 import { environment } from './../../environments/environment';
 import { DataTablesResponse } from './../common/datatables.response';
+
 import { faTimes, faCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -12,12 +15,15 @@ import { faTimes, faCheck, IconDefinition } from '@fortawesome/free-solid-svg-ic
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss']
 })
-export class EmployeeComponent implements OnInit {
+export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild(DataTableDirective)
+  private dtElement: DataTableDirective;
+  private dtOptions: DataTables.Settings = {};
+  private dtTrigger = new Subject();
   private employees: Employee[] = [];
-  private dtOptions: any = {};
+  private selectedEmployee: Employee = null;
   private employeeActive = faCheck;
   private employeeInactive = faTimes;
-  private selectedEmployee: Employee;
 
   constructor(private employeeService: EmployeeService, private http: HttpClient) { }
 
@@ -50,9 +56,25 @@ export class EmployeeComponent implements OnInit {
           data: "active",
           searchable: false
         }
-      ],
-      select: true
+      ]
     };
+  }
+
+  ngAfterViewInit(): void {
+    this.dtTrigger.next();
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
   }
 
   private selectRow(employee: Employee): void {
@@ -65,5 +87,34 @@ export class EmployeeComponent implements OnInit {
 
   private renderEmployeeActive(employeeActive: boolean): IconDefinition {
     return employeeActive ? this.employeeActive : this.employeeInactive;
+  }
+
+  private createEmployee() {
+  }
+
+  private editEmployee() {
+    
+  }
+
+  private deleteEmployee() {
+    if (this.validateEmployeeSelection() && confirm("Are you sure?")) {
+      this.employeeService.delete(this.selectedEmployee.id).subscribe(() => {
+        this.rerender();
+      });
+      this.clearRowSelection();
+    }
+  }
+
+  private validateEmployeeSelection(): boolean {
+    if (this.selectedEmployee === null) {
+      alert("Please select employee first!");
+      return false;
+    }
+
+    return true;
+  }
+
+  private clearRowSelection() {
+    this.selectedEmployee = null;
   }
 }

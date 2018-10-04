@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 
 import { ResourceService } from '../../common/resource.service';
 import { EmployeeBase } from './employee-base';
-import { DataTableDirective } from 'angular-datatables';
 
 @Injectable({
   providedIn: 'root'
