@@ -9,6 +9,8 @@ import { environment } from './../../environments/environment';
 import { DataTablesResponse } from './../common/datatables.response';
 
 import { faTimes, faCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EmployeeModalComponent } from './employee-modal/employee-modal.component';
 
 @Component({
   selector: 'app-employee',
@@ -25,7 +27,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
   private employeeActive = faCheck;
   private employeeInactive = faTimes;
 
-  constructor(private employeeService: EmployeeService, private http: HttpClient) { }
+  constructor(private employeeService: EmployeeService, private http: HttpClient, private modalService: NgbModal) { }
 
   ngOnInit() {
 
@@ -89,11 +91,27 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     return employeeActive ? this.employeeActive : this.employeeInactive;
   }
 
+  private openModal(employee: Employee) {
+    const modalReference = this.modalService.open(EmployeeModalComponent);
+    modalReference.componentInstance.employeeToEdit = employee;
+
+    modalReference.result.then((result) => {
+      if (result === "employee save") {
+        this.rerender();
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
   private createEmployee() {
+    this.openModal(null);
   }
 
   private editEmployee() {
-    
+    if (this.validateEmployeeSelection()) {
+      this.openModal(this.selectedEmployee);
+    }
   }
 
   private deleteEmployee() {

@@ -17,6 +17,8 @@ import { NavComponent } from './nav/nav.component';
 import { AboutComponent } from './about/about.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EmployeeModalComponent } from './employee/employee-modal/employee-modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,13 +27,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CompanyComponent,
     NavComponent,
     AboutComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    EmployeeModalComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     DataTablesModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     FontAwesomeModule
   ],
@@ -48,7 +53,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     },
     EmployeeService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    EmployeeModalComponent
+  ]
 })
 export class AppModule {
   constructor() { }

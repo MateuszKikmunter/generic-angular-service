@@ -12,14 +12,14 @@ namespace GenericAngularService.Api.Helpers.DataTablesServerSideHelpers
         public Search Search { get; set; }
         public List<Order> Order { get; set; } = new List<Order>();
 
-        public IEnumerable<Column> GetSearchableColums()
+        public IList<Column> GetSearchableColums()
         {
-            return Columns.Where(c => c.Searchable);
+            return Columns.Where(c => c.Searchable).ToList();
         }
 
-        public IEnumerable<Column> GetSortableColumns()
+        public IList<Column> GetSortableColumns()
         {
-            return Columns.Where(c => c.Orderable);
+            return Columns.Where(c => c.Orderable).ToList();
         }
     }
 }
