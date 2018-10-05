@@ -5,6 +5,11 @@
   </button>
 </div>
 <div class="modal-body">
+
+  <div *ngIf="error">
+    <em class="text-danger">{{ error }}</em>
+  </div>
+
   <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()" novalidate autocomplete="off" id="employee-form">
 
     <div class="form-group">

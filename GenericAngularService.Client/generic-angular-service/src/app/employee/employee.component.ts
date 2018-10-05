@@ -76,6 +76,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
       dtInstance.destroy();
       // Call the dtTrigger to rerender again
       this.dtTrigger.next();
+      this.clearRowSelection();
     });
   }
 

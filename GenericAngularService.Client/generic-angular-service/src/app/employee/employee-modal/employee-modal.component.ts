@@ -14,9 +14,9 @@ import { Employee } from '../shared/employee';
 export class EmployeeModalComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService, public modal: NgbActiveModal) { }
-  @Input() employeeId: number;
   @Input() employeeToEdit: Employee = null;
   private employeeForm: FormGroup;
+  private error: any;
 
   ngOnInit() {
     this.isInAddMode() ? this.buildForm(this.employeeToEdit) : this.buildForm(this.employeeToEdit);
@@ -35,7 +35,7 @@ export class EmployeeModalComponent implements OnInit {
     if (this.employeeForm.valid) {
       this.isInAddMode()
         ? this.employeeService.add(form).subscribe(() => this.closeModal())
-        : this.employeeService.update(this.employeeToEdit.id, form).subscribe(() => this.closeModal());
+        : this.employeeService.update(this.employeeToEdit.id, form).subscribe(res => this.closeModal(), err => this.error = err);
     }
   }
 
