@@ -1,6 +1,6 @@
 <div class="modal-header">
-  <h4 class="modal-title">{{ isInAddMode() ? "Create" : "Edit" }}</h4>
-  <button type="button" class="close" aria-label="Close" (click)="modal.close('Cross click')">
+  <h4 class="modal-title">{{ getModalTitle() }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modal.close()">
     &times;
   </button>
 </div>
@@ -49,6 +49,6 @@
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-default" (click)="modal.close('Close clicked')">Cancel</button>
-  <button class="btn btn-success" type="submit" [disabled]="employeeForm.invalid" form="employee-form">Save</button>
+  <button class="btn btn-default" (click)="modal.close()">Cancel</button>
+  <button *ngIf="!isReadOnly()" class="btn btn-success" type="submit" [disabled]="employeeForm.invalid" form="employee-form">Save</button>
 </div>

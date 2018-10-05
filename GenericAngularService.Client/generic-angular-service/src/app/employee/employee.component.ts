@@ -11,6 +11,7 @@ import { DataTablesResponse } from './../common/datatables.response';
 import { faTimes, faCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeModalComponent } from './employee-modal/employee-modal.component';
+import { Mode } from '../common/mode.enum';
 
 @Component({
   selector: 'app-employee',
@@ -70,7 +71,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dtTrigger.unsubscribe();
   }
 
-  rerender(): void {
+  realoadTable(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
@@ -80,48 +81,31 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private selectRow(employee: Employee): void {
-    this.selectedEmployee = (this.selectedEmployee === employee ? null : employee);
-  }
-
-  private rowSelected(employee: Employee): boolean {
-    return this.selectedEmployee === employee;
-  }
-
   private renderEmployeeActive(employeeActive: boolean): IconDefinition {
     return employeeActive ? this.employeeActive : this.employeeInactive;
   }
 
-  private openModal(employee: Employee) {
-    const modalReference = this.modalService.open(EmployeeModalComponent);
-    modalReference.componentInstance.employeeToEdit = employee;
-
-    modalReference.result.then((result) => {
-      if (result === "employee save") {
-        this.rerender();
-      }
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
-
   private createEmployee() {
-    this.openModal(null);
+    this.openModal(null, Mode.add);
   }
 
   private editEmployee() {
     if (this.validateEmployeeSelection()) {
-      this.openModal(this.selectedEmployee);
+      this.openModal(this.selectedEmployee, Mode.edit);
     }
   }
 
   private deleteEmployee() {
     if (this.validateEmployeeSelection() && confirm("Are you sure?")) {
       this.employeeService.delete(this.selectedEmployee.id).subscribe(() => {
-        this.rerender();
+        this.realoadTable();
       });
       this.clearRowSelection();
     }
+  }
+
+  private showEmployee() {
+    this.openModal(this.selectedEmployee, Mode.readonly);
   }
 
   private validateEmployeeSelection(): boolean {
@@ -133,7 +117,30 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     return true;
   }
 
+  private selectRow(employee: Employee): void {
+    this.selectedEmployee = (this.selectedEmployee === employee ? null : employee);
+  }
+
+  private rowSelected(employee: Employee): boolean {
+    return this.selectedEmployee === employee;
+  }
+
+
   private clearRowSelection() {
     this.selectedEmployee = null;
+  }
+
+  private openModal(employee: Employee, mode: Mode) {
+    const modalReference = this.modalService.open(EmployeeModalComponent);
+    modalReference.componentInstance.employeeToEdit = employee;
+    modalReference.componentInstance.mode = mode;
+
+    modalReference.result.then((result) => {
+      if (result === "save") {
+        this.realoadTable();
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 }
