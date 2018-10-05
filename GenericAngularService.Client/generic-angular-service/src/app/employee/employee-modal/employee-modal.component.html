@@ -37,6 +37,7 @@
         is required.</em>
       <em class="text-danger" *ngIf="employeeForm.get('email').hasError('maxlength') && employeeForm.get('email').dirty">Email
         too long.</em>
+        <em class="text-danger" *ngIf="employeeForm.get('email').hasError('email') && employeeForm.get('email').dirty">Please enter a valid email.</em>
     </div>
 
     <div class="form-check">
