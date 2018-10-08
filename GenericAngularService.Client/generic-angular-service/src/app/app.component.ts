@@ -9,7 +9,7 @@ export class AppComponent implements OnInit {
   title = 'generic-angular-service';
   constructor() { }
 
-  ngOnInit() { 
+  ngOnInit() {  
    }
 }
  

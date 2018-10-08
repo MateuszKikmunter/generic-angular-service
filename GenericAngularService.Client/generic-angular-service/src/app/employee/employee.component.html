@@ -6,7 +6,7 @@
       <button type="button" class="btn btn-outline-warning" (click)="editEmployee()">Edit</button>
       <button type="button" class="btn btn-outline-danger" (click)="deleteEmployee()">Delete</button>
 
-      <button (click)="showEmployee()" class="btn btn-outline-dark" *ngIf="selectedEmployee">{{ selectedEmployee.firstName }} {{ selectedEmployee.lastName }} selected</button>
+      <button *ngIf="selectedEmployee" class="btn btn-outline-dark" (click)="showEmployee()">{{ selectedEmployee.firstName }} {{ selectedEmployee.lastName }} selected</button>
     </div>
 
   <table id="employee-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-bordered">

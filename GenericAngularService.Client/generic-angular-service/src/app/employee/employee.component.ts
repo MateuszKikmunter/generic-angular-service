@@ -7,7 +7,6 @@ import { EmployeeService } from './shared/employee-service';
 import { Employee } from './shared/employee';
 import { environment } from './../../environments/environment';
 import { DataTablesResponse } from './../common/datatables.response';
-
 import { faTimes, faCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeModalComponent } from './employee-modal/employee-modal.component';
@@ -85,17 +84,17 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     return employeeActive ? this.employeeActive : this.employeeInactive;
   }
 
-  private createEmployee() {
+  private createEmployee(): void {
     this.openModal(null, Mode.add);
   }
 
-  private editEmployee() {
+  private editEmployee(): void {
     if (this.validateEmployeeSelection()) {
       this.openModal(this.selectedEmployee, Mode.edit);
     }
   }
 
-  private deleteEmployee() {
+  private deleteEmployee(): void {
     if (this.validateEmployeeSelection() && confirm("Are you sure?")) {
       this.employeeService.delete(this.selectedEmployee.id).subscribe(() => {
         this.realoadTable();
@@ -104,7 +103,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  private showEmployee() {
+  private showEmployee(): void {
     this.openModal(this.selectedEmployee, Mode.readonly);
   }
 
@@ -118,19 +117,20 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private selectRow(employee: Employee): void {
-    this.selectedEmployee = (this.selectedEmployee === employee ? null : employee);
+    this.selectedEmployee = this.rowSelected(employee) ? null : employee;
   }
 
   private rowSelected(employee: Employee): boolean {
-    return this.selectedEmployee === employee;
+    if (this.selectedEmployee) {
+      return this.selectedEmployee.id === employee.id;
+    }   
   }
 
-
-  private clearRowSelection() {
+  private clearRowSelection(): void {
     this.selectedEmployee = null;
   }
 
-  private openModal(employee: Employee, mode: Mode) {
+  private openModal(employee: Employee, mode: Mode): void {
     const modalReference = this.modalService.open(EmployeeModalComponent);
     modalReference.componentInstance.employeeToEdit = employee;
     modalReference.componentInstance.mode = mode;

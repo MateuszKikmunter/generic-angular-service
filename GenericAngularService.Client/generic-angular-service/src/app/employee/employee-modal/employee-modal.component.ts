@@ -6,11 +6,11 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeService } from '../shared/employee-service';
+import { EmployeeForManipulation } from '../shared/employee-for-manipulation';
 import { Employee } from '../shared/employee';
 import { Mode } from '../../common/mode.enum';
 import { environment } from '../../../environments/environment';
 import { Company } from '../../company/shared/company';
-import { EmployeeForManipulation } from '../shared/employee-for-manipulation';
 
 @Component({
   selector: 'app-employee-modal',
@@ -18,16 +18,14 @@ import { EmployeeForManipulation } from '../shared/employee-for-manipulation';
   styleUrls: ['./employee-modal.component.scss']
 })
 export class EmployeeModalComponent implements OnInit {
-
   constructor(private employeeService: EmployeeService, public modal: NgbActiveModal, private http: HttpClient) { }
   @Input() employeeToEdit: Employee = null;
   @Input() mode: Mode;
   private employeeForm: FormGroup;
   private error: any;
-  private companies: Company[] = []; 
+  private companies: Company[] = [];
 
-
-  //TODO: refactor typeahead functionality, add tests for form, use company service for data fetching (service to add) and use automapper for mapping
+  //TODO: refactor typeahead functionality, add tests for form, use company service for data fetching (service to add)
   ngOnInit() {
     this.buildForm(this.employeeToEdit);
     this.http.get<Company[]>(`${environment.apiUrl}/companies`).subscribe(c => this.companies = c);
@@ -37,21 +35,13 @@ export class EmployeeModalComponent implements OnInit {
     this.modal.close("save");
   }
 
-  private saveEmployee() {
-    let form = this.employeeForm.value;
-    console.log(form);
-    let model = new EmployeeForManipulation();
-    model.active = form.active;
-    model.firstName = form.firstName;
-    model.lastName = form.lastName;
-    model.email = form.email;
-    model.companyId = form.company.id;
-
-
+  private saveEmployee(): void {
     if (this.employeeForm.valid) {
+      let employee = this.mapToDto(this.employeeForm.value);
+
       this.isInAddMode()
-        ? this.employeeService.add(model).subscribe(() => this.closeModal())
-        : this.employeeService.update(this.employeeToEdit.id, model).subscribe(res => this.closeModal(), err => this.error = err);
+        ? this.employeeService.add(employee).subscribe(() => this.closeModal())
+        : this.employeeService.update(this.employeeToEdit.id, employee).subscribe(res => this.closeModal(), err => this.error = err);
     }
   }
 
@@ -65,11 +55,11 @@ export class EmployeeModalComponent implements OnInit {
     });
   }
 
-  private isReadOnly() {
+  private isReadOnly(): boolean {
     return this.mode === Mode.readonly;
   }
 
-  private isInAddMode() {
+  private isInAddMode(): boolean {
     return this.mode === Mode.add;
   }
 
@@ -84,16 +74,27 @@ export class EmployeeModalComponent implements OnInit {
     }
   }
 
-  private searchFormatter = (result: any) => {
+  private searchFormatter = (result: any): any => {
     return result.name ? result.name : result;
   };
 
-  private search = (searchTerm: Observable<string>) => {
+  private search = (searchTerm: Observable<string>): Observable<Company[]> => {
         return searchTerm.pipe(
         debounceTime(200),
         distinctUntilChanged(),
         map(term => term === '' ? []
-          : this.companies.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+          : this.companies.filter(c => c.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
       );
   };
+
+  private mapToDto(form: any): EmployeeForManipulation {
+    let employee = new EmployeeForManipulation();
+    employee.active = form.active;
+    employee.companyId = form.company.id;
+    employee.email = form.email;
+    employee.firstName = form.firstName;
+    employee.lastName = form.lastName;
+
+    return employee;
+  }
 }
