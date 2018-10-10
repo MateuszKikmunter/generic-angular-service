@@ -22,7 +22,7 @@ export class EmployeeModalComponent implements OnInit {
   @Input() employeeToEdit: Employee = null;
   @Input() mode: Mode;
   private employeeForm: FormGroup;
-  private error: any;
+  private errors: any[];
   private companies: Company[] = [];
 
   //TODO: refactor typeahead functionality, add tests for form, use company service for data fetching (service to add)
@@ -40,8 +40,8 @@ export class EmployeeModalComponent implements OnInit {
       let employee = this.mapToDto(this.employeeForm.value);
 
       this.isInAddMode()
-        ? this.employeeService.add(employee).subscribe(() => this.closeModal())
-        : this.employeeService.update(this.employeeToEdit.id, employee).subscribe(res => this.closeModal(), err => this.error = err);
+        ? this.employeeService.add(employee).subscribe(() => this.closeModal(), err => this.mapErrors(err))
+        : this.employeeService.update(this.employeeToEdit.id, employee).subscribe(() => this.closeModal(), err => this.mapErrors(err))
     }
   }
 
@@ -74,17 +74,17 @@ export class EmployeeModalComponent implements OnInit {
     }
   }
 
-  private searchFormatter = (result: any): any => {
+  private formatter = (result: Company): any => {
     return result.name ? result.name : result;
   };
 
   private search = (searchTerm: Observable<string>): Observable<Company[]> => {
-        return searchTerm.pipe(
-        debounceTime(200),
-        distinctUntilChanged(),
-        map(term => term === '' ? []
-          : this.companies.filter(c => c.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
-      );
+    return searchTerm.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => term === '' ? []
+        : this.companies.filter(c => c.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+    );
   };
 
   private mapToDto(form: any): EmployeeForManipulation {
@@ -96,5 +96,10 @@ export class EmployeeModalComponent implements OnInit {
     employee.lastName = form.lastName;
 
     return employee;
+  }
+
+  private mapErrors(errors: any): void {
+    this.errors = [];
+    this.errors = errors;
   }
 }

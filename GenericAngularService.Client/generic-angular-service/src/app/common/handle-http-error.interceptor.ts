@@ -19,7 +19,7 @@ export class HandleHttpErrorInterceptor implements HttpInterceptor {
                 console.log(errorToLog);
             }
 
-            return throwError(error.message);
+            return error.status === 422 ? throwError(error.error.map(e => e)) : throwError(["Something went wrong, please try again."]);
         }));
     }
 }

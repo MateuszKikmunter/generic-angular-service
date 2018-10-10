@@ -4,6 +4,7 @@ using AutoMapper;
 using GenericAngularService.Api.Data.Abstract;
 using GenericAngularService.Api.Dtos.Company;
 using GenericAngularService.Api.Entities;
+using GenericAngularService.Api.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GenericAngularService.Api.Controllers
@@ -61,7 +62,7 @@ namespace GenericAngularService.Api.Controllers
 
             if (!ModelState.IsValid)
             {
-                BadRequest(ModelState);
+                return UnprocessableEntity(ModelState.GetValidationErrors());
             }
 
             var companyToAdd = _mapper.Map<Company>(company);
@@ -86,7 +87,7 @@ namespace GenericAngularService.Api.Controllers
 
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return UnprocessableEntity(ModelState.GetValidationErrors());
             }
 
             _mapper.Map(company, companyToUpdate);

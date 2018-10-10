@@ -73,7 +73,7 @@ namespace GenericAngularService.Api.Controllers
 
             if (!ModelState.IsValid)
             {
-                BadRequest(ModelState);
+                return UnprocessableEntity(ModelState.GetValidationErrors());
             }
 
             var employeeToAdd = _mapper.Map<Employee>(employee);
@@ -98,7 +98,7 @@ namespace GenericAngularService.Api.Controllers
 
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return UnprocessableEntity(ModelState.GetValidationErrors());
             }
 
             _mapper.Map(employee, employeeToUpdate);
