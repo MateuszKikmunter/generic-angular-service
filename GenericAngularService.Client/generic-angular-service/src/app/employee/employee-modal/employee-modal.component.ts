@@ -25,7 +25,7 @@ export class EmployeeModalComponent implements OnInit {
   private errors: any[];
   private companies: Company[] = [];
 
-  //TODO: refactor typeahead functionality, add tests for form, use company service for data fetching (service to add)
+  //TODO: refactor typeahead to use company service if possible
   ngOnInit() {
     this.buildForm(this.employeeToEdit);
     this.http.get<Company[]>(`${environment.apiUrl}/companies`).subscribe(c => this.companies = c);
@@ -74,28 +74,33 @@ export class EmployeeModalComponent implements OnInit {
     }
   }
 
-  private formatter = (result: Company): any => {
-    return result.name ? result.name : result;
+  private formatter = (result: string): any => {
+    return result;
   };
 
-  private search = (searchTerm: Observable<string>): Observable<Company[]> => {
+  private search = (searchTerm: Observable<string>): Observable<string[]> => {
     return searchTerm.pipe(
       debounceTime(200),
       distinctUntilChanged(),
       map(term => term === '' ? []
-        : this.companies.filter(c => c.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+        : this.companies.filter(c => c.name.toLowerCase().indexOf(term.toLowerCase()) > -1).map(c => c.name).slice(0, 10))
     );
   };
 
   private mapToDto(form: any): EmployeeForManipulation {
     let employee = new EmployeeForManipulation();
     employee.active = form.active;
-    employee.companyId = form.company.id;
+    employee.companyId = this.getCompanyForEmployee(form.company);
     employee.email = form.email;
     employee.firstName = form.firstName;
     employee.lastName = form.lastName;
 
     return employee;
+  }
+
+  private getCompanyForEmployee(company: string): any {
+    let result = this.companies.find(c => c.name === company);
+    return result ? result.id : null;
   }
 
   private mapErrors(errors: any): void {
