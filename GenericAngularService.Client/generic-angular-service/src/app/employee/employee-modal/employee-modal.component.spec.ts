@@ -159,33 +159,4 @@ describe("employee-modal-component", () => {
 
         expect(component.employeeForm.valid).toBeFalsy();
     });
-
-    
-    it("add mode - max length exceeded - form should be invalid", () => {
-        component.mode = Mode.edit;
-        let employee = new Employee();
-        employee.active = true;
-        employee.company = "";
-        employee.email = "dummy.user";
-        employee.firstName = "";
-        employee.lastName = "";
-        employee.id = 1;
-
-        for(let i = 0; i < 300; i++) {
-            employee.firstName += "a";
-            employee.lastName += "a";
-            employee.email += "a";
-        }
-
-        component.employeeToEdit = employee;
-        component.ngOnInit();
-        fixture.detectChanges();
-
-        expect(component.employeeForm.controls["firstName"].getError("maxlength")).toBeTruthy();
-        expect(component.employeeForm.controls["lastName"].getError("maxlength")).toBeTruthy();
-        expect(component.employeeForm.controls["email"].getError("maxlength")).toBeTruthy();
-        expect(component.employeeForm.controls["email"].getError("email")).toBeTruthy();
-
-        expect(component.employeeForm.valid).toBeFalsy();
-    });
 });
