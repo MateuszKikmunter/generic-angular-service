@@ -23,13 +23,12 @@ describe("employee-modal-component", () => {
         }
     };
 
-    beforeEach(async(() => {
+    beforeEach(() => {
 
         TestBed.configureTestingModule({
             declarations: [EmployeeModalComponent],
             imports: [
                 ReactiveFormsModule,
-                FormsModule,
                 NgbTypeaheadModule
             ],
             providers: [
@@ -38,7 +37,7 @@ describe("employee-modal-component", () => {
                 { provide: NgbActiveModal, useValue: mockNgbActiveModal }
             ]
         });
-    }));
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(EmployeeModalComponent);
@@ -110,7 +109,6 @@ describe("employee-modal-component", () => {
         expect(component.employeeForm.controls["firstName"].getError("required")).toBeTruthy();
         expect(component.employeeForm.controls["lastName"].getError("required")).toBeTruthy();
         expect(component.employeeForm.controls["email"].getError("email")).toBeTruthy();
-
         expect(component.employeeForm.valid).toBeFalsy();
     });
 
@@ -138,8 +136,6 @@ describe("employee-modal-component", () => {
         expect(component.employeeForm.controls["firstName"].getError("maxlength")).toBeTruthy();
         expect(component.employeeForm.controls["lastName"].getError("maxlength")).toBeTruthy();
         expect(component.employeeForm.controls["email"].getError("maxlength")).toBeTruthy();
-        expect(component.employeeForm.controls["email"].getError("email")).toBeTruthy();
-
         expect(component.employeeForm.valid).toBeFalsy();
     });
 
