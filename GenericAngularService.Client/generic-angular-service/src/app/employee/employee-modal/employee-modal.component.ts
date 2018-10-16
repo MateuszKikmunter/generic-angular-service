@@ -21,9 +21,9 @@ export class EmployeeModalComponent implements OnInit {
   constructor(private employeeService: EmployeeService, public modal: NgbActiveModal, private http: HttpClient) { }
   @Input() employeeToEdit: Employee = null;
   @Input() mode: Mode;
-  private employeeForm: FormGroup;
   private errors: any[];
   private companies: Company[] = [];
+  public employeeForm: FormGroup;
 
   //TODO: refactor typeahead to use company service if possible
   ngOnInit() {
@@ -73,10 +73,6 @@ export class EmployeeModalComponent implements OnInit {
       return "Edit";
     }
   }
-
-  private formatter = (result: string): any => {
-    return result;
-  };
 
   private search = (searchTerm: Observable<string>): Observable<string[]> => {
     return searchTerm.pipe(

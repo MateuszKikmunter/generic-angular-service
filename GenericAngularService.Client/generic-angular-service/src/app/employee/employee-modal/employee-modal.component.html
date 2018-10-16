@@ -43,8 +43,7 @@
 
     <div class="form-group">
       <label for="company">{{ isReadOnly() ? "Company:" : "Search for a company:" }}</label>
-      <input formControlName="company" id="company" type="text" class="form-control" [ngbTypeahead]="search"
-        [resultFormatter]="formatter" [inputFormatter]="formatter" />
+      <input formControlName="company" id="company" type="text" class="form-control" [ngbTypeahead]="search" />
     </div>
 
     <div class="form-check">
