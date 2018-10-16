@@ -57,4 +57,17 @@ describe("employee-modal-component", () => {
         expect(component.employeeForm.controls["company"].disabled).toBeTruthy();
         expect(component.employeeForm.controls["active"].disabled).toBeTruthy();
     });
+
+    it("add mode - form active", () => {
+        component.mode = Mode.add;
+        component.employeeToEdit = new Employee();
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        expect(component.employeeForm.controls["firstName"].disabled).toBeFalsy();
+        expect(component.employeeForm.controls["lastName"].disabled).toBeFalsy();
+        expect(component.employeeForm.controls["email"].disabled).toBeFalsy();
+        expect(component.employeeForm.controls["company"].disabled).toBeFalsy();
+        expect(component.employeeForm.controls["active"].disabled).toBeFalsy();
+    });
 });
