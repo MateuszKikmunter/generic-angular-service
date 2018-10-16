@@ -26,7 +26,7 @@ describe("employee-modal-component", () => {
     beforeEach(async(() => {
 
         TestBed.configureTestingModule({
-            declarations: [ EmployeeModalComponent ],
+            declarations: [EmployeeModalComponent],
             imports: [
                 ReactiveFormsModule,
                 FormsModule,
@@ -45,7 +45,7 @@ describe("employee-modal-component", () => {
         component = fixture.componentInstance;
     });
 
-    it("employee form should be readonly - readonly mode", () => {
+    it("employee form in readonly mode - all controls should be disabled", () => {
         component.mode = Mode.readonly;
         component.employeeToEdit = new Employee();
         component.ngOnInit();
@@ -58,7 +58,7 @@ describe("employee-modal-component", () => {
         expect(component.employeeForm.controls["active"].disabled).toBeTruthy();
     });
 
-    it("add mode - form active", () => {
+    it("add mode - form active, all controls are enabled", () => {
         component.mode = Mode.add;
         component.employeeToEdit = new Employee();
         component.ngOnInit();
@@ -69,6 +69,7 @@ describe("employee-modal-component", () => {
         expect(component.employeeForm.controls["email"].disabled).toBeFalsy();
         expect(component.employeeForm.controls["company"].disabled).toBeFalsy();
         expect(component.employeeForm.controls["active"].disabled).toBeFalsy();
+        expect(component.employeeForm.valid).toBeFalsy();
     });
 
     it("edit mode - controls have correct values", () => {
@@ -90,5 +91,23 @@ describe("employee-modal-component", () => {
         expect(component.employeeForm.controls["email"].value).toBe(employee.email);
         expect(component.employeeForm.controls["company"].value).toBe(employee.company);
         expect(component.employeeForm.controls["active"].value).toBe(employee.active);
+        expect(component.employeeForm.valid).toBeTruthy();
+    });
+
+    it("edit mode - invalid input, from should be invalid", () => {
+        component.mode = Mode.edit;
+        let employee = new Employee();
+        employee.active = true;
+        employee.company = "";
+        employee.email = "dummy.user";
+        employee.firstName = "";
+        employee.lastName = "";
+        employee.id = 1;
+
+        component.employeeToEdit = employee;
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        expect(component.employeeForm.valid).toBeFalsy();
     });
 });
