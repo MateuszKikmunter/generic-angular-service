@@ -58,9 +58,8 @@ describe("employee-modal-component", () => {
         expect(component.employeeForm.controls["active"].disabled).toBeTruthy();
     });
 
-    it("add mode - form active, all controls are enabled", () => {
+    it("add mode - form active, all controls should be enabled", () => {
         component.mode = Mode.add;
-        component.employeeToEdit = new Employee();
         component.ngOnInit();
         fixture.detectChanges();
 
@@ -72,7 +71,7 @@ describe("employee-modal-component", () => {
         expect(component.employeeForm.valid).toBeFalsy();
     });
 
-    it("edit mode - controls have correct values", () => {
+    it("edit mode - controls should have correct values", () => {
         component.mode = Mode.edit;
         let employee = new Employee();
         employee.active = true;
@@ -117,6 +116,52 @@ describe("employee-modal-component", () => {
 
     
     it("edit mode - max length exceeded - form should be invalid", () => {
+        component.mode = Mode.edit;
+        let employee = new Employee();
+        employee.active = true;
+        employee.company = "";
+        employee.email = "dummy.user";
+        employee.firstName = "";
+        employee.lastName = "";
+        employee.id = 1;
+
+        for(let i = 0; i < 300; i++) {
+            employee.firstName += "a";
+            employee.lastName += "a";
+            employee.email += "a";
+        }
+
+        component.employeeToEdit = employee;
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        expect(component.employeeForm.controls["firstName"].getError("maxlength")).toBeTruthy();
+        expect(component.employeeForm.controls["lastName"].getError("maxlength")).toBeTruthy();
+        expect(component.employeeForm.controls["email"].getError("maxlength")).toBeTruthy();
+        expect(component.employeeForm.controls["email"].getError("email")).toBeTruthy();
+
+        expect(component.employeeForm.valid).toBeFalsy();
+    });
+
+    it("add mode - invalid input, from should be invalid", () => {
+        component.mode = Mode.add;
+        let employee = new Employee();
+        employee.active = true;
+        employee.company = "";
+        employee.email = "dummy.user";
+        employee.firstName = "";
+        employee.lastName = "";
+        employee.id = 1;
+
+        component.employeeToEdit = employee;
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        expect(component.employeeForm.valid).toBeFalsy();
+    });
+
+    
+    it("add mode - max length exceeded - form should be invalid", () => {
         component.mode = Mode.edit;
         let employee = new Employee();
         employee.active = true;
