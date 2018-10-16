@@ -70,4 +70,25 @@ describe("employee-modal-component", () => {
         expect(component.employeeForm.controls["company"].disabled).toBeFalsy();
         expect(component.employeeForm.controls["active"].disabled).toBeFalsy();
     });
+
+    it("edit mode - controls have correct values", () => {
+        component.mode = Mode.edit;
+        let employee = new Employee();
+        employee.active = true;
+        employee.company = "WTW";
+        employee.email = "dummy.user@wtw.com";
+        employee.firstName = "dummy";
+        employee.lastName = "user";
+        employee.id = 1;
+
+        component.employeeToEdit = employee;
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        expect(component.employeeForm.controls["firstName"].value).toBe(employee.firstName);
+        expect(component.employeeForm.controls["lastName"].value).toBe(employee.lastName);
+        expect(component.employeeForm.controls["email"].value).toBe(employee.email);
+        expect(component.employeeForm.controls["company"].value).toBe(employee.company);
+        expect(component.employeeForm.controls["active"].value).toBe(employee.active);
+    });
 });
