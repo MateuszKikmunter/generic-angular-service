@@ -1,0 +1,60 @@
+import { TestBed, async } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
+import { EmployeeModalComponent } from './employee-modal.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgbTypeaheadModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient } from '@angular/common/http';
+
+import { Mode } from '../../common/mode.enum';
+import { Employee } from '../shared/employee';
+import { EmployeeService } from '../shared/employee-service';
+import { Company } from 'src/app/company/shared/company';
+import { of } from 'rxjs';
+
+describe("employee-modal-component", () => {
+    let component: EmployeeModalComponent;
+    let fixture: ComponentFixture<EmployeeModalComponent>;
+    let mockEmployeeService, mockNgbActiveModal;
+
+    const http = {
+        get() {
+            const companies: Company[] = [];
+            return of(companies);
+        }
+    };
+
+    beforeEach(async(() => {
+
+        TestBed.configureTestingModule({
+            declarations: [ EmployeeModalComponent ],
+            imports: [
+                ReactiveFormsModule,
+                FormsModule,
+                NgbTypeaheadModule
+            ],
+            providers: [
+                { provide: HttpClient, useValue: http },
+                { provide: EmployeeService, useValue: mockEmployeeService },
+                { provide: NgbActiveModal, useValue: mockNgbActiveModal }
+            ]
+        });
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(EmployeeModalComponent);
+        component = fixture.componentInstance;
+    });
+
+    it("employee form should be readonly - readonly mode", () => {
+        component.mode = Mode.readonly;
+        component.employeeToEdit = new Employee();
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        expect(component.employeeForm.controls["firstName"].disabled).toBeTruthy();
+        expect(component.employeeForm.controls["lastName"].disabled).toBeTruthy();
+        expect(component.employeeForm.controls["email"].disabled).toBeTruthy();
+        expect(component.employeeForm.controls["company"].disabled).toBeTruthy();
+        expect(component.employeeForm.controls["active"].disabled).toBeTruthy();
+    });
+});
