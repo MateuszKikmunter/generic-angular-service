@@ -1,15 +1,14 @@
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeService } from '../shared/employee-service';
+import { CompanyService } from './../../company/shared/company.service';
 import { EmployeeForManipulation } from '../shared/employee-for-manipulation';
 import { Employee } from '../shared/employee';
 import { Mode } from '../../common/mode.enum';
-import { environment } from '../../../environments/environment';
 import { Company } from '../../company/shared/company';
 
 @Component({
@@ -18,17 +17,16 @@ import { Company } from '../../company/shared/company';
   styleUrls: ['./employee-modal.component.scss']
 })
 export class EmployeeModalComponent implements OnInit {
-  constructor(private employeeService: EmployeeService, public modal: NgbActiveModal, private http: HttpClient) { }
+  constructor(private employeeService: EmployeeService, public modal: NgbActiveModal, private companyService: CompanyService) { }
   @Input() employeeToEdit: Employee = null;
   @Input() mode: Mode;
   private errors: any[];
   private companies: Company[] = [];
   public employeeForm: FormGroup;
 
-  //TODO: refactor typeahead to use company service if possible
   ngOnInit() {
     this.buildForm(this.employeeToEdit);
-    this.http.get<Company[]>(`${environment.apiUrl}/companies`).subscribe(c => this.companies = c);
+    this.companyService.getAll().subscribe(c => this.companies = c as Company[]);
   }
 
   private closeModal(): void {
@@ -76,12 +74,12 @@ export class EmployeeModalComponent implements OnInit {
 
   private search = (searchTerm: Observable<string>): Observable<string[]> => {
     return searchTerm.pipe(
-      debounceTime(200),
       distinctUntilChanged(),
-      map(term => term === '' ? []
+      map(term => term === '' 
+        ? []
         : this.companies.filter(c => c.name.toLowerCase().indexOf(term.toLowerCase()) > -1).map(c => c.name).slice(0, 10))
     );
-  };
+  }
 
   private mapToDto(form: any): EmployeeForManipulation {
     let employee = new EmployeeForManipulation();
