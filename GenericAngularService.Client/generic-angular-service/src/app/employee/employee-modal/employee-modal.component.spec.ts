@@ -1,9 +1,9 @@
-import { TestBed, async } from '@angular/core/testing';
+import { CompanyService } from './../../company/shared/company.service';
+import { TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
 import { EmployeeModalComponent } from './employee-modal.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgbTypeaheadModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from '@angular/common/http';
 
 import { Mode } from '../../common/mode.enum';
 import { Employee } from '../shared/employee';
@@ -16,9 +16,9 @@ describe("employee-modal-component", () => {
     let fixture: ComponentFixture<EmployeeModalComponent>;
     let mockEmployeeService, mockNgbActiveModal;
 
-    const http = {
-        get() {
-            const companies: Company[] = [];
+    const mockCompanyService = {
+        getAll: () => {
+            let companies: Company[] = [];
             return of(companies);
         }
     };
@@ -32,7 +32,7 @@ describe("employee-modal-component", () => {
                 NgbTypeaheadModule
             ],
             providers: [
-                { provide: HttpClient, useValue: http },
+                { provide: CompanyService, useValue: mockCompanyService },
                 { provide: EmployeeService, useValue: mockEmployeeService },
                 { provide: NgbActiveModal, useValue: mockNgbActiveModal }
             ]
