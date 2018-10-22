@@ -1,5 +1,4 @@
 import { DataTableDirective } from 'angular-datatables';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -27,7 +26,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
   private employeeActive = faCheck;
   private employeeInactive = faTimes;
 
-  constructor(private employeeService: EmployeeService, private http: HttpClient, private modalService: NgbModal) { }
+  constructor(private employeeService: EmployeeService, private modalService: NgbModal) { }
 
   ngOnInit() {
 
@@ -37,17 +36,15 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
       processing: true,
       searchDelay: 500,
       ajax: (dataTablesParameters: any, callback) => {
-        this.http
-          .post<DataTablesResponse>(`${environment.apiUrl}/employees/GetTableData`, dataTablesParameters, {})
-          .subscribe(resp => {
-            this.employees = resp.data as Employee[];
+        this.employeeService.getDataTablesData(dataTablesParameters).subscribe(resp => {
+          this.employees = resp.data as Employee[];
 
-            callback({
-              recordsTotal: resp.recordsTotal,
-              recordsFiltered: resp.recordsFiltered,
-              data: []
-            });
+          callback({
+            recordsTotal: resp.recordsTotal,
+            recordsFiltered: resp.recordsFiltered,
+            data: []
           });
+        });
       },
       columns: [
         { data: "id" },

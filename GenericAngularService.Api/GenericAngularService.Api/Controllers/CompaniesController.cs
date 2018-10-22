@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using GenericAngularService.Api.Data.Abstract;
@@ -21,6 +22,13 @@ namespace GenericAngularService.Api.Controllers
         {
             _companyRepository = companyRepository;
             _propertyMappingService = propertyMappingService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCompanies()
+        {
+            var companies = await _companyRepository.GetAllAsync();
+            return Ok(_mapper.Map<List<CompanyDto>>(companies));
         }
 
         [HttpPost]
