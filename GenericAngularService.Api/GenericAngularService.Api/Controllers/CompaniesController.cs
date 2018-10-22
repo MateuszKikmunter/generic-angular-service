@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using GenericAngularService.Api.Data.Abstract;
 using GenericAngularService.Api.Dtos.Company;
 using GenericAngularService.Api.Entities;
 using GenericAngularService.Api.Extensions;
+using GenericAngularService.Api.Helpers.DataTablesServerSideHelpers;
+using GenericAngularService.Api.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GenericAngularService.Api.Controllers
@@ -13,17 +15,26 @@ namespace GenericAngularService.Api.Controllers
     public class CompaniesController : BaseController
     {
         private readonly ICompanyRepository _companyRepository;
-        public CompaniesController(IMapper mapper, ICompanyRepository companyRepository) : base(mapper)
+        private readonly IPropertyMappingService _propertyMappingService;
+
+        public CompaniesController(IMapper mapper, ICompanyRepository companyRepository, IPropertyMappingService propertyMappingService) : base(mapper)
         {
             _companyRepository = companyRepository;
+            _propertyMappingService = propertyMappingService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetCompanies()
+        [HttpPost]
+        [Route("GetTableData")]
+        public IActionResult GetCompanies([FromBody] DataTablesOptions options)
         {
-            var copanies = await _companyRepository.GetAllAsync();
-            var result = _mapper.Map<List<CompanyDto>>(copanies);
-            return Ok(result);
+            var mappings = _propertyMappingService.GetMappings<Company, CompanyDto>();
+            var companies = _companyRepository.GetCompanies()
+                .ApplySearch(options, mappings)
+                .ApplySort(options, mappings)
+                .ProjectTo<CompanyDto>(_mapper.ConfigurationProvider)
+                .ToPagedList(options);
+
+            return DataTablesResult(companies);
         }
 
         [HttpGet("{id}", Name = "GetCompany")]

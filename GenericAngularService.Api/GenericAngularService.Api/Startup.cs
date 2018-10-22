@@ -2,6 +2,7 @@
 using GenericAngularService.Api.Data;
 using GenericAngularService.Api.Data.Abstract;
 using GenericAngularService.Api.Data.Concrete;
+using GenericAngularService.Api.Dtos.Company;
 using GenericAngularService.Api.Dtos.Employee;
 using GenericAngularService.Api.Entities;
 using GenericAngularService.Api.Services;
@@ -50,7 +51,9 @@ namespace GenericAngularService.Api
 
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
             services.AddScoped<IPropertyMappingCollection, EmployeeToEmployeeDtoMappingCollection<Employee, EmployeeDto>>();
+            services.AddScoped<IPropertyMappingCollection, CompanyToCompanyDtoMappingCollection<Company, CompanyDto>>();
             services.AddScoped<IPropertyMappingService, PropertyMappingService>();
         }
 
