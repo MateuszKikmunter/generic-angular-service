@@ -20,6 +20,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EmployeeModalComponent } from './employee/employee-modal/employee-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CompanyModalComponent } from './company/company-modal/company-modal.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NavComponent,
     AboutComponent,
     WelcomeComponent,
-    EmployeeModalComponent
+    EmployeeModalComponent,
+    CompanyModalComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    EmployeeModalComponent
+    EmployeeModalComponent,
+    CompanyModalComponent
   ]
 })
 export class AppModule {

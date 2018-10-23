@@ -1,0 +1,56 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ getModalTitle() }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modal.close()">
+    &times;
+  </button>
+</div>
+<div class="modal-body">
+
+  <ul *ngIf="errors?.length > 0">
+    <li *ngFor="let error of errors" class="text-danger">{{ error }}</li>
+  </ul>
+
+  <form [formGroup]="companyForm" (ngSubmit)="saveCompany()" novalidate autocomplete="off" id="company-form">
+
+    <div class="form-group">
+      <label for="name" class="control-label">Name:</label>
+      <input formControlName="name" class="form-control" type="text" id="name">
+      <em class="text-danger" *ngIf="companyForm.get('name').hasError('required') && companyForm.get('name').dirty">
+        Name is required.</em>
+      <em class="text-danger" *ngIf="companyForm.get('name').hasError('maxlength') && companyForm.get('name').dirty">
+        Name too long.</em>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label" for="industry">Industry:</label>
+      <input formControlName="industry" class="form-control" type="text" id="industry">
+      <em class="text-danger" *ngIf="companyForm.get('industry').hasError('required') && companyForm.get('industry').dirty">Industry
+        is required.</em>
+      <em class="text-danger" *ngIf="companyForm.get('industry').hasError('maxlength') && companyForm.get('industry').dirty">Industry
+        too long.</em>
+    </div>
+
+    <div class="form-group">
+      <label for="founded" class="control-label">Founded:</label>
+      <div class="input-group">
+        <input formControlName="founded" class="form-control" name="founded" ngbDatepicker #picker="ngbDatepicker"
+        [minDate]="minDate" 
+        [maxDate]="maxDate"
+        id="founded">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" (click)="picker.toggle()" type="button" [disabled]="isReadOnly()">
+            <fa-icon [icon]="calendarIcon"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <em class="text-danger" *ngIf="companyForm.get('founded').hasError('required') && companyForm.get('founded').dirty">Founded
+        is required.</em>
+    </div>
+
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-default" (click)="modal.close()">Cancel</button>
+  <button *ngIf="!isReadOnly()" class="btn btn-success" type="submit" [disabled]="companyForm.invalid" form="company-form">Save</button>
+</div>

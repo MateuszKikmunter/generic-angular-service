@@ -4,8 +4,6 @@ import { Subject } from 'rxjs';
 
 import { EmployeeService } from './shared/employee-service';
 import { Employee } from './shared/employee';
-import { environment } from './../../environments/environment';
-import { DataTablesResponse } from './../common/datatables.response';
 import { faTimes, faCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeModalComponent } from './employee-modal/employee-modal.component';
@@ -44,7 +42,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
             recordsFiltered: resp.recordsFiltered,
             data: []
           });
-        });
+        }, err => alert(err));
       },
       columns: [
         { data: "id" },

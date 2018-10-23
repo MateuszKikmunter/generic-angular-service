@@ -1,11 +1,10 @@
 <div class="container">
-  <h1 class="text-center my-3">- List of all employees -</h1>
+  <h1 class="text-center my-3">- All employees -</h1>
 
     <div class="btn-group mb-2">
       <button type="button" class="btn btn-outline-success" (click)="createEmployee()">Create</button>
       <button type="button" class="btn btn-outline-warning" (click)="editEmployee()">Edit</button>
       <button type="button" class="btn btn-outline-danger" (click)="deleteEmployee()">Delete</button>
-
       <button *ngIf="selectedEmployee" class="btn btn-outline-dark" (click)="showEmployee()">{{ selectedEmployee.firstName }} {{ selectedEmployee.lastName }} selected</button>
     </div>
 

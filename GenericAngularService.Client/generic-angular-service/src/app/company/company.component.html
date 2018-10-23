@@ -1,5 +1,12 @@
 <div class="container">
-  <h1 class="text-center my-3">- List of all companies -</h1>
+  <h1 class="text-center my-3">- All companies -</h1>
+
+  <div class="btn-group mb-2">
+      <button type="button" class="btn btn-outline-success" (click)="createCompany()">Create</button>
+      <button type="button" class="btn btn-outline-warning" (click)="editCompany()">Edit</button>
+      <button type="button" class="btn btn-outline-danger" (click)="deleteCompany()">Delete</button>
+      <button *ngIf="selectedCompany" class="btn btn-outline-dark" (click)="showCompany()">{{ selectedCompany.name }} selected</button>
+    </div>
 
   <table id="company-table" class="table table-hover table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
     <thead>
@@ -11,13 +18,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let company of companies">
+      <tr *ngFor="let company of companies" (click)="selectRow(company)" 
+      [ngStyle]="{ 'color': rowSelected(company) ? 'white' : 'black' }" 
+      [ngClass]="{ 'bg-info': rowSelected(company) }">
         <td>{{ company.id }}</td>
         <td>{{ company.name }}</td>
         <td>{{ company.industry }}</td>
         <td>{{ company.founded | date: "dd/MM/yyyy" }}</td>
       </tr>
-      <tr *ngIf="companies?.length == 0">
+      <tr *ngIf="companies?.length === 0">
         <td colspan="4" class="no-data-available">No data!</td>
       </tr>
     </tbody>
