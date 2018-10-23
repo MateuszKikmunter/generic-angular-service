@@ -34,8 +34,8 @@
       <label for="founded" class="control-label">Founded:</label>
       <div class="input-group">
         <input formControlName="founded" class="form-control" name="founded" ngbDatepicker #picker="ngbDatepicker"
-        [minDate]="minDate" 
-        [maxDate]="maxDate"
+        [minDate]="dtPickerConfig.minDate" 
+        [maxDate]="dtPickerConfig.maxDate"
         id="founded">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" (click)="picker.toggle()" type="button" [disabled]="isReadOnly()">

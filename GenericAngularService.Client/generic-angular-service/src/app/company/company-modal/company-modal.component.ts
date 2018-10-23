@@ -19,17 +19,17 @@ export class CompanyModalComponent implements OnInit {
   private errors: any[];
   private companyForm: FormGroup;
   private calendarIcon = faCalendar;
-  private minDate = { day: 1, month: 1, year: 1900 };
-  private maxDate = { day: 31, month: 12, year: new Date().getFullYear() + 10 };
 
   constructor(private companyService: CompanyService, private modal: NgbActiveModal, private dtPickerConfig: NgbDatepickerConfig) { }
 
   ngOnInit() {
     this.buildForm();
+    this.configureDatePicker();
+  }
 
-    // this.dtPickerConfig.minDate.day = 1;
-    // this.dtPickerConfig.minDate.month = 1;
-    // this.dtPickerConfig.minDate.year = 2000;
+  private configureDatePicker() {
+    this.dtPickerConfig.minDate = { day: 1, month: 1, year: 1900 };
+    this.dtPickerConfig.maxDate = { day: 31, month: 12, year: new Date().getFullYear() + 10 };
   }
 
   private closeModal(): void {
