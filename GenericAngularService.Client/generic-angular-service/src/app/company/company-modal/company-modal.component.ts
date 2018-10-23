@@ -40,7 +40,7 @@ export class CompanyModalComponent implements OnInit {
     this.companyForm = new FormGroup({
       name: new FormControl({ value: this.isInAddMode() ? "" : this.companyToEdit.name, disabled: this.isReadOnly() }, [Validators.required, Validators.maxLength(255)]),
       industry: new FormControl({ value: this.isInAddMode() ? "" : this.companyToEdit.industry, disabled: this.isReadOnly() }, [Validators.required, Validators.maxLength(155)]),
-      founded: new FormControl({ value: this.isInAddMode() ? "" : this.getDate(), disabled: this.isReadOnly() }, [Validators.required]),
+      founded: new FormControl({ value: this.isInAddMode() ? null : this.getDate(), disabled: this.isReadOnly() }, [Validators.required]),
     });
   }
 

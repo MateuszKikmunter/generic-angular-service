@@ -34,6 +34,7 @@
       <label for="founded" class="control-label">Founded:</label>
       <div class="input-group">
         <input formControlName="founded" class="form-control" name="founded" ngbDatepicker #picker="ngbDatepicker"
+        placeholder="yyyy-mm-dd"
         [minDate]="dtPickerConfig.minDate" 
         [maxDate]="dtPickerConfig.maxDate"
         id="founded">

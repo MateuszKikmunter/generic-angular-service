@@ -24,7 +24,7 @@
         <td>{{ company.id }}</td>
         <td>{{ company.name }}</td>
         <td>{{ company.industry }}</td>
-        <td>{{ company.founded | date: "dd/MM/yyyy" }}</td>
+        <td>{{ company.founded | date: "yyyy-MM-dd" }}</td>
       </tr>
       <tr *ngIf="companies?.length === 0">
         <td colspan="4" class="no-data-available">No data!</td>
