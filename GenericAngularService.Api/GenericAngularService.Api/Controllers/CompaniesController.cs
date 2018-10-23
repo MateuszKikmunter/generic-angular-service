@@ -112,7 +112,7 @@ namespace GenericAngularService.Api.Controllers
             _mapper.Map(company, companyToUpdate);
             await _companyRepository.UpdateAsync(companyToUpdate);
 
-            return Ok();
+            return NoContent();
         }
     }
 }

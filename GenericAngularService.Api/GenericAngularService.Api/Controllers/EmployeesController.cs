@@ -104,7 +104,7 @@ namespace GenericAngularService.Api.Controllers
             _mapper.Map(employee, employeeToUpdate);
             await _employeeRepository.UpdateAsync(employeeToUpdate);
 
-            return Ok();
+            return NoContent();
         }
     }
 }
