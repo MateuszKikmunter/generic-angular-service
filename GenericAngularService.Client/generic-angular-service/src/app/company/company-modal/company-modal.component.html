@@ -45,10 +45,10 @@
         </div>
       </div>
 
-      <em class="text-danger" *ngIf="companyForm.get('founded').hasError('required') && companyForm.get('founded').dirty">Founded
+      <em class="text-danger block-error-message" *ngIf="companyForm.get('founded').hasError('required') && companyForm.get('founded').dirty">Founded
         is required.</em>
 
-        <em class="text-danger" *ngIf="companyForm.get('founded').invalid && companyForm.get('founded').dirty">
+        <em class="text-danger block-error-message" *ngIf="companyForm.get('founded').invalid && companyForm.get('founded').dirty">
           Please enter a valid date.</em>
     </div>
 

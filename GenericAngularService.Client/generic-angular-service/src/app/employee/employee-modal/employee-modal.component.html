@@ -35,9 +35,9 @@
       <input formControlName="email" class="form-control" type="email" id="email">
       <em class="text-danger" *ngIf="employeeForm.get('email').hasError('required') && employeeForm.get('email').dirty">Email
         is required.</em>
-      <em class="text-danger" *ngIf="employeeForm.get('email').hasError('maxlength') && employeeForm.get('email').dirty">Email
+      <em class="text-danger block-error-message" *ngIf="employeeForm.get('email').hasError('maxlength') && employeeForm.get('email').dirty">Email
         too long.</em>
-      <em class="text-danger" *ngIf="employeeForm.get('email').hasError('email') && employeeForm.get('email').dirty">Please
+      <em class="text-danger block-error-message" *ngIf="employeeForm.get('email').hasError('email') && employeeForm.get('email').dirty">Please
         enter a valid email.</em>
     </div>
 
