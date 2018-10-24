@@ -2,7 +2,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Mode } from './../../common/mode.enum';
-import { NgbActiveModal, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerConfigExtension } from './../../common/ngb-date-picker-config.extension';
 import { CompanyForManipulation } from './../shared/company-for-manipulation';
 import { Company } from 'src/app/company/shared/company';
 import { CompanyService } from './../shared/company.service';
@@ -20,16 +21,12 @@ export class CompanyModalComponent implements OnInit {
   private companyForm: FormGroup;
   private calendarIcon = faCalendar;
 
-  constructor(private companyService: CompanyService, private modal: NgbActiveModal, private dtPickerConfig: NgbDatepickerConfig) { }
+  constructor(private companyService: CompanyService, private modal: NgbActiveModal, private dtPickerConfig: NgbDatepickerConfigExtension) { }
 
   ngOnInit() {
     this.buildForm();
-    this.configureDatePicker();
-  }
-
-  private configureDatePicker() {
-    this.dtPickerConfig.minDate = { day: 1, month: 1, year: 1900 };
-    this.dtPickerConfig.maxDate = { day: 31, month: 12, year: new Date().getFullYear() + 10 };
+    this.dtPickerConfig.configureMinDate(1, 1, 1900);
+    this.dtPickerConfig.configureMaxDate(31, 12, new Date().getFullYear() + 10);
   }
 
   private closeModal(): void {
@@ -40,17 +37,8 @@ export class CompanyModalComponent implements OnInit {
     this.companyForm = new FormGroup({
       name: new FormControl({ value: this.isInAddMode() ? "" : this.companyToEdit.name, disabled: this.isReadOnly() }, [Validators.required, Validators.maxLength(255)]),
       industry: new FormControl({ value: this.isInAddMode() ? "" : this.companyToEdit.industry, disabled: this.isReadOnly() }, [Validators.required, Validators.maxLength(155)]),
-      founded: new FormControl({ value: this.isInAddMode() ? null : this.getDate(), disabled: this.isReadOnly() }, [Validators.required]),
+      founded: new FormControl({ value: this.isInAddMode() ? null : this.dtPickerConfig.bindInputToValue(new Date(this.companyToEdit.founded)), disabled: this.isReadOnly() }, [Validators.required]),
     });
-  }
-
-  private getDate(): any {
-    let date = new Date(this.companyToEdit.founded);
-    return {
-      day: date.getDate(),
-      month: date.getMonth() + 1,
-      year: date.getFullYear()
-    };
   }
 
   private isReadOnly(): boolean {
@@ -83,9 +71,9 @@ export class CompanyModalComponent implements OnInit {
   }
 
   private mapToDto(form: any): CompanyForManipulation {
-    let company = new CompanyForManipulation();
     let founded = this.companyForm.get("founded").value;
-
+    
+    let company = new CompanyForManipulation();
     company.name = form.name;
     company.industry = form.industry;
     company.founded = new Date(founded.year, founded.month - 1, founded.day);

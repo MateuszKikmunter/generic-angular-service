@@ -1,3 +1,4 @@
+import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,6 +22,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EmployeeModalComponent } from './employee/employee-modal/employee-modal.component';
 import { CompanyModalComponent } from './company/company-modal/company-modal.component';
 import { CompanyService } from './company/shared/company.service';
+import { NgbDatepickerConfigExtension } from './common/ngb-date-picker-config.extension';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import { CompanyService } from './company/shared/company.service';
       multi: true
     },
     CompanyService,
-    EmployeeService
+    EmployeeService,
+    NgbDatepickerConfigExtension
   ],
   bootstrap: [AppComponent],
   entryComponents: [
