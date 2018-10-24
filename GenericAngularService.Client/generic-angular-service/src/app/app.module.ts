@@ -22,6 +22,7 @@ import { EmployeeModalComponent } from './employee/employee-modal/employee-modal
 import { CompanyModalComponent } from './company/company-modal/company-modal.component';
 import { CompanyService } from './company/shared/company.service';
 import { NgbDatepickerConfigExtension } from './common/ngb-datepicker-config.extension';
+import { DataTableSelect } from './common/data-table-select.service';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { NgbDatepickerConfigExtension } from './common/ngb-datepicker-config.ext
       multi: true
     },
     CompanyService,
+    DataTableSelect,
     EmployeeService,
     NgbDatepickerConfigExtension
   ],

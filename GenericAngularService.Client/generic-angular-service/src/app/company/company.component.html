@@ -5,7 +5,7 @@
       <button type="button" class="btn btn-outline-success" (click)="createCompany()">Create</button>
       <button type="button" class="btn btn-outline-warning" (click)="editCompany()">Edit</button>
       <button type="button" class="btn btn-outline-danger" (click)="deleteCompany()">Delete</button>
-      <button *ngIf="selectedCompany" class="btn btn-outline-dark" (click)="showCompany()">{{ selectedCompany.name }} selected</button>
+      <button *ngIf="select.currentRow()" class="btn btn-outline-dark" (click)="showCompany()">{{ select.currentRow()?.name }} selected</button>
     </div>
 
   <table id="company-table" class="table table-hover table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let company of companies" (click)="selectRow(company)" 
+      <tr *ngFor="let company of companies" (click)="select.selectRow(company)" 
       [ngStyle]="{ 'color': rowSelected(company) ? 'white' : 'black' }" 
       [ngClass]="{ 'bg-info': rowSelected(company) }">
         <td>{{ company.id }}</td>

@@ -7,6 +7,7 @@ import { Mode } from '../common/mode.enum';
 import { CompanyModalComponent } from './company-modal/company-modal.component';
 import { DataTableDirective } from 'angular-datatables';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataTableSelect } from './../common/data-table-select.service';
 
 @Component({
   selector: 'app-company',
@@ -19,9 +20,8 @@ export class CompanyComponent implements OnInit {
   private dtOptions: DataTables.Settings = {};
   private companies: Company[] = [];
   private dtTrigger = new Subject();
-  private selectedCompany: Company = null;
 
-  constructor(private companyService: CompanyService, private modalService: NgbModal) { }
+  constructor(private companyService: CompanyService, private select: DataTableSelect, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.dtOptions = {
@@ -66,22 +66,12 @@ export class CompanyComponent implements OnInit {
       dtInstance.destroy();
       // Call the dtTrigger to rerender again
       this.dtTrigger.next();
-      this.clearRowSelection();
+      this.select.clearRowSelection();
     });
   }
 
-  private selectRow(company: Company): void {
-    this.selectedCompany = this.rowSelected(company) ? null : company;
-  }
-
   private rowSelected(company: Company): boolean {
-    if (this.selectedCompany) {
-      return this.selectedCompany.id === company.id;
-    }   
-  }
-
-  private clearRowSelection(): void {
-    this.selectedCompany = null;
+    return this.select.rowSelected(company, "id");  
   }
 
   private createCompany(): void {
@@ -89,31 +79,22 @@ export class CompanyComponent implements OnInit {
   }
 
   private editCompany(): void {
-    if (this.validateCompanySelection()) {
-      this.openModal(this.selectedCompany, Mode.edit);
+    if (this.select.validateRowSelection()) {
+      this.openModal(this.select.currentRow(), Mode.edit);
     }
   }
 
   private deleteCompany(): void {
-    if (this.validateCompanySelection() && confirm("Are you sure?")) {
-      this.companyService.delete(this.selectedCompany.id).subscribe(() => {
+    if (this.select.validateRowSelection() && confirm("Are you sure?")) {
+      this.companyService.delete(this.select.currentRow().id).subscribe(() => {
         this.realoadTable();
       });
-      this.clearRowSelection();
+      this.select.clearRowSelection();
     }
   }
 
   private showCompany(): void {
-    this.openModal(this.selectedCompany, Mode.readonly);
-  }
-
-  private validateCompanySelection(): boolean {
-    if (this.selectedCompany === null) {
-      alert("Please select company first!");
-      return false;
-    }
-
-    return true;
+    this.openModal(this.select.currentRow(), Mode.readonly)
   }
 
   private openModal(company: Company, mode: Mode): void {
