@@ -35,8 +35,8 @@
       <div class="input-group">
         <input formControlName="founded" class="form-control" name="founded" ngbDatepicker #picker="ngbDatepicker"
         placeholder="yyyy-mm-dd"
-        [minDate]="dtPickerConfig.minDate" 
-        [maxDate]="dtPickerConfig.maxDate"
+        [minDate]="datepickerConfig.minDate" 
+        [maxDate]="datepickerConfig.maxDate"
         id="founded">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" (click)="picker.toggle()" type="button" [disabled]="isReadOnly()">
@@ -44,8 +44,12 @@
           </button>
         </div>
       </div>
+
       <em class="text-danger" *ngIf="companyForm.get('founded').hasError('required') && companyForm.get('founded').dirty">Founded
         is required.</em>
+
+        <em class="text-danger" *ngIf="companyForm.get('founded').invalid && companyForm.get('founded').dirty">
+          Please enter a valid date.</em>
     </div>
 
   </form>

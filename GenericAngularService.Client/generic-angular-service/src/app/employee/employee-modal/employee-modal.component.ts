@@ -10,6 +10,7 @@ import { EmployeeForManipulation } from '../shared/employee-for-manipulation';
 import { Employee } from '../shared/employee';
 import { Mode } from '../../common/mode.enum';
 import { Company } from '../../company/shared/company';
+import { ModalHelper } from 'src/app/common/modal.helper';
 
 @Component({
   selector: 'app-employee-modal',
@@ -27,20 +28,6 @@ export class EmployeeModalComponent implements OnInit {
   ngOnInit() {
     this.buildForm(this.employeeToEdit);
     this.companyService.getAll().subscribe(c => this.companies = c as Company[]);
-  }
-
-  private closeModal(): void {
-    this.modal.close("save");
-  }
-
-  private saveEmployee(): void {
-    if (this.employeeForm.valid) {
-      let employee = this.mapToDto(this.employeeForm.value);
-
-      this.isInAddMode()
-        ? this.employeeService.add(employee).subscribe(() => this.closeModal(), err => this.mapErrors(err))
-        : this.employeeService.update(this.employeeToEdit.id, employee).subscribe(() => this.closeModal(), err => this.mapErrors(err))
-    }
   }
 
   private buildForm(employee: Employee): void {
@@ -62,14 +49,8 @@ export class EmployeeModalComponent implements OnInit {
   }
 
   private getModalTitle(): string {
-    if (this.isReadOnly()) {
-      return `${this.employeeToEdit.firstName} ${this.employeeToEdit.lastName}`;
-    }
-    else if (this.isInAddMode()) {
-      return "Create";
-    } else {
-      return "Edit";
-    }
+    let title = this.employeeToEdit ? `${this.employeeToEdit.firstName} ${this.employeeToEdit.lastName}` : null;
+    return ModalHelper.getModalTitle(this.mode, title);
   }
 
   private search = (searchTerm: Observable<string>): Observable<string[]> => {
@@ -79,6 +60,16 @@ export class EmployeeModalComponent implements OnInit {
         ? []
         : this.companies.filter(c => c.name.toLowerCase().indexOf(term.toLowerCase()) > -1).map(c => c.name).slice(0, 10))
     );
+  }
+
+  private saveEmployee(): void {
+    if (this.employeeForm.valid) {
+      let employee = this.mapToDto(this.employeeForm.value);
+
+      this.isInAddMode()
+        ? this.employeeService.add(employee).subscribe(() => this.modal.close("save"), err => this.mapErrors(err))
+        : this.employeeService.update(this.employeeToEdit.id, employee).subscribe(() => this.modal.close("save"), err => this.mapErrors(err))
+    }
   }
 
   private mapToDto(form: any): EmployeeForManipulation {

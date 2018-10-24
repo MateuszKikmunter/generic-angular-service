@@ -1,4 +1,3 @@
-import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,7 +13,7 @@ import { EmployeeService } from './employee/shared/employee-service';
 import { appRoutes } from './routes';
 import { HandleHttpErrorInterceptor } from './common/handle-http-error.interceptor';
 import { DataTablesModule } from 'angular-datatables';
-import { NgbModule, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './nav/nav.component';
 import { AboutComponent } from './about/about.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -22,7 +21,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EmployeeModalComponent } from './employee/employee-modal/employee-modal.component';
 import { CompanyModalComponent } from './company/company-modal/company-modal.component';
 import { CompanyService } from './company/shared/company.service';
-import { NgbDatepickerConfigExtension } from './common/ngb-date-picker-config.extension';
+import { NgbDatepickerConfigExtension } from './common/ngb-datepicker-config.extension';
 
 @NgModule({
   declarations: [
