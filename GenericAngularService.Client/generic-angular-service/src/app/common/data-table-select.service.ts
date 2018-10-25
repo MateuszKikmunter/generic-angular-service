@@ -10,7 +10,7 @@ export class DataTableSelect {
   }
 
   public rowSelected(item: BaseEntity): boolean {
-    if (this.selectedItem) {
+    if (this.selectedItem && item) {
       return this.selectedItem.id === item.id;
     }
   }
