@@ -70,23 +70,19 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-  private rowSelected(company: Company): boolean {
-    return this.select.rowSelected(company, "id");  
-  }
-
   private createCompany(): void {
     this.openModal(null, Mode.add);
   }
 
   private editCompany(): void {
     if (this.select.validateRowSelection()) {
-      this.openModal(this.select.currentRow(), Mode.edit);
+      this.openModal(this.select.selectedItem as Company, Mode.edit);
     }
   }
 
   private deleteCompany(): void {
     if (this.select.validateRowSelection() && confirm("Are you sure?")) {
-      this.companyService.delete(this.select.currentRow().id).subscribe(() => {
+      this.companyService.delete(this.select.selectedItem.id).subscribe(() => {
         this.realoadTable();
       });
       this.select.clearRowSelection();
@@ -94,7 +90,7 @@ export class CompanyComponent implements OnInit {
   }
 
   private showCompany(): void {
-    this.openModal(this.select.currentRow(), Mode.readonly)
+    this.openModal(this.select.selectedItem as Company, Mode.readonly)
   }
 
   private openModal(company: Company, mode: Mode): void {

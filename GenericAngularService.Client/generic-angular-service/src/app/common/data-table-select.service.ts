@@ -1,33 +1,30 @@
+import { BaseEntity } from './base.entity';
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class DataTableSelect {
-  private selectedEntity: any = null;
+  public selectedItem: BaseEntity = null;
 
-  public selectRow(entity: any, propertyToCompare: any): void {
-    this.selectedEntity = this.rowSelected(entity, propertyToCompare) ? null : entity;
+  public selectRow(item: BaseEntity): void {
+    this.selectedItem = this.rowSelected(item) ? null : item;
   }
 
-  public rowSelected(entity: any, propertyToCompare: any): boolean {
-    if (this.selectedEntity) {
-      return this.selectedEntity[propertyToCompare] === entity[propertyToCompare];
+  public rowSelected(item: BaseEntity): boolean {
+    if (this.selectedItem) {
+      return this.selectedItem.id === item.id;
     }
   }
 
   public clearRowSelection(): void {
-    this.selectedEntity = null;
+    this.selectedItem = null;
   }
 
   public validateRowSelection(): boolean {
-    if (this.selectedEntity === null) {
+    if (this.selectedItem === null) {
       alert("Please select on grid first!");
       return false;
     }
 
     return true;
-  }
-
-  public currentRow(): any {
-    return this.selectedEntity;
   }
 }

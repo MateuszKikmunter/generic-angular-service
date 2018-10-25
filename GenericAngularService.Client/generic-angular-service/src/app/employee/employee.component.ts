@@ -1,7 +1,8 @@
-import { DataTableDirective } from 'angular-datatables';
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 
+import { DataTableSelect } from './../common/data-table-select.service';
+import { DataTableDirective } from 'angular-datatables';
 import { EmployeeService } from './shared/employee-service';
 import { Employee } from './shared/employee';
 import { faTimes, faCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -20,11 +21,10 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
   private dtOptions: DataTables.Settings = {};
   private dtTrigger = new Subject();
   private employees: Employee[] = [];
-  private selectedEmployee: Employee = null;
   private employeeActive = faCheck;
   private employeeInactive = faTimes;
 
-  constructor(private employeeService: EmployeeService, private modalService: NgbModal) { }
+  constructor(private employeeService: EmployeeService, private select: DataTableSelect, private modalService: NgbModal) { }
 
   ngOnInit() {
 
@@ -71,7 +71,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
       dtInstance.destroy();
       // Call the dtTrigger to rerender again
       this.dtTrigger.next();
-      this.clearRowSelection();
+      this.select.clearRowSelection();
     });
   }
 
@@ -84,45 +84,22 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private editEmployee(): void {
-    if (this.validateEmployeeSelection()) {
-      this.openModal(this.selectedEmployee, Mode.edit);
+    if (this.select.validateRowSelection()) {
+      this.openModal(this.select.selectedItem as Employee, Mode.edit);
     }
   }
 
   private deleteEmployee(): void {
-    if (this.validateEmployeeSelection() && confirm("Are you sure?")) {
-      this.employeeService.delete(this.selectedEmployee.id).subscribe(() => {
+    if (this.select.validateRowSelection() && confirm("Are you sure?")) {
+      this.employeeService.delete(this.select.selectedItem.id).subscribe(() => {
         this.realoadTable();
       });
-      this.clearRowSelection();
+      this.select.clearRowSelection();
     }
   }
 
   private showEmployee(): void {
-    this.openModal(this.selectedEmployee, Mode.readonly);
-  }
-
-  private validateEmployeeSelection(): boolean {
-    if (this.selectedEmployee === null) {
-      alert("Please select employee first!");
-      return false;
-    }
-
-    return true;
-  }
-
-  private selectRow(employee: Employee): void {
-    this.selectedEmployee = this.rowSelected(employee) ? null : employee;
-  }
-
-  private rowSelected(employee: Employee): boolean {
-    if (this.selectedEmployee) {
-      return this.selectedEmployee.id === employee.id;
-    }   
-  }
-
-  private clearRowSelection(): void {
-    this.selectedEmployee = null;
+    this.openModal(this.select.selectedItem as Employee, Mode.readonly);
   }
 
   private openModal(employee: Employee, mode: Mode): void {

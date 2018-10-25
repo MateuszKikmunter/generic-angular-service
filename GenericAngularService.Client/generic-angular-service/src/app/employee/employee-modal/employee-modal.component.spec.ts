@@ -1,10 +1,10 @@
-import { CompanyService } from './../../company/shared/company.service';
 import { TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
 import { EmployeeModalComponent } from './employee-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbTypeaheadModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { CompanyService } from './../../company/shared/company.service';
 import { Mode } from '../../common/mode.enum';
 import { Employee } from '../shared/employee';
 import { EmployeeService } from '../shared/employee-service';

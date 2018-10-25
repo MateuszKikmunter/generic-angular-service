@@ -5,7 +5,7 @@
       <button type="button" class="btn btn-outline-success" (click)="createEmployee()">Create</button>
       <button type="button" class="btn btn-outline-warning" (click)="editEmployee()">Edit</button>
       <button type="button" class="btn btn-outline-danger" (click)="deleteEmployee()">Delete</button>
-      <button *ngIf="selectedEmployee" class="btn btn-outline-dark" (click)="showEmployee()">{{ selectedEmployee.firstName }} {{ selectedEmployee.lastName }} selected</button>
+      <button *ngIf="select.selectedItem" class="btn btn-outline-dark" (click)="showEmployee()">{{ select.selectedItem?.firstName }} {{ select.selectedItem?.lastName }} selected</button>
     </div>
 
   <table id="employee-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-bordered">
@@ -19,9 +19,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let employee of employees;" (click)="selectRow(employee)" 
-      [ngStyle]="{ 'color': rowSelected(employee) ? 'white' : 'black' }" 
-      [ngClass]="{ 'bg-info': rowSelected(employee) }">
+      <tr *ngFor="let employee of employees;" (click)="select.selectRow(employee)" 
+      [ngStyle]="{ 'color': select.selectedItem?.id === employee.id ? 'white' : 'black' }" 
+      [ngClass]="{ 'bg-info': select.selectedItem?.id === employee.id }">
         <td>{{ employee.id }}</td>
         <td>{{ employee.firstName }}</td>
         <td>{{ employee.lastName }}</td>
