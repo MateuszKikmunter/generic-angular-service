@@ -92,7 +92,7 @@ describe('CompanyModalComponent', () => {
     expect(component.companyForm.valid).toBeTruthy();
   });
 
-  it("should have invalid required error", () => {
+  it("should have required error", () => {
     let company = new Company();
 
     component.mode = Mode.edit;
