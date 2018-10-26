@@ -1,6 +1,10 @@
+// Bootswatch
 @import "../node_modules/bootswatch/dist/flatly/variables";
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "../node_modules/bootswatch/dist/flatly/bootswatch";
+
+//toastr
+@import '~ngx-toastr/toastr.css';
 
 $georgia-cambria-tnr-serif: Georgia, Cambria,"Times New Roman", Times, serif;
 $font-size-eighteen-px: 18px;

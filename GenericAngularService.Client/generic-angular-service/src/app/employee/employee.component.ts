@@ -9,6 +9,7 @@ import { faTimes, faCheck, IconDefinition } from '@fortawesome/free-solid-svg-ic
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeModalComponent } from './employee-modal/employee-modal.component';
 import { Mode } from '../common/mode.enum';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-employee',
@@ -24,7 +25,11 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
   private employeeActive = faCheck;
   private employeeInactive = faTimes;
 
-  constructor(private employeeService: EmployeeService, private select: DataTableSelect, private modalService: NgbModal) { }
+  constructor(
+    private employeeService: EmployeeService,
+    private select: DataTableSelect,
+    private modalService: NgbModal,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -93,7 +98,8 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.select.validateRowSelection() && confirm("Are you sure?")) {
       this.employeeService.delete(this.select.selectedItem.id).subscribe(() => {
         this.realoadTable();
-      });
+        this.toastr.success("Success!");
+      }, error => this.toastr.error(error));
       this.select.clearRowSelection();
     }
   }
@@ -110,9 +116,10 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     modalReference.result.then((result) => {
       if (result === "save") {
         this.realoadTable();
+        this.toastr.success("Success!");
       }
     }).catch((error) => {
-      console.log(error);
+      this.toastr.error(error);
     });
   }
 }

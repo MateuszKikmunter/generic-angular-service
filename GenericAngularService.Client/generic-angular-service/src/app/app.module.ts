@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -23,6 +24,7 @@ import { CompanyModalComponent } from './company/company-modal/company-modal.com
 import { CompanyService } from './company/shared/company.service';
 import { NgbDatepickerConfigExtension } from './common/ngb-datepicker-config.extension';
 import { DataTableSelect } from './common/data-table-select.service';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -37,13 +39,15 @@ import { DataTableSelect } from './common/data-table-select.service';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     DataTablesModule,
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {

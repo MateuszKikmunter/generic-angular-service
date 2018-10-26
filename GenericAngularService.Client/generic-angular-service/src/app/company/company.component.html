@@ -6,7 +6,7 @@
       <button type="button" class="btn btn-outline-warning" (click)="editCompany()">Edit</button>
       <button type="button" class="btn btn-outline-danger" (click)="deleteCompany()">Delete</button>
       <button *ngIf="select.selectedItem" class="btn btn-outline-dark" (click)="showCompany()">{{ select.selectedItem?.name }} selected</button>
-    </div>
+  </div>
 
   <table id="company-table" class="table table-hover table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
     <thead>

@@ -8,6 +8,7 @@ import { CompanyModalComponent } from './company-modal/company-modal.component';
 import { DataTableDirective } from 'angular-datatables';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableSelect } from './../common/data-table-select.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-company',
@@ -21,7 +22,7 @@ export class CompanyComponent implements OnInit {
   private companies: Company[] = [];
   private dtTrigger = new Subject();
 
-  constructor(private companyService: CompanyService, private select: DataTableSelect, private modalService: NgbModal) { }
+  constructor(private companyService: CompanyService, private select: DataTableSelect, private modalService: NgbModal, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.dtOptions = {
@@ -84,7 +85,10 @@ export class CompanyComponent implements OnInit {
     if (this.select.validateRowSelection() && confirm("Are you sure?")) {
       this.companyService.delete(this.select.selectedItem.id).subscribe(() => {
         this.realoadTable();
-      });
+        this.toastr.success("Success!");
+      },
+       err => this.toastr.error(err.message));
+
       this.select.clearRowSelection();
     }
   }
@@ -101,9 +105,10 @@ export class CompanyComponent implements OnInit {
     modalReference.result.then((result) => {
       if (result === "save") {
         this.realoadTable();
+        this.toastr.success("Success!");
       }
     }).catch((error) => {
-      console.log(error);
+      this.toastr.error(error);
     });
   }
 }
