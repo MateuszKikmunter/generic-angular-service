@@ -19,8 +19,8 @@ export class CompanyModalComponent implements OnInit {
   @Input() companyToEdit: Company = null;
   @Input() mode: Mode;
   private errors: any[];
-  private companyForm: FormGroup;
   private calendarIcon = faCalendar;
+  public companyForm: FormGroup;
 
   constructor(private companyService: CompanyService, private modal: NgbActiveModal, private datepickerConfig: NgbDatepickerConfigExtension) { }
 

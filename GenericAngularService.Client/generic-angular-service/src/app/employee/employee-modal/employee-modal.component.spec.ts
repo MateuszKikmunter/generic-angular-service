@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
-import { EmployeeModalComponent } from './employee-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgbTypeaheadModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { NgbTypeaheadModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { EmployeeModalComponent } from './employee-modal.component';
 import { CompanyService } from './../../company/shared/company.service';
 import { Mode } from '../../common/mode.enum';
 import { Employee } from '../shared/employee';
@@ -50,11 +50,9 @@ describe("employee-modal-component", () => {
         component.ngOnInit();
         fixture.detectChanges();
 
-        expect(component.employeeForm.controls["firstName"].disabled).toBeTruthy();
-        expect(component.employeeForm.controls["lastName"].disabled).toBeTruthy();
-        expect(component.employeeForm.controls["email"].disabled).toBeTruthy();
-        expect(component.employeeForm.controls["company"].disabled).toBeTruthy();
-        expect(component.employeeForm.controls["active"].disabled).toBeTruthy();
+        Object.keys(component.employeeForm.controls).forEach(key => {
+            expect(component.employeeForm.get(key).disabled).toBeTruthy();
+        });
     });
 
     it("add mode - form active, all controls should be enabled", () => {
@@ -62,11 +60,9 @@ describe("employee-modal-component", () => {
         component.ngOnInit();
         fixture.detectChanges();
 
-        expect(component.employeeForm.controls["firstName"].disabled).toBeFalsy();
-        expect(component.employeeForm.controls["lastName"].disabled).toBeFalsy();
-        expect(component.employeeForm.controls["email"].disabled).toBeFalsy();
-        expect(component.employeeForm.controls["company"].disabled).toBeFalsy();
-        expect(component.employeeForm.controls["active"].disabled).toBeFalsy();
+        Object.keys(component.employeeForm.controls).forEach(key => {
+            expect(component.employeeForm.get(key).disabled).toBeFalsy();
+        });
         expect(component.employeeForm.valid).toBeFalsy();
     });
 
@@ -78,17 +74,15 @@ describe("employee-modal-component", () => {
         employee.email = "dummy.user@wtw.com";
         employee.firstName = "dummy";
         employee.lastName = "user";
-        employee.id = 1;
 
         component.employeeToEdit = employee;
         component.ngOnInit();
         fixture.detectChanges();
 
-        expect(component.employeeForm.controls["firstName"].value).toBe(employee.firstName);
-        expect(component.employeeForm.controls["lastName"].value).toBe(employee.lastName);
-        expect(component.employeeForm.controls["email"].value).toBe(employee.email);
-        expect(component.employeeForm.controls["company"].value).toBe(employee.company);
-        expect(component.employeeForm.controls["active"].value).toBe(employee.active);
+        Object.keys(component.employeeForm.controls).forEach(key => {
+            expect(component.employeeForm.controls[key].value).toBe(employee[key]);
+        });
+
         expect(component.employeeForm.valid).toBeTruthy();
     });
 
@@ -100,7 +94,6 @@ describe("employee-modal-component", () => {
         employee.email = "dummy.user";
         employee.firstName = "";
         employee.lastName = "";
-        employee.id = 1;
 
         component.employeeToEdit = employee;
         component.ngOnInit();
@@ -112,7 +105,7 @@ describe("employee-modal-component", () => {
         expect(component.employeeForm.valid).toBeFalsy();
     });
 
-    
+
     it("edit mode - max length exceeded - form should be invalid", () => {
         component.mode = Mode.edit;
         let employee = new Employee();
@@ -121,9 +114,8 @@ describe("employee-modal-component", () => {
         employee.email = "dummy.user";
         employee.firstName = "";
         employee.lastName = "";
-        employee.id = 1;
 
-        for(let i = 0; i < 300; i++) {
+        for (let i = 0; i < 300; i++) {
             employee.firstName += "a";
             employee.lastName += "a";
             employee.email += "a";
@@ -147,7 +139,6 @@ describe("employee-modal-component", () => {
         employee.email = "dummy.user";
         employee.firstName = "";
         employee.lastName = "";
-        employee.id = 1;
 
         component.employeeToEdit = employee;
         component.ngOnInit();
