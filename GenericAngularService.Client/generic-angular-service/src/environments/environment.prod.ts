@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: "https://localhost:44309/api"
+  apiUrl: "https://genericangularserviceapi.azurewebsites.net/api"
 };

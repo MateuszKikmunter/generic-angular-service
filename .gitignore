@@ -9,3 +9,5 @@ GenericAngularService.Api/.vs/GenericAngularService.Api/v15/Server/sqlite3/stora
 GenericAngularService.Api/.vs/GenericAngularService.Api/v15/Server/sqlite3/storage.ide
 /GenericAngularService.Api/GenericAngularService.Api.UnitTests/obj
 /GenericAngularService.Api/GenericAngularService.Api.UnitTests/bin/Debug/netcoreapp2.1
+/GenericAngularService.Api/GenericAngularService.Api/appsettings.production.json
+/GenericAngularService.Api/GenericAngularService.Api/Properties/PublishProfiles
