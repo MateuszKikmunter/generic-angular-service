@@ -18,18 +18,19 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(DataTableDirective)
-  private dtElement: DataTableDirective;
-  private dtOptions: DataTables.Settings = {};
-  private dtTrigger = new Subject();
-  private employees: Employee[] = [];
+  public dtElement: DataTableDirective;
+  public dtOptions: DataTables.Settings = {};
+  public employees: Employee[] = [];
+  public dtTrigger = new Subject();
+
   private employeeActive = faCheck;
   private employeeInactive = faTimes;
 
   constructor(
     private employeeService: EmployeeService,
-    private select: DataTableSelect,
     private modalService: NgbModal,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    public select: DataTableSelect) { }
 
   ngOnInit() {
 
@@ -62,15 +63,15 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     };
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.dtTrigger.next();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
 
-  realoadTable(): void {
+  public realoadTable(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
@@ -80,21 +81,17 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private renderEmployeeActive(employeeActive: boolean): IconDefinition {
-    return employeeActive ? this.employeeActive : this.employeeInactive;
-  }
-
-  private createEmployee(): void {
+  public createEmployee(): void {
     this.openModal(null, Mode.add);
   }
 
-  private editEmployee(): void {
+  public editEmployee(): void {
     if (this.select.validateRowSelection()) {
       this.openModal(this.select.selectedItem as Employee, Mode.edit);
     }
   }
 
-  private deleteEmployee(): void {
+  public deleteEmployee(): void {
     if (this.select.validateRowSelection() && confirm("Are you sure?")) {
       this.employeeService.delete(this.select.selectedItem.id).subscribe(() => {
         this.realoadTable();
@@ -102,6 +99,10 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
       }, error => this.toastr.error(error));
       this.select.clearRowSelection();
     }
+  }
+
+  private renderEmployeeActive(employeeActive: boolean): IconDefinition {
+    return employeeActive ? this.employeeActive : this.employeeInactive;
   }
 
   private showEmployee(): void {

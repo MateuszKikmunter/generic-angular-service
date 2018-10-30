@@ -21,9 +21,10 @@ export class EmployeeModalComponent implements OnInit {
   constructor(private employeeService: EmployeeService, public modal: NgbActiveModal, private companyService: CompanyService) { }
   @Input() employeeToEdit: Employee = null;
   @Input() mode: Mode;
-  private errors: any[];
-  private companies: Company[] = [];
+  public errors: any[];
   public employeeForm: FormGroup;
+
+  private companies: Company[] = [];
 
   ngOnInit() {
     this.buildForm(this.employeeToEdit);
@@ -40,29 +41,29 @@ export class EmployeeModalComponent implements OnInit {
     });
   }
 
-  private isReadOnly(): boolean {
+  public isReadOnly(): boolean {
     return this.mode === Mode.readonly;
   }
 
-  private isInAddMode(): boolean {
+  public isInAddMode(): boolean {
     return this.mode === Mode.add;
   }
 
-  private getModalTitle(): string {
+  public getModalTitle(): string {
     let title = this.employeeToEdit ? `${this.employeeToEdit.firstName} ${this.employeeToEdit.lastName}` : null;
     return ModalHelper.getModalTitle(this.mode, title);
   }
 
-  private search = (searchTerm: Observable<string>): Observable<string[]> => {
+  public search = (searchTerm: Observable<string>): Observable<string[]> => {
     return searchTerm.pipe(
       distinctUntilChanged(),
-      map(term => term === '' 
+      map(term => term === ''
         ? []
         : this.companies.filter(c => c.name.toLowerCase().indexOf(term.toLowerCase()) > -1).map(c => c.name).slice(0, 10))
     );
   }
 
-  private saveEmployee(): void {
+  public saveEmployee(): void {
     if (this.employeeForm.valid) {
       let employee = this.mapToDto(this.employeeForm.value);
 

@@ -18,11 +18,11 @@ import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 export class CompanyModalComponent implements OnInit {
   @Input() companyToEdit: Company = null;
   @Input() mode: Mode;
-  private errors: any[];
-  private calendarIcon = faCalendar;
+  public errors: any[];
+  public calendarIcon = faCalendar;
   public companyForm: FormGroup;
 
-  constructor(private companyService: CompanyService, private modal: NgbActiveModal, private datepickerConfig: NgbDatepickerConfigExtension) { }
+  constructor(private companyService: CompanyService, public modal: NgbActiveModal, public datepickerConfig: NgbDatepickerConfigExtension) { }
 
   ngOnInit() {
     this.buildForm();
@@ -38,20 +38,20 @@ export class CompanyModalComponent implements OnInit {
     });
   }
 
-  private isReadOnly(): boolean {
-    return this.mode === Mode.readonly;
-  }
-
   private isInAddMode(): boolean {
     return this.mode === Mode.add;
   }
 
-  private getModalTitle(): string {
+  public isReadOnly(): boolean {
+    return this.mode === Mode.readonly;
+  }
+
+  public getModalTitle(): string {
     let title = this.companyToEdit ? this.companyToEdit.name : null;
     return ModalHelper.getModalTitle(this.mode, title);
   }
 
-  private saveCompany(): void {
+  public saveCompany(): void {
     if (this.companyForm.valid) {
       let company = this.mapToDto(this.companyForm.value);
 

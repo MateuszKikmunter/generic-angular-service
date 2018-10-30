@@ -1,5 +1,7 @@
+import { Injectable } from '@angular/core';
 import { NgbDatepickerConfig } from "@ng-bootstrap/ng-bootstrap";
 
+@Injectable()
 export class NgbDatepickerConfigExtension extends NgbDatepickerConfig {
 
     public configureMinDate(day: number, month: number, year: number): void {

@@ -17,12 +17,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CompanyComponent implements OnInit {
   @ViewChild(DataTableDirective)
-  private dtElement: DataTableDirective;
-  private dtOptions: DataTables.Settings = {};
-  private companies: Company[] = [];
-  private dtTrigger = new Subject();
+  public dtElement: DataTableDirective;
+  public dtOptions: DataTables.Settings = {};
+  public companies: Company[] = [];
+  public dtTrigger = new Subject();
 
-  constructor(private companyService: CompanyService, private select: DataTableSelect, private modalService: NgbModal, private toastr: ToastrService) { }
+  constructor(private companyService: CompanyService, private modalService: NgbModal, private toastr: ToastrService, public select: DataTableSelect) { }
 
   ngOnInit() {
     this.dtOptions = {
@@ -53,15 +53,15 @@ export class CompanyComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.dtTrigger.next();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
 
-  realoadTable(): void {
+  public realoadTable(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
@@ -71,24 +71,23 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-  private createCompany(): void {
+  public createCompany(): void {
     this.openModal(null, Mode.add);
   }
 
-  private editCompany(): void {
+  public editCompany(): void {
     if (this.select.validateRowSelection()) {
       this.openModal(this.select.selectedItem as Company, Mode.edit);
     }
   }
 
-  private deleteCompany(): void {
+  public deleteCompany(): void {
     if (this.select.validateRowSelection() && confirm("Are you sure?")) {
       this.companyService.delete(this.select.selectedItem.id).subscribe(() => {
         this.realoadTable();
         this.toastr.success("Success!");
       },
-       err => this.toastr.error(err.message));
-
+        error => this.toastr.error(error.message));
       this.select.clearRowSelection();
     }
   }
