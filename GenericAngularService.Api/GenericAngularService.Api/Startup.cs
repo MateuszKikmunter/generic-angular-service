@@ -6,7 +6,6 @@ using GenericAngularService.Api.Data.Concrete;
 using GenericAngularService.Api.Dtos.Company;
 using GenericAngularService.Api.Dtos.Employee;
 using GenericAngularService.Api.Entities;
-using GenericAngularService.Api.Services;
 using GenericAngularService.Api.Services.Abstract;
 using GenericAngularService.Api.Services.Concrete;
 using Microsoft.AspNetCore.Builder;

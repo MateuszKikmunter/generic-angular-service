@@ -25,6 +25,7 @@ import { CompanyService } from './company/shared/company.service';
 import { NgbDatepickerConfigExtension } from './common/ngb-datepicker-config.extension';
 import { DataTableSelect } from './common/data-table-select.service';
 import { ToastrModule } from 'ngx-toastr';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ToastrModule } from 'ngx-toastr';
     AboutComponent,
     WelcomeComponent,
     EmployeeModalComponent,
-    CompanyModalComponent
+    CompanyModalComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

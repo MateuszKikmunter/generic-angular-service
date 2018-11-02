@@ -6,17 +6,44 @@
 //toastr
 @import '~ngx-toastr/toastr.css';
 
-$georgia-cambria-tnr-serif: Georgia, Cambria,"Times New Roman", Times, serif;
+$georgia-cambria-tnr-serif: Georgia, Cambria, "Times New Roman", Times, serif;
 $font-size-eighteen-px: 18px;
 
+.block-error-message {
+  display: block;
+}
+
 .dataTables_empty {
-    display: none;
+  display: none;
 }
 
 .no-data-available {
-    text-align: center;
+  text-align: center;
 }
 
-.block-error-message {
-    display: block;
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
+}
+
+footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  text-align: center;
 }
