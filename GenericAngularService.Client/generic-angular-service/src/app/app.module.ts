@@ -1,3 +1,4 @@
+import { CacheInterceptor } from './common/cache-interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -26,6 +27,7 @@ import { NgbDatepickerConfigExtension } from './common/ngb-datepicker-config.ext
 import { DataTableSelect } from './common/data-table-select.service';
 import { ToastrModule } from 'ngx-toastr';
 import { FooterComponent } from './footer/footer.component';
+import { HttpCacheService } from './common/http-cache.service';
 
 @NgModule({
   declarations: [
@@ -59,12 +61,18 @@ import { FooterComponent } from './footer/footer.component';
     },
     {
       provide: HTTP_INTERCEPTORS,
+      useClass: CacheInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: HandleHttpErrorInterceptor,
       multi: true
     },
     CompanyService,
     DataTableSelect,
     EmployeeService,
+    HttpCacheService,
     NgbDatepickerConfigExtension
   ],
   bootstrap: [AppComponent],
