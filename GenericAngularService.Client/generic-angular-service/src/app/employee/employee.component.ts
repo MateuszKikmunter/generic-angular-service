@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { DataTableSelect } from './../common/data-table-select.service';
+import { DataTableSelect } from '../common/angular-datatables/data-table-select.service';
 import { DataTableDirective } from 'angular-datatables';
 import { EmployeeService } from './shared/employee-service';
 import { Employee } from './shared/employee';
@@ -39,8 +39,8 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
       serverSide: true,
       processing: true,
       searchDelay: 500,
-      ajax: (dataTablesParameters: any, callback) => {
-        this.employeeService.getDataTablesData(dataTablesParameters).subscribe(resp => {
+      ajax: (dtParameters: any, callback) => {
+        this.employeeService.getDataTablesData(dtParameters).subscribe(resp => {
           this.employees = resp.data as Employee[];
 
           callback({

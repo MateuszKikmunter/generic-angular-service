@@ -7,7 +7,7 @@ import { Mode } from '../common/mode.enum';
 import { CompanyModalComponent } from './company-modal/company-modal.component';
 import { DataTableDirective } from 'angular-datatables';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DataTableSelect } from './../common/data-table-select.service';
+import { DataTableSelect } from '../common/angular-datatables/data-table-select.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -30,8 +30,8 @@ export class CompanyComponent implements OnInit {
       serverSide: true,
       processing: true,
       searchDelay: 500,
-      ajax: (dataTablesParameters: any, callback) => {
-        this.companyService.getDataTablesData(dataTablesParameters).subscribe(resp => {
+      ajax: (dtParameters: any, callback) => {
+        this.companyService.getDataTablesData(dtParameters).subscribe(resp => {
           this.companies = resp.data as Company[];
 
           callback({

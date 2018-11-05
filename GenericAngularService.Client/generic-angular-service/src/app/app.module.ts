@@ -1,4 +1,3 @@
-import { CacheInterceptor } from './common/cache-interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -24,10 +23,11 @@ import { EmployeeModalComponent } from './employee/employee-modal/employee-modal
 import { CompanyModalComponent } from './company/company-modal/company-modal.component';
 import { CompanyService } from './company/shared/company.service';
 import { NgbDatepickerConfigExtension } from './common/ngb-datepicker-config.extension';
-import { DataTableSelect } from './common/data-table-select.service';
+import { DataTableSelect } from './common/angular-datatables/data-table-select.service';
 import { ToastrModule } from 'ngx-toastr';
 import { FooterComponent } from './footer/footer.component';
-import { HttpCacheService } from './common/http-cache.service';
+import { HttpCacheService } from './common/cache/http-cache.service';
+import { CacheInterceptor } from './common/cache/cache-interceptor';
 
 @NgModule({
   declarations: [

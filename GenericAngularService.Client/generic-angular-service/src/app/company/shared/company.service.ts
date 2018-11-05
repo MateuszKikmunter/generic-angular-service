@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResourceService } from 'src/app/common/resource.service';
 
-import { DataTablesResponse } from './../../common/datatables.response';
+import { DataTablesResponse } from '../../common/angular-datatables/datatables.response';
+import { DataTablesOptions } from './../../common/angular-datatables/data-tables.options';
 import { CompanyBase } from './company-base';
 
 @Injectable({
@@ -15,7 +16,7 @@ export class CompanyService extends ResourceService<CompanyBase> {
     super(http, "companies");
   }
 
-  public getDataTablesData(dtParams: any): Observable<DataTablesResponse> {
-    return this.http.post<DataTablesResponse>(`${this.apiUrl}/${this.endpoint}/GetTableData`, dtParams, {});
+  public getDataTablesData(dtParameters: DataTablesOptions): Observable<DataTablesResponse> {
+    return this.http.post<DataTablesResponse>(`${this.apiUrl}/${this.endpoint}/GetTableData`, dtParameters, {});
   }
 }
