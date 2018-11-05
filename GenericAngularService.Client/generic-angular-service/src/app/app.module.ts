@@ -28,6 +28,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { FooterComponent } from './footer/footer.component';
 import { HttpCacheService } from './common/cache/http-cache.service';
 import { CacheInterceptor } from './common/cache/cache-interceptor';
+import { ConfirmComponent } from './confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CacheInterceptor } from './common/cache/cache-interceptor';
     WelcomeComponent,
     EmployeeModalComponent,
     CompanyModalComponent,
-    FooterComponent
+    FooterComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +80,8 @@ import { CacheInterceptor } from './common/cache/cache-interceptor';
   bootstrap: [AppComponent],
   entryComponents: [
     EmployeeModalComponent,
-    CompanyModalComponent
+    CompanyModalComponent,
+    ConfirmComponent
   ]
 })
 export class AppModule {

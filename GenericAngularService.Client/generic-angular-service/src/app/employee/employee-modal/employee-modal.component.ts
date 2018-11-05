@@ -11,6 +11,7 @@ import { Employee } from '../shared/employee';
 import { Mode } from '../../common/mode.enum';
 import { Company } from '../../company/shared/company';
 import { ModalHelper } from 'src/app/common/modal.helper';
+import { Confirmation } from 'src/app/common/confirmation.enum';
 
 @Component({
   selector: 'app-employee-modal',
@@ -68,8 +69,8 @@ export class EmployeeModalComponent implements OnInit {
       let employee = this.mapToDto(this.employeeForm.value);
 
       this.isInAddMode()
-        ? this.employeeService.add(employee).subscribe(() => this.modal.close("save"), err => this.mapErrors(err))
-        : this.employeeService.update(this.employeeToEdit.id, employee).subscribe(() => this.modal.close("save"), err => this.mapErrors(err))
+        ? this.employeeService.add(employee).subscribe(() => this.modal.close(Confirmation.yes), err => this.mapErrors(err))
+        : this.employeeService.update(this.employeeToEdit.id, employee).subscribe(() => this.modal.close(Confirmation.yes), err => this.mapErrors(err))
     }
   }
 

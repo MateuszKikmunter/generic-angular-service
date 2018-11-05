@@ -3,8 +3,8 @@
 
     <div class="btn-group mb-2">
       <button type="button" class="btn btn-outline-success" (click)="createEmployee()">Create</button>
-      <button type="button" class="btn btn-outline-warning" (click)="editEmployee()">Edit</button>
-      <button type="button" class="btn btn-outline-danger" (click)="deleteEmployee()">Delete</button>
+      <button type="button" class="btn btn-outline-warning" (click)="editEmployee()" [disabled]="!select.selectedItem">Edit</button>
+      <button type="button" class="btn btn-outline-danger" (click)="deleteEmployee()" [disabled]="!select.selectedItem">Delete</button>
       <button *ngIf="select.selectedItem" class="btn btn-outline-dark" (click)="showEmployee()">{{ select.selectedItem?.firstName }} {{ select.selectedItem?.lastName }} selected</button>
     </div>
 

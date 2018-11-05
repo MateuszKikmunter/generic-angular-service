@@ -9,6 +9,7 @@ import { CompanyForManipulation } from './../shared/company-for-manipulation';
 import { Company } from 'src/app/company/shared/company';
 import { CompanyService } from './../shared/company.service';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { Confirmation } from 'src/app/common/confirmation.enum';
 
 @Component({
   selector: 'app-company-modal',
@@ -56,8 +57,8 @@ export class CompanyModalComponent implements OnInit {
       let company = this.mapToDto(this.companyForm.value);
 
       this.isInAddMode()
-        ? this.companyService.add(company).subscribe(() => this.modal.close("save"), err => this.mapErrors(err))
-        : this.companyService.update(this.companyToEdit.id, company).subscribe(() => this.modal.close("save"), err => this.mapErrors(err))
+        ? this.companyService.add(company).subscribe(() => this.modal.close(Confirmation.yes), err => this.mapErrors(err))
+        : this.companyService.update(this.companyToEdit.id, company).subscribe(() => this.modal.close(Confirmation.yes), err => this.mapErrors(err))
     }
   }
 

@@ -3,8 +3,8 @@
 
   <div class="btn-group mb-2">
       <button type="button" class="btn btn-outline-success" (click)="createCompany()">Create</button>
-      <button type="button" class="btn btn-outline-warning" (click)="editCompany()">Edit</button>
-      <button type="button" class="btn btn-outline-danger" (click)="deleteCompany()">Delete</button>
+      <button type="button" class="btn btn-outline-warning" (click)="editCompany()" [disabled]="!select.selectedItem">Edit</button>
+      <button type="button" class="btn btn-outline-danger" (click)="deleteCompany()" [disabled]="!select.selectedItem">Delete</button>
       <button *ngIf="select.selectedItem" class="btn btn-outline-dark" (click)="showCompany()">{{ select.selectedItem?.name }} selected</button>
   </div>
 

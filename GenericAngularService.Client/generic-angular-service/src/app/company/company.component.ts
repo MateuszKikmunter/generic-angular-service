@@ -6,9 +6,11 @@ import { CompanyService } from './shared/company.service';
 import { Mode } from '../common/mode.enum';
 import { CompanyModalComponent } from './company-modal/company-modal.component';
 import { DataTableDirective } from 'angular-datatables';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableSelect } from '../common/angular-datatables/data-table-select.service';
 import { ToastrService } from 'ngx-toastr';
+import { Confirmation } from 'src/app/common/confirmation.enum';
+import { ConfirmComponent } from './../confirm/confirm.component';
 
 @Component({
   selector: 'app-company',
@@ -82,14 +84,19 @@ export class CompanyComponent implements OnInit {
   }
 
   public deleteCompany(): void {
-    if (this.select.validateRowSelection() && confirm("Are you sure?")) {
-      this.companyService.delete(this.select.selectedItem.id).subscribe(() => {
-        this.realoadTable();
-        this.toastr.success("Success!");
-      },
-        error => this.toastr.error(error.message));
-      this.select.clearRowSelection();
-    }
+    const modalReference = this.modalService.open(ConfirmComponent);
+    modalReference.result.then((result) => {
+      if (result === Confirmation.yes) {
+        this.companyService.delete(this.select.selectedItem.id).subscribe(() => {
+          this.realoadTable();
+          this.toastr.success("Success!");
+        },
+          error => this.toastr.error(error.message));
+        this.select.clearRowSelection();
+      }
+    }).catch((error) => {
+      this.toastr.error(error);
+    });
   }
 
   private showCompany(): void {
@@ -101,8 +108,12 @@ export class CompanyComponent implements OnInit {
     modalReference.componentInstance.companyToEdit = company;
     modalReference.componentInstance.mode = mode;
 
+     this.handleModalResult(modalReference);
+  }
+
+  private handleModalResult(modalReference: NgbModalRef): void {
     modalReference.result.then((result) => {
-      if (result === "save") {
+      if (result === Confirmation.yes) {
         this.realoadTable();
         this.toastr.success("Success!");
       }

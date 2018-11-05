@@ -10,6 +10,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeModalComponent } from './employee-modal/employee-modal.component';
 import { Mode } from '../common/mode.enum';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmComponent } from './../confirm/confirm.component';
+import { Confirmation } from 'src/app/common/confirmation.enum';
 
 @Component({
   selector: 'app-employee',
@@ -92,13 +94,18 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public deleteEmployee(): void {
-    if (this.select.validateRowSelection() && confirm("Are you sure?")) {
-      this.employeeService.delete(this.select.selectedItem.id).subscribe(() => {
-        this.realoadTable();
-        this.toastr.success("Success!");
-      }, error => this.toastr.error(error));
-      this.select.clearRowSelection();
-    }
+    const modalReference = this.modalService.open(ConfirmComponent);
+    modalReference.result.then((result) => {
+      if (result === Confirmation.yes) {
+        this.employeeService.delete(this.select.selectedItem.id).subscribe(() => {
+          this.realoadTable();
+          this.toastr.success("Success!");
+        }, error => this.toastr.error(error));
+        this.select.clearRowSelection();
+      }
+    }).catch((error) => {
+      this.toastr.error(error);
+    });
   }
 
   private renderEmployeeActive(employeeActive: boolean): IconDefinition {
@@ -115,7 +122,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     modalReference.componentInstance.mode = mode;
 
     modalReference.result.then((result) => {
-      if (result === "save") {
+      if (result === Confirmation.yes) {
         this.realoadTable();
         this.toastr.success("Success!");
       }
