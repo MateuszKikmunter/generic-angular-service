@@ -88,7 +88,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     return employeeActive ? this.employeeActive : this.employeeInactive;
   }
 
-  public hadleButtonClick(action: Action) {
+  public hadleDtButtonClick(action: Action) {
     let selection = this.select.selectedItem as Employee;
     switch (action) {
       case Action.VIEW: {

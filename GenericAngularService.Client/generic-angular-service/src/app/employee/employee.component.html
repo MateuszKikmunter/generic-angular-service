@@ -1,9 +1,8 @@
 <div class="container">
   <h1 class="text-center my-3">- All Employees -</h1>
 
-    <app-data-tables-crud-buttons 
-    [showButtonText]="select.selectedItem?.fullName"
-    [selectedItem]="select.selectedItem" (dtButtonClick)="hadleButtonClick($event)">
+  <app-data-tables-crud-buttons [showButtonText]="select.selectedItem?.fullName" [selectedItem]="select.selectedItem"
+    (dtButtonClick)="hadleDtButtonClick($event)">
   </app-data-tables-crud-buttons>
 
   <table id="employee-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-bordered">
@@ -17,18 +16,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let employee of employees;" (click)="select.selectRow(employee)" 
-      [ngStyle]="{ 'color': select.selectedItem?.id === employee.id ? 'white' : 'black' }" 
-      [ngClass]="{ 'bg-info': select.selectedItem?.id === employee.id }">
+      <tr *ngFor="let employee of employees;" (click)="select.selectRow(employee)" [ngStyle]="{ 'color': select.selectedItem?.id === employee.id ? 'white' : 'black' }"
+        [ngClass]="{ 'bg-info': select.selectedItem?.id === employee.id }">
         <td>{{ employee.id }}</td>
         <td>{{ employee.firstName }}</td>
         <td>{{ employee.lastName }}</td>
         <td>{{ employee.company }}</td>
-        <td><fa-icon [icon]="renderEmployeeActive(employee.active)"></fa-icon></td>
+        <td>
+          <fa-icon [icon]="renderEmployeeActive(employee.active)"></fa-icon>
+        </td>
       </tr>
       <tr *ngIf="employees?.length == 0">
         <td colspan="5" class="no-data-available">No data!</td>
-    </tr>
+      </tr>
     </tbody>
   </table>
 </div>

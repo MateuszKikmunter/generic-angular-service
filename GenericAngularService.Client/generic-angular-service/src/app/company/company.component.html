@@ -1,12 +1,9 @@
 <div class="container">
   <h1 class="text-center my-3">- All Companies -</h1>
 
-  <div class="btn-group mb-2">
-      <button type="button" class="btn btn-outline-success" (click)="createCompany()">Create</button>
-      <button type="button" class="btn btn-outline-warning" (click)="editCompany()" [disabled]="!select.selectedItem">Edit</button>
-      <button type="button" class="btn btn-outline-danger" (click)="deleteCompany()" [disabled]="!select.selectedItem">Delete</button>
-      <button *ngIf="select.selectedItem" class="btn btn-outline-dark" (click)="showCompany()">{{ select.selectedItem?.name }} selected</button>
-  </div>
+  <app-data-tables-crud-buttons [showButtonText]="select.selectedItem?.name" [selectedItem]="select.selectedItem"
+    (dtButtonClick)="hadleDtButtonClick($event)">
+  </app-data-tables-crud-buttons>
 
   <table id="company-table" class="table table-hover table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
     <thead>
@@ -18,9 +15,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let company of companies" (click)="select.selectRow(company)" 
-      [ngStyle]="{ 'color': select.selectedItem?.id === company.id ? 'white' : 'black' }" 
-      [ngClass]="{ 'bg-info': select.selectedItem?.id === company.id }">
+      <tr *ngFor="let company of companies" (click)="select.selectRow(company)" [ngStyle]="{ 'color': select.selectedItem?.id === company.id ? 'white' : 'black' }"
+        [ngClass]="{ 'bg-info': select.selectedItem?.id === company.id }">
         <td>{{ company.id }}</td>
         <td>{{ company.name }}</td>
         <td>{{ company.industry }}</td>

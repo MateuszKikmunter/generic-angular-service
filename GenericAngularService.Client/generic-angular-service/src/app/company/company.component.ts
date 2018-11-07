@@ -11,6 +11,7 @@ import { DataTableSelect } from '../common/angular-datatables/data-table-select.
 import { ToastrService } from 'ngx-toastr';
 import { Confirmation } from 'src/app/common/confirmation.enum';
 import { ConfirmComponent } from './../confirm/confirm.component';
+import { Action } from './../common/action.enum';
 
 @Component({
   selector: 'app-company',
@@ -73,16 +74,26 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-  private showCompany(): void {
-    this.openModal(this.select.selectedItem as Company, Mode.READONLY)
-  }
-
-  public createCompany(): void {
-    this.openModal(null, Mode.ADD);
-  }
-
-  public editCompany(): void {
-    this.openModal(this.select.selectedItem as Company, Mode.EDIT);
+  public hadleDtButtonClick(action: Action) {
+    let company = this.select.selectedItem as Company;
+    switch (action) {
+      case Action.VIEW: {
+        this.openModal(company, Mode.READONLY);
+        break;
+      }
+      case Action.ADD: {
+        this.openModal(null, Mode.ADD);
+        break;
+      }
+      case Action.EDIT: {
+        this.openModal(company, Mode.EDIT);
+        break;
+      }
+      case Action.DELETE: {
+        this.deleteCompany();
+        break;
+      }
+    }
   }
 
   public deleteCompany(): void {
