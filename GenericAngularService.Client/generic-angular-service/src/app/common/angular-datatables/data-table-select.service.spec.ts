@@ -75,17 +75,4 @@ describe('DataTableSelectService', () => {
       expect(service.selectedItem).toBeNull();
     });
   });
-
-  describe("validateRowSelction", () => {
-    it("should return false when nothing selected", () => {
-      spyOn(window, "alert");
-      expect(service.validateRowSelection()).toBeFalsy();
-      expect(window.alert).toHaveBeenCalledWith("Please select on grid first!");
-    });   
-
-    it("should return true when item selected", () => {
-      service.selectedItem = new Company();
-      expect(service.validateRowSelection()).toBeTruthy();
-    });
-  });
 });

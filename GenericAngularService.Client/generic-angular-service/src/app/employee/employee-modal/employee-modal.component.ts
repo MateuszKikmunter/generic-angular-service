@@ -69,8 +69,8 @@ export class EmployeeModalComponent implements OnInit {
       let employee = this.mapToDto(this.employeeForm.value);
 
       this.isInAddMode()
-        ? this.employeeService.add(employee).subscribe(() => this.modal.close(Confirmation.yes), err => this.mapErrors(err))
-        : this.employeeService.update(this.employeeToEdit.id, employee).subscribe(() => this.modal.close(Confirmation.yes), err => this.mapErrors(err))
+        ? this.employeeService.add(employee).subscribe(() => this.modal.close("save"), err => this.mapErrors(err))
+        : this.employeeService.update(this.employeeToEdit.id, employee).subscribe(() => this.modal.close("save"), err => this.mapErrors(err))
     }
   }
 

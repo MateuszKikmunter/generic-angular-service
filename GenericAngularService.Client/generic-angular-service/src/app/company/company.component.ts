@@ -6,7 +6,7 @@ import { CompanyService } from './shared/company.service';
 import { Mode } from '../common/mode.enum';
 import { CompanyModalComponent } from './company-modal/company-modal.component';
 import { DataTableDirective } from 'angular-datatables';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableSelect } from '../common/angular-datatables/data-table-select.service';
 import { ToastrService } from 'ngx-toastr';
 import { Confirmation } from 'src/app/common/confirmation.enum';
@@ -73,34 +73,26 @@ export class CompanyComponent implements OnInit {
     });
   }
 
+  private showCompany(): void {
+    this.openModal(this.select.selectedItem as Company, Mode.readonly)
+  }
+
   public createCompany(): void {
     this.openModal(null, Mode.add);
   }
 
   public editCompany(): void {
-    if (this.select.validateRowSelection()) {
-      this.openModal(this.select.selectedItem as Company, Mode.edit);
-    }
+    this.openModal(this.select.selectedItem as Company, Mode.edit);
   }
 
   public deleteCompany(): void {
-    const modalReference = this.modalService.open(ConfirmComponent);
-    modalReference.result.then((result) => {
-      if (result === Confirmation.yes) {
+    this.modalService.open(ConfirmComponent).result.then((result) => {
+      if (result === Confirmation.YES) {
         this.companyService.delete(this.select.selectedItem.id).subscribe(() => {
-          this.realoadTable();
-          this.toastr.success("Success!");
-        },
-          error => this.toastr.error(error.message));
-        this.select.clearRowSelection();
+          this.reloadAndToastSuccess();
+        }, error => this.toastr.error(error));
       }
-    }).catch((error) => {
-      this.toastr.error(error);
-    });
-  }
-
-  private showCompany(): void {
-    this.openModal(this.select.selectedItem as Company, Mode.readonly)
+    }, result => this.onAlternativeModalClose(result));
   }
 
   private openModal(company: Company, mode: Mode): void {
@@ -108,17 +100,19 @@ export class CompanyComponent implements OnInit {
     modalReference.componentInstance.companyToEdit = company;
     modalReference.componentInstance.mode = mode;
 
-     this.handleModalResult(modalReference);
+    modalReference.result.then((result) => {
+      if (result === "save") {
+        this.reloadAndToastSuccess();
+      }
+    }, result => this.onAlternativeModalClose(result));
   }
 
-  private handleModalResult(modalReference: NgbModalRef): void {
-    modalReference.result.then((result) => {
-      if (result === Confirmation.yes) {
-        this.realoadTable();
-        this.toastr.success("Success!");
-      }
-    }).catch((error) => {
-      this.toastr.error(error);
-    });
+  private reloadAndToastSuccess(): void {
+    this.realoadTable();
+    this.toastr.success("Success!");
+  }
+
+  private onAlternativeModalClose(reason: any): any {
+    return reason === ModalDismissReasons.ESC || reason === ModalDismissReasons.BACKDROP_CLICK ? {} : this.toastr.error(reason);
   }
 }

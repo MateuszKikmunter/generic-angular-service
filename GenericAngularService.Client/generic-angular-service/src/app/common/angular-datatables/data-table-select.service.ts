@@ -18,13 +18,4 @@ export class DataTableSelect {
   public clearRowSelection(): void {
     this.selectedItem = null;
   }
-
-  public validateRowSelection(): boolean {
-    if (this.selectedItem === null) {
-      alert("Please select on grid first!");
-      return false;
-    }
-
-    return true;
-  }
 }

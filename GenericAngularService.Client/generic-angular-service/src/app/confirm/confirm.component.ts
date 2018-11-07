@@ -15,7 +15,7 @@ export class ConfirmComponent implements OnInit {
   ngOnInit() { }
 
   public close(confirmed: boolean): void {
-    let closeResult = confirmed ? Confirmation.yes : Confirmation.no;
+    const closeResult = confirmed ? Confirmation.YES : Confirmation.NO;
     this.modal.close(closeResult);
   }
 }

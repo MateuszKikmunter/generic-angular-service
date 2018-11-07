@@ -6,7 +6,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { EmployeeService } from './shared/employee-service';
 import { Employee } from './shared/employee';
 import { faTimes, faCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeModalComponent } from './employee-modal/employee-modal.component';
 import { Mode } from '../common/mode.enum';
 import { ToastrService } from 'ngx-toastr';
@@ -83,31 +83,6 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  public createEmployee(): void {
-    this.openModal(null, Mode.add);
-  }
-
-  public editEmployee(): void {
-    if (this.select.validateRowSelection()) {
-      this.openModal(this.select.selectedItem as Employee, Mode.edit);
-    }
-  }
-
-  public deleteEmployee(): void {
-    const modalReference = this.modalService.open(ConfirmComponent);
-    modalReference.result.then((result) => {
-      if (result === Confirmation.yes) {
-        this.employeeService.delete(this.select.selectedItem.id).subscribe(() => {
-          this.realoadTable();
-          this.toastr.success("Success!");
-        }, error => this.toastr.error(error));
-        this.select.clearRowSelection();
-      }
-    }).catch((error) => {
-      this.toastr.error(error);
-    });
-  }
-
   private renderEmployeeActive(employeeActive: boolean): IconDefinition {
     return employeeActive ? this.employeeActive : this.employeeInactive;
   }
@@ -116,18 +91,42 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.openModal(this.select.selectedItem as Employee, Mode.readonly);
   }
 
+  public createEmployee(): void {
+    this.openModal(null, Mode.add);
+  }
+
+  public editEmployee(): void {
+    this.openModal(this.select.selectedItem as Employee, Mode.edit);
+  }
+
+  public deleteEmployee(): void {
+    this.modalService.open(ConfirmComponent).result.then((result) => {
+      if (result === Confirmation.YES) {
+        this.employeeService.delete(this.select.selectedItem.id).subscribe(() => {
+          this.reloadAndToastSuccess();
+        }, error => this.toastr.error(error));
+      }
+    }, result => this.onAlternativeModalClose(result));
+  }
+
   private openModal(employee: Employee, mode: Mode): void {
     const modalReference = this.modalService.open(EmployeeModalComponent);
     modalReference.componentInstance.employeeToEdit = employee;
     modalReference.componentInstance.mode = mode;
 
     modalReference.result.then((result) => {
-      if (result === Confirmation.yes) {
-        this.realoadTable();
-        this.toastr.success("Success!");
+      if (result === "save") {
+        this.reloadAndToastSuccess();
       }
-    }).catch((error) => {
-      this.toastr.error(error);
-    });
+    }, result => this.onAlternativeModalClose(result));
+  }
+
+  private reloadAndToastSuccess(): void {
+    this.realoadTable();
+    this.toastr.success("Success!");
+  }
+
+  private onAlternativeModalClose(reason: any): any {
+    return reason === ModalDismissReasons.ESC || reason === ModalDismissReasons.BACKDROP_CLICK ? {} : this.toastr.error(reason);
   }
 }
