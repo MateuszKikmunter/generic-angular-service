@@ -12,7 +12,7 @@ export class DataTablesCrudButtonsComponent implements OnInit {
   @Input() selectedItem: any;
   @Input() showButtonText: string;
 
-  @Output() dtEdit = new EventEmitter<Action>();
+  @Output() dtButtonClick = new EventEmitter<Action>();
 
   constructor() { }
 
@@ -20,18 +20,18 @@ export class DataTablesCrudButtonsComponent implements OnInit {
   }
 
   public onShow(): void {
-    this.dtEdit.emit(Action.VIEW);
+    this.dtButtonClick.emit(Action.VIEW);
   }
 
   public onCreate(): void {
-    this.dtEdit.emit(Action.ADD);
+    this.dtButtonClick.emit(Action.ADD);
   }
 
   public onEdit(): void {
-    this.dtEdit.emit(Action.EDIT);
+    this.dtButtonClick.emit(Action.EDIT);
   }
 
   public onDelete(): void {
-    this.dtEdit.emit(Action.DELETE);
+    this.dtButtonClick.emit(Action.DELETE);
   }
 }

@@ -3,7 +3,7 @@
 
     <app-data-tables-crud-buttons 
     [showButtonText]="select.selectedItem?.fullName"
-    [selectedItem]="select.selectedItem" (dtEdit)="hadleButtonClick($event)">
+    [selectedItem]="select.selectedItem" (dtButtonClick)="hadleButtonClick($event)">
   </app-data-tables-crud-buttons>
 
   <table id="employee-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-bordered">
