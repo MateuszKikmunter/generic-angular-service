@@ -46,7 +46,7 @@ describe('CompanyModalComponent', () => {
   });
 
   it("should be readonly", () => {
-    component.mode = Mode.readonly;
+    component.mode = Mode.READONLY;
     component.companyToEdit = new Company();
     component.ngOnInit();
     fixture.detectChanges();
@@ -57,7 +57,7 @@ describe('CompanyModalComponent', () => {
   });
 
   it("should be active - add mode", () => {
-    component.mode = Mode.add;
+    component.mode = Mode.ADD;
     component.companyToEdit = new Company();
     component.ngOnInit();
     fixture.detectChanges();
@@ -75,7 +75,7 @@ describe('CompanyModalComponent', () => {
     company.name = "awesome inc.";
     company.industry = "awesomeness";
 
-    component.mode = Mode.edit;
+    component.mode = Mode.EDIT;
     component.companyToEdit = company;
 
     component.ngOnInit();
@@ -95,7 +95,7 @@ describe('CompanyModalComponent', () => {
   it("should have required error", () => {
     let company = new Company();
 
-    component.mode = Mode.edit;
+    component.mode = Mode.EDIT;
     component.companyToEdit = company;
 
     component.ngOnInit();
@@ -118,7 +118,7 @@ describe('CompanyModalComponent', () => {
       company.industry += "invalid control";
     }
 
-    component.mode = Mode.edit;
+    component.mode = Mode.EDIT;
     component.companyToEdit = company;
 
     component.ngOnInit();
@@ -134,7 +134,7 @@ describe('CompanyModalComponent', () => {
   it("should have datepicker invalid date error", () => {
     let company = new Company();
 
-    component.mode = Mode.edit;
+    component.mode = Mode.EDIT;
     component.companyToEdit = company;
 
     component.ngOnInit();

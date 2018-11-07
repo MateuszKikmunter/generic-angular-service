@@ -9,10 +9,10 @@ export class ModalHelper {
   * - Mode readonly = provided string or "Details" when no title provided.
  */
     public static getModalTitle(modalMode: Mode, readOnlyTitle?: string): string {
-        if (modalMode === Mode.readonly) {
+        if (modalMode === Mode.READONLY) {
             return readOnlyTitle ? readOnlyTitle : "Details";
         }
-        else if (modalMode === Mode.add) {
+        else if (modalMode === Mode.ADD) {
             return "Create";
         } else {
             return "Edit";

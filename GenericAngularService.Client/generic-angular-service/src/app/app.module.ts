@@ -29,6 +29,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HttpCacheService } from './common/cache/http-cache.service';
 import { CacheInterceptor } from './common/cache/cache-interceptor';
 import { ConfirmComponent } from './confirm/confirm.component';
+import { DataTablesCrudButtonsComponent } from './data-tables-crud-buttons/data-tables-crud-buttons.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ConfirmComponent } from './confirm/confirm.component';
     EmployeeModalComponent,
     CompanyModalComponent,
     FooterComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    DataTablesCrudButtonsComponent
   ],
   imports: [
     BrowserModule,

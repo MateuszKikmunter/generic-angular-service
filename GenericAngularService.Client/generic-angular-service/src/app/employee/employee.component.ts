@@ -12,6 +12,7 @@ import { Mode } from '../common/mode.enum';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmComponent } from './../confirm/confirm.component';
 import { Confirmation } from 'src/app/common/confirmation.enum';
+import { Action } from './../common/action.enum';
 
 @Component({
   selector: 'app-employee',
@@ -87,16 +88,26 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     return employeeActive ? this.employeeActive : this.employeeInactive;
   }
 
-  private showEmployee(): void {
-    this.openModal(this.select.selectedItem as Employee, Mode.readonly);
-  }
-
-  public createEmployee(): void {
-    this.openModal(null, Mode.add);
-  }
-
-  public editEmployee(): void {
-    this.openModal(this.select.selectedItem as Employee, Mode.edit);
+  public hadleButtonClick(action: Action) {
+    let selection = this.select.selectedItem as Employee;
+    switch (action) {
+      case Action.VIEW: {
+        this.openModal(selection, Mode.READONLY);
+        break;
+      }
+      case Action.ADD: {
+        this.openModal(null, Mode.ADD);
+        break;
+      }
+      case Action.EDIT: {
+        this.openModal(selection, Mode.EDIT);
+        break;
+      }
+      case Action.DELETE: {
+        this.deleteEmployee();
+        break;
+      }
+    }
   }
 
   public deleteEmployee(): void {

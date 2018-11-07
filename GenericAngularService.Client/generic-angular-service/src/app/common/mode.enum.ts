@@ -1,5 +1,5 @@
 export enum Mode {
-    readonly = 0,
-    add = 1,
-    edit = 2
+    READONLY = 0,
+    ADD = 1,
+    EDIT = 2
 }

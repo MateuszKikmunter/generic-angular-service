@@ -45,7 +45,7 @@ describe("employee-modal-component", () => {
     });
 
     it("employee form in readonly mode - all controls should be disabled", () => {
-        component.mode = Mode.readonly;
+        component.mode = Mode.READONLY;
         component.employeeToEdit = new Employee();
         component.ngOnInit();
         fixture.detectChanges();
@@ -56,7 +56,7 @@ describe("employee-modal-component", () => {
     });
 
     it("add mode - form active, all controls should be enabled", () => {
-        component.mode = Mode.add;
+        component.mode = Mode.ADD;
         component.ngOnInit();
         fixture.detectChanges();
 
@@ -67,7 +67,7 @@ describe("employee-modal-component", () => {
     });
 
     it("edit mode - controls should have correct values", () => {
-        component.mode = Mode.edit;
+        component.mode = Mode.EDIT;
         let employee = new Employee();
         employee.active = true;
         employee.company = "WTW";
@@ -87,7 +87,7 @@ describe("employee-modal-component", () => {
     });
 
     it("edit mode - invalid input, from should be invalid", () => {
-        component.mode = Mode.edit;
+        component.mode = Mode.EDIT;
         let employee = new Employee();
         employee.active = true;
         employee.company = "";
@@ -107,7 +107,7 @@ describe("employee-modal-component", () => {
 
 
     it("edit mode - max length exceeded - form should be invalid", () => {
-        component.mode = Mode.edit;
+        component.mode = Mode.EDIT;
         let employee = new Employee();
         employee.active = true;
         employee.company = "";
@@ -132,7 +132,7 @@ describe("employee-modal-component", () => {
     });
 
     it("add mode - invalid input, from should be invalid", () => {
-        component.mode = Mode.add;
+        component.mode = Mode.ADD;
         let employee = new Employee();
         employee.active = true;
         employee.company = "";

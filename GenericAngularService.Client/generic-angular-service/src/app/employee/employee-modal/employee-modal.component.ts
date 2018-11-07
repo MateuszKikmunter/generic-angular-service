@@ -43,11 +43,11 @@ export class EmployeeModalComponent implements OnInit {
   }
 
   public isReadOnly(): boolean {
-    return this.mode === Mode.readonly;
+    return this.mode === Mode.READONLY;
   }
 
   public isInAddMode(): boolean {
-    return this.mode === Mode.add;
+    return this.mode === Mode.ADD;
   }
 
   public getModalTitle(): string {

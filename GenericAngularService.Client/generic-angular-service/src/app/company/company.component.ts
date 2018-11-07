@@ -74,15 +74,15 @@ export class CompanyComponent implements OnInit {
   }
 
   private showCompany(): void {
-    this.openModal(this.select.selectedItem as Company, Mode.readonly)
+    this.openModal(this.select.selectedItem as Company, Mode.READONLY)
   }
 
   public createCompany(): void {
-    this.openModal(null, Mode.add);
+    this.openModal(null, Mode.ADD);
   }
 
   public editCompany(): void {
-    this.openModal(this.select.selectedItem as Company, Mode.edit);
+    this.openModal(this.select.selectedItem as Company, Mode.EDIT);
   }
 
   public deleteCompany(): void {
