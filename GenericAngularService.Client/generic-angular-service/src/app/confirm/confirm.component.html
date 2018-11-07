@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title">Please Confirm</h4>
-  <button type="button" class="close" aria-label="Close" (click)="close()">
+  <button type="button" class="close" aria-label="Close" (click)="reject()">
     &times;
   </button>
 </div>
@@ -10,6 +10,6 @@
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-default" (click)="close()">Cancel</button>
-  <button class="btn btn-success" (click)="close(true)">OK</button>
+  <button class="btn btn-default" (click)="reject()">Cancel</button>
+  <button class="btn btn-success" (click)="confirm()">OK</button>
 </div>
