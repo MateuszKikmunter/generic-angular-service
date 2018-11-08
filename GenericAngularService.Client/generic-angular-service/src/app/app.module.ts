@@ -18,7 +18,6 @@ import { appRoutes } from './routes';
 import { HandleHttpErrorInterceptor } from './common/handle-http-error.interceptor';
 import { DataTablesModule } from 'angular-datatables';
 import { DataTablesCrudButtonsComponent } from './data-tables-crud-buttons/data-tables-crud-buttons.component';
-import { DataTableSelect } from './common/angular-datatables/data-table-select.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDatepickerConfigExtension } from './common/ngb-datepicker-config.extension';
 import { NavComponent } from './nav/nav.component';
@@ -76,8 +75,7 @@ import { ConfirmComponent } from './confirm/confirm.component';
     CompanyService,
     EmployeeService,
     HttpCacheService,
-    NgbDatepickerConfigExtension,
-    DataTableSelect
+    NgbDatepickerConfigExtension
   ],
   bootstrap: [AppComponent],
   entryComponents: [
