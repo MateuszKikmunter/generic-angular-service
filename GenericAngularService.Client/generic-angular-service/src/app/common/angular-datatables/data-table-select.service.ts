@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { isEqual } from "lodash";
 
-// @Injectable({
-//   providedIn: "root"
-// })
 @Injectable()
 export class DataTableSelect<T> {
   public selectedItem: T = null;
