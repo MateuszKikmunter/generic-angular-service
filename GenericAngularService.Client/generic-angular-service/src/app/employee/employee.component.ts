@@ -36,6 +36,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     public select: DataTableSelect<Employee>) { }
 
   ngOnInit() {
+    this.select.clearRowSelection();
 
     this.dtOptions = {
       pagingType: 'full_numbers',

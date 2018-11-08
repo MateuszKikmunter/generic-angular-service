@@ -32,6 +32,8 @@ export class CompanyComponent implements OnInit {
     public select: DataTableSelect<Company>) { }
 
   ngOnInit() {
+    this.select.clearRowSelection();
+
     this.dtOptions = {
       pagingType: "full_numbers",
       serverSide: true,

@@ -23,7 +23,6 @@ import { EmployeeModalComponent } from './employee/employee-modal/employee-modal
 import { CompanyModalComponent } from './company/company-modal/company-modal.component';
 import { CompanyService } from './company/shared/company.service';
 import { NgbDatepickerConfigExtension } from './common/ngb-datepicker-config.extension';
-import { DataTableSelect } from './common/angular-datatables/data-table-select.service';
 import { ToastrModule } from 'ngx-toastr';
 import { FooterComponent } from './footer/footer.component';
 import { HttpCacheService } from './common/cache/http-cache.service';
@@ -74,7 +73,6 @@ import { DataTablesCrudButtonsComponent } from './data-tables-crud-buttons/data-
       multi: true
     },
     CompanyService,
-    DataTableSelect,
     EmployeeService,
     HttpCacheService,
     NgbDatepickerConfigExtension
