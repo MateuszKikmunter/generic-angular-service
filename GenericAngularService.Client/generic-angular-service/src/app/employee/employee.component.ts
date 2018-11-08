@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { DataTableSelect } from '../common/angular-datatables/data-table-select.service';
+import { DataTableSelect } from '../datatables-extensions/common/data-table-select.service';
 import { DataTableDirective } from 'angular-datatables';
 import { EmployeeService } from './shared/employee-service';
 import { Employee } from './shared/employee';

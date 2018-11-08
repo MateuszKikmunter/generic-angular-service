@@ -6,17 +6,17 @@ import { isEqual } from "lodash";
 export class DataTableSelect<T> {
   public selectedItem: T = null;
 
+  public clearRowSelection(): void {
+    this.selectedItem = null;
+  }
+
   public selectRow(item: T): void {
     this.selectedItem = this.rowSelected(item) ? null : item;
   }
 
-  public rowSelected(item: T): boolean {
+  private rowSelected(item: T): boolean {
     if (this.selectedItem && item) {
       return isEqual(item, this.selectedItem);
     }
-  }
-
-  public clearRowSelection(): void {
-    this.selectedItem = null;
   }
 }

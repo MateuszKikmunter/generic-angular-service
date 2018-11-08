@@ -26,7 +26,7 @@
           <fa-icon [icon]="renderEmployeeActive(employee.active)"></fa-icon>
         </td>
       </tr>
-      <tr *ngIf="employees?.length == 0">
+      <tr *ngIf="employees?.length === 0">
         <td colspan="5" class="no-data-available">No data!</td>
       </tr>
     </tbody>

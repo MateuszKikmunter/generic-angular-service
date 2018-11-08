@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { HttpCacheService } from './http-cache.service';
-import { DataTablesOptions } from '../angular-datatables/data-tables.options';
+import { DataTablesOptions } from "../../datatables-extensions/common/data-tables.options";
 import { HttpResponse, HttpRequest } from '@angular/common/http';
 
 describe('HttpCacheService', () => {

@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResourceService } from 'src/app/common/resource.service';
 
-import { DataTablesResponse } from '../../common/angular-datatables/datatables.response';
-import { DataTablesOptions } from './../../common/angular-datatables/data-tables.options';
+import { DataTablesOptions } from "../../datatables-extensions/common/data-tables.options"
+import { DataTablesResponse } from "../../datatables-extensions/common/datatables.response"
 import { CompanyBase } from './company-base';
 
 @Injectable({

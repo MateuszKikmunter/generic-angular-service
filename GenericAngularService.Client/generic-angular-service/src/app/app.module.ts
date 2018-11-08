@@ -17,7 +17,7 @@ import { CompanyService } from './company/shared/company.service';
 import { appRoutes } from './routes';
 import { HandleHttpErrorInterceptor } from './common/handle-http-error.interceptor';
 import { DataTablesModule } from 'angular-datatables';
-import { DataTablesCrudButtonsComponent } from './data-tables-crud-buttons/data-tables-crud-buttons.component';
+import { DataTablesExtensionsModule } from './datatables-extensions/datatables-extensions.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDatepickerConfigExtension } from './common/ngb-datepicker-config.extension';
 import { NavComponent } from './nav/nav.component';
@@ -41,8 +41,7 @@ import { ConfirmComponent } from './confirm/confirm.component';
     EmployeeModalComponent,
     CompanyModalComponent,
     FooterComponent,
-    ConfirmComponent,
-    DataTablesCrudButtonsComponent
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +49,7 @@ import { ConfirmComponent } from './confirm/confirm.component';
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     DataTablesModule,
+    DataTablesExtensionsModule,
     FormsModule,
     ReactiveFormsModule,
     NgbModule,

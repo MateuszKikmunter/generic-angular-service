@@ -5,7 +5,7 @@ import { Company } from 'src/app/company/shared/company';
 import { CompanyService } from './shared/company.service';
 import { CompanyModalComponent } from './company-modal/company-modal.component';
 import { DataTableDirective } from 'angular-datatables';
-import { DataTableSelect } from '../common/angular-datatables/data-table-select.service';
+import { DataTableSelect } from '../datatables-extensions/common/data-table-select.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Confirmation } from 'src/app/common/confirmation.enum';

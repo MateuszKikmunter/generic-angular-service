@@ -3,7 +3,7 @@ import { HttpResponse, HttpRequest } from '@angular/common/http';
 
 import { isEqual, omit } from "lodash";
 import { CacheEntry } from './cache.entry';
-import { DataTablesOptions } from '../angular-datatables/data-tables.options';
+import { DataTablesOptions } from '../../datatables-extensions/common/data-tables.options';
 
 @Injectable()
 export class HttpCacheService {
