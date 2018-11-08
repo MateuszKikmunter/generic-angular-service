@@ -16,7 +16,8 @@ import { Mode } from '../common/mode.enum';
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
-  styleUrls: ['./company.component.scss']
+  styleUrls: ['./company.component.scss'],
+  providers: [ DataTableSelect ]
 })
 export class CompanyComponent implements OnInit {
   @ViewChild(DataTableDirective)
@@ -32,7 +33,7 @@ export class CompanyComponent implements OnInit {
     public select: DataTableSelect<Company>) { }
 
   ngOnInit() {
-    this.select.clearRowSelection();
+    // this.select.clearRowSelection();
 
     this.dtOptions = {
       pagingType: "full_numbers",
@@ -48,7 +49,7 @@ export class CompanyComponent implements OnInit {
             recordsFiltered: resp.recordsFiltered,
             data: []
           });
-        }, err => alert(err));
+        }, err => this.toastr.error(err));
       },
       columns: [
         { data: "id" },

@@ -17,7 +17,8 @@ import { Action } from './../common/action.enum';
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss']
+  styleUrls: ['./employee.component.scss'],
+  providers: [ DataTableSelect ]
 })
 export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(DataTableDirective)
@@ -36,7 +37,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     public select: DataTableSelect<Employee>) { }
 
   ngOnInit() {
-    this.select.clearRowSelection();
+    // this.select.clearRowSelection();
 
     this.dtOptions = {
       pagingType: 'full_numbers',
