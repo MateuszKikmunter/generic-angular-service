@@ -33,7 +33,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     private employeeService: EmployeeService,
     private modalService: NgbModal,
     private toastr: ToastrService,
-    public select: DataTableSelect) { }
+    public select: DataTableSelect<Employee>) { }
 
   ngOnInit() {
 
@@ -51,7 +51,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
             recordsFiltered: resp.recordsFiltered,
             data: []
           });
-        }, err => alert(err));
+        }, err => this.toastr.error(err));
       },
       columns: [
         { data: "id" },
@@ -84,32 +84,6 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private renderEmployeeActive(employeeActive: boolean): IconDefinition {
-    return employeeActive ? this.employeeActive : this.employeeInactive;
-  }
-
-  public hadleDtButtonClick(action: Action) {
-    let selection = this.select.selectedItem as Employee;
-    switch (action) {
-      case Action.VIEW: {
-        this.openModal(selection, Mode.READONLY);
-        break;
-      }
-      case Action.ADD: {
-        this.openModal(null, Mode.ADD);
-        break;
-      }
-      case Action.EDIT: {
-        this.openModal(selection, Mode.EDIT);
-        break;
-      }
-      case Action.DELETE: {
-        this.deleteEmployee();
-        break;
-      }
-    }
-  }
-
   public deleteEmployee(): void {
     this.modalService.open(ConfirmComponent).result.then((result) => {
       if (result === Confirmation.YES) {
@@ -118,6 +92,14 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
         }, error => this.toastr.error(error));
       }
     }, result => this.onAlternativeModalClose(result));
+  }
+
+  public hadleDtButtonClick(action: Action): void {
+    this.actionDispatcher(action, this.select.selectedItem as Employee);
+  }
+
+  private renderEmployeeActive(employeeActive: boolean): IconDefinition {
+    return employeeActive ? this.employeeActive : this.employeeInactive;
   }
 
   private openModal(employee: Employee, mode: Mode): void {
@@ -140,4 +122,11 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
   private onAlternativeModalClose(reason: any): any {
     return reason === ModalDismissReasons.ESC || reason === ModalDismissReasons.BACKDROP_CLICK ? {} : this.toastr.error(reason);
   }
+
+  private actionDispatcher = (action: Action, employee: Employee) => ({
+    "ADD": () =>    this.openModal(null, Mode.ADD),
+    "EDIT": () =>   this.openModal(employee, Mode.EDIT),
+    "VIEW": () =>   this.openModal(employee, Mode.READONLY),
+    "DELETE": () => this.deleteEmployee()
+  })[action]()
 }

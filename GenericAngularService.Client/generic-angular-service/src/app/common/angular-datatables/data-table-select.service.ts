@@ -1,17 +1,18 @@
-import { BaseEntity } from '../base.entity';
 import { Injectable } from '@angular/core';
 
-@Injectable()
-export class DataTableSelect {
-  public selectedItem: BaseEntity = null;
+import { isEqual } from "lodash";
 
-  public selectRow(item: BaseEntity): void {
+@Injectable()
+export class DataTableSelect<T> {
+  public selectedItem: T = null;
+
+  public selectRow(item: T): void {
     this.selectedItem = this.rowSelected(item) ? null : item;
   }
 
-  public rowSelected(item: BaseEntity): boolean {
+  public rowSelected(item: T): boolean {
     if (this.selectedItem && item) {
-      return this.selectedItem.id === item.id;
+      return isEqual(item, this.selectedItem);
     }
   }
 

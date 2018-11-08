@@ -4,7 +4,7 @@ import { DataTableSelect } from './data-table-select.service';
 
 describe('DataTableSelectService', () => {
 
-  let service: DataTableSelect;
+  let service: DataTableSelect<any>;
   let previous, current: Company;
 
   beforeEach(() => {

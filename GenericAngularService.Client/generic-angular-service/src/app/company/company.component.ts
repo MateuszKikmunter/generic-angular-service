@@ -3,15 +3,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Company } from 'src/app/company/shared/company';
 import { CompanyService } from './shared/company.service';
-import { Mode } from '../common/mode.enum';
 import { CompanyModalComponent } from './company-modal/company-modal.component';
 import { DataTableDirective } from 'angular-datatables';
-import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableSelect } from '../common/angular-datatables/data-table-select.service';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Confirmation } from 'src/app/common/confirmation.enum';
 import { ConfirmComponent } from './../confirm/confirm.component';
 import { Action } from './../common/action.enum';
+import { Mode } from '../common/mode.enum';
 
 @Component({
   selector: 'app-company',
@@ -25,7 +25,11 @@ export class CompanyComponent implements OnInit {
   public companies: Company[] = [];
   public dtTrigger = new Subject();
 
-  constructor(private companyService: CompanyService, private modalService: NgbModal, private toastr: ToastrService, public select: DataTableSelect) { }
+  constructor(
+    private companyService: CompanyService, 
+    private modalService: NgbModal, 
+    private toastr: ToastrService, 
+    public select: DataTableSelect<Company>) { }
 
   ngOnInit() {
     this.dtOptions = {
@@ -74,26 +78,8 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-  public hadleDtButtonClick(action: Action) {
-    let company = this.select.selectedItem as Company;
-    switch (action) {
-      case Action.VIEW: {
-        this.openModal(company, Mode.READONLY);
-        break;
-      }
-      case Action.ADD: {
-        this.openModal(null, Mode.ADD);
-        break;
-      }
-      case Action.EDIT: {
-        this.openModal(company, Mode.EDIT);
-        break;
-      }
-      case Action.DELETE: {
-        this.deleteCompany();
-        break;
-      }
-    }
+  public hadleDtButtonClick(action: Action): void {
+    this.actionDispatcher(action, this.select.selectedItem as Company);
   }
 
   public deleteCompany(): void {
@@ -126,4 +112,11 @@ export class CompanyComponent implements OnInit {
   private onAlternativeModalClose(reason: any): any {
     return reason === ModalDismissReasons.ESC || reason === ModalDismissReasons.BACKDROP_CLICK ? {} : this.toastr.error(reason);
   }
+
+  private actionDispatcher = (action: Action, company: Company) => ({
+    "ADD": () =>    this.openModal(null, Mode.ADD),
+    "EDIT": () =>   this.openModal(company, Mode.EDIT),
+    "VIEW": () =>   this.openModal(company, Mode.READONLY),
+    "DELETE": () => this.deleteCompany()
+  })[action]()
 }
