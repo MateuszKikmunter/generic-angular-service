@@ -14,7 +14,7 @@ export class DataTableSelect<T> {
     this.selectedItem = this.rowSelected(item) ? null : item;
   }
 
-  private rowSelected(item: T): boolean {
+  public rowSelected(item: T): boolean {
     if (this.selectedItem && item) {
       return isEqual(item, this.selectedItem);
     }
