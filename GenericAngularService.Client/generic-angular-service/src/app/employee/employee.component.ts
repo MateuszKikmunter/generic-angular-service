@@ -95,7 +95,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public hadleDtButtonClick(action: Action): void {
-    this.actionDispatcher(action, this.select.selectedItem as Employee);
+    this.actionDispatcher(action, this.select.selectedItem);
   }
 
   private renderEmployeeActive(employeeActive: boolean): IconDefinition {

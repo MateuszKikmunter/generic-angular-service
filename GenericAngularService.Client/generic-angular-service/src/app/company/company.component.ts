@@ -80,7 +80,7 @@ export class CompanyComponent implements OnInit {
   }
 
   public hadleDtButtonClick(action: Action): void {
-    this.actionDispatcher(action, this.select.selectedItem as Company);
+    this.actionDispatcher(action, this.select.selectedItem);
   }
 
   public deleteCompany(): void {
