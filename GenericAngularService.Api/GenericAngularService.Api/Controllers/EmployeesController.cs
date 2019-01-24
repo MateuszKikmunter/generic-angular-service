@@ -77,9 +77,9 @@ namespace GenericAngularService.Api.Controllers
             }
 
             var employeeToAdd = _mapper.Map<Employee>(employee);
-
             await _employeeRepository.AddAsync(employeeToAdd);
-            return CreatedAtRoute("GetEmployee", employeeToAdd, new { id = employeeToAdd.Id });
+
+            return CreatedAtRoute("GetEmployee", new { id = employeeToAdd.Id }, employeeToAdd);
         }
 
         [HttpPut("{id}")]
