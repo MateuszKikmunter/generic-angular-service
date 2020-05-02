@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpResponse, HttpRequest } from '@angular/common/http';
 
 import { isEqual, omit } from "lodash";
-import { CacheEntry } from './cache.entry';
-import { DataTablesOptions } from '../../datatables-extensions/common/data-tables.options';
 
-@Injectable()
+import { DataTablesOptions } from '../../models/data-tables/data-tables.options';
+import { CacheEntry } from '../../models/cache.entry';
+
+@Injectable({
+  providedIn: 'root'
+})
 export class HttpCacheService {
   private requests: CacheEntry[] = [];
 

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Employee } from "../employee/shared/employee";
+import { Employee } from "../models/employee/employee";
 import { ResourceService } from "./resource.service";
 import { HttpClient } from "@angular/common/http";
 

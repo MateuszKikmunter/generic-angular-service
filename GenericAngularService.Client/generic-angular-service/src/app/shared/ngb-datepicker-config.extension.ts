@@ -25,6 +25,6 @@ export class NgbDatepickerConfigExtension extends NgbDatepickerConfig {
             day: value.getDate(),
             month: value.getMonth() + 1,
             year: value.getFullYear()
-          }
+        }
     }
 }

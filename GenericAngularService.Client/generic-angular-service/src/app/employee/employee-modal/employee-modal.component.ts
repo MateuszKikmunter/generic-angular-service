@@ -1,17 +1,17 @@
-import { Observable } from 'rxjs';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+import { Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { EmployeeService } from '../shared/employee-service';
-import { CompanyService } from './../../company/shared/company.service';
-import { EmployeeForManipulation } from '../shared/employee-for-manipulation';
-import { Employee } from '../shared/employee';
-import { Mode } from '../../common/mode.enum';
-import { Company } from '../../company/shared/company';
-import { ModalHelper } from 'src/app/common/modal.helper';
-import { Confirmation } from 'src/app/common/confirmation.enum';
+import { EmployeeService } from '../../core/services/employee/employee-service';
+import { CompanyService } from '../../core/services/company/company.service';
+import { EmployeeForManipulation } from '../../core/models/employee/employee-for-manipulation';
+import { Employee } from '../../core/models/employee/employee';
+import { Mode } from '../../core/enums/mode.enum';
+import { Company } from '../../core/models/company/company';
+import { ModalHelper } from 'src/app/shared/modal.helper';
 
 @Component({
   selector: 'app-employee-modal',
@@ -20,8 +20,10 @@ import { Confirmation } from 'src/app/common/confirmation.enum';
 })
 export class EmployeeModalComponent implements OnInit {
   constructor(private employeeService: EmployeeService, public modal: NgbActiveModal, private companyService: CompanyService) { }
+
   @Input() employeeToEdit: Employee = null;
   @Input() mode: Mode;
+  
   public errors: any[];
   public employeeForm: FormGroup;
 

@@ -4,11 +4,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { NgbTypeaheadModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeModalComponent } from './employee-modal.component';
-import { CompanyService } from './../../company/shared/company.service';
-import { Mode } from '../../common/mode.enum';
-import { Employee } from '../shared/employee';
-import { EmployeeService } from '../shared/employee-service';
-import { Company } from 'src/app/company/shared/company';
+import { CompanyService } from '../../core/services/company/company.service';
+import { Mode } from '../../core/enums/mode.enum';
+import { Employee } from '../../core/models/employee/employee';
+import { EmployeeService } from '../../core/services/employee/employee-service';
+import { Company } from 'src/app/core/models/company/company';
 import { of } from 'rxjs';
 
 describe("employee-modal-component", () => {

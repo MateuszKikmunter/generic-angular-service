@@ -2,7 +2,7 @@ import { TestBed, inject, async } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { FakeService } from './fake.service';
-import { Employee } from './../employee/shared/employee';
+import { Employee } from '../models/employee/employee';
 
 describe("ResourceService", () => {
 

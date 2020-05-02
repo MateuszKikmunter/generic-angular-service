@@ -1,26 +1,27 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+
 import { Subject } from 'rxjs';
 
-import { DataTableSelect } from '../datatables-extensions/common/data-table-select.service';
+import { DataTableSelect } from '../core/services/data-tables/data-table-select.service';
 import { DataTableDirective } from 'angular-datatables';
-import { EmployeeService } from './shared/employee-service';
-import { Employee } from './shared/employee';
+import { EmployeeService } from '../core/services/employee/employee-service';
+import { Employee } from '../core/models/employee/employee';
 import { faTimes, faCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeModalComponent } from './employee-modal/employee-modal.component';
-import { Mode } from '../common/mode.enum';
+import { Mode } from '../core/enums/mode.enum';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmComponent } from './../confirm/confirm.component';
-import { Confirmation } from 'src/app/common/confirmation.enum';
-import { Action } from './../common/action.enum';
+import { Confirmation } from 'src/app/core/enums/confirmation.enum';
+import { Action } from '../core/enums/action.enum';
 
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss'],
-  providers: [ DataTableSelect ]
+  styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
+  
   @ViewChild(DataTableDirective, { static: true })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};

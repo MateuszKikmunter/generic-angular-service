@@ -1,4 +1,4 @@
-import { Mode } from "./mode.enum";
+import { Mode } from "../core/enums/mode.enum";
 
 export class ModalHelper {
 

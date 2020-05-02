@@ -4,57 +4,40 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AppComponent } from './app.component';
-import { EnsureAcceptHeaderInterceptor } from './common/ensure-accept-header.interceptor';
-import { EmployeeComponent } from './employee/employee.component';
-import { EmployeeService } from './employee/shared/employee-service';
-import { EmployeeModalComponent } from './employee/employee-modal/employee-modal.component';
-import { CompanyComponent } from './company/company.component';
-import { CompanyModalComponent } from './company/company-modal/company-modal.component';
-import { CompanyService } from './company/shared/company.service';
 import { appRoutes } from './routes';
-import { HandleHttpErrorInterceptor } from './common/handle-http-error.interceptor';
-import { DataTablesModule } from 'angular-datatables';
-import { DataTablesExtensionsModule } from './datatables-extensions/datatables-extensions.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDatepickerConfigExtension } from './common/ngb-datepicker-config.extension';
-import { NavComponent } from './nav/nav.component';
-import { AboutComponent } from './about/about.component';
-import { WelcomeComponent } from './welcome/welcome.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AppComponent } from './app.component';
+import { EnsureAcceptHeaderInterceptor } from './core/services/ensure-accept-header.interceptor';
+import { HandleHttpErrorInterceptor } from './core/services/handle-http-error.interceptor';
+import { CacheInterceptor } from './core/services/cache/cache-interceptor';
 import { ToastrModule } from 'ngx-toastr';
-import { FooterComponent } from './footer/footer.component';
-import { HttpCacheService } from './common/cache/http-cache.service';
-import { CacheInterceptor } from './common/cache/cache-interceptor';
-import { ConfirmComponent } from './confirm/confirm.component';
+import { CoreModule } from './core/core.module';
+import { WelcomeModule } from './welcome/welcome.module';
+import { FooterModule } from './footer/footer.module';
+import { AboutModule } from './about/about.module';
+import { NavModule } from './nav/nav.module';
+import { ConfirmModule } from './confirm/confirm.module';
+import { EmployeeModule } from './employee/employee.module';
+import { CompanyModule } from './company/company.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    EmployeeComponent,
-    CompanyComponent,
-    NavComponent,
-    AboutComponent,
-    WelcomeComponent,
-    EmployeeModalComponent,
-    CompanyModalComponent,
-    FooterComponent,
-    ConfirmComponent
+    AppComponent
   ],
   imports: [
+    AboutModule,
     BrowserModule,
     BrowserAnimationsModule,
+    CoreModule,
+    CompanyModule,
+    ConfirmModule,
+    EmployeeModule,
     HttpClientModule,
+    FooterModule,
+    NavModule,
     RouterModule.forRoot(appRoutes),
-    DataTablesModule,
-    DataTablesExtensionsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgbModule,
-    FontAwesomeModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    WelcomeModule
   ],
   providers: [
     {
@@ -71,11 +54,7 @@ import { ConfirmComponent } from './confirm/confirm.component';
       provide: HTTP_INTERCEPTORS,
       useClass: HandleHttpErrorInterceptor,
       multi: true
-    },
-    CompanyService,
-    EmployeeService,
-    HttpCacheService,
-    NgbDatepickerConfigExtension
+    }
   ],
   bootstrap: [AppComponent]
 })

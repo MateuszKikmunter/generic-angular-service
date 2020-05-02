@@ -1,13 +1,13 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Mode } from './../../common/mode.enum';
-import { ModalHelper } from './../../common/modal.helper';
+import { Mode } from '../../core/enums/mode.enum';
+import { ModalHelper } from '../../shared/modal.helper';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDatepickerConfigExtension } from './../../common/ngb-datepicker-config.extension';
-import { CompanyForManipulation } from './../shared/company-for-manipulation';
-import { Company } from 'src/app/company/shared/company';
-import { CompanyService } from './../shared/company.service';
+import { NgbDatepickerConfigExtension } from '../../shared/ngb-datepicker-config.extension';
+import { CompanyForManipulation } from '../../core/models/company/company-for-manipulation';
+import { Company } from 'src/app/core/models/company/company';
+import { CompanyService } from '../../core/services/company/company.service';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -16,13 +16,18 @@ import { faCalendar } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./company-modal.component.scss']
 })
 export class CompanyModalComponent implements OnInit {
+
   @Input() companyToEdit: Company = null;
   @Input() mode: Mode;
+  
   public errors: any[];
   public calendarIcon = faCalendar;
   public companyForm: FormGroup;
 
-  constructor(private companyService: CompanyService, public modal: NgbActiveModal, public datepickerConfig: NgbDatepickerConfigExtension) { }
+  constructor(
+    private companyService: CompanyService, 
+    public modal: NgbActiveModal, 
+    public datepickerConfig: NgbDatepickerConfigExtension) { }
 
   ngOnInit() {
     this.buildForm();

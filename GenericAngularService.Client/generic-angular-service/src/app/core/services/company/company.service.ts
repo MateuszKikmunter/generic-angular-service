@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ResourceService } from 'src/app/common/resource.service';
+import { ResourceService } from 'src/app/core/services/resource.service';
 
-import { DataTablesOptions } from "../../datatables-extensions/common/data-tables.options"
-import { DataTablesResponse } from "../../datatables-extensions/common/datatables.response"
-import { CompanyBase } from './company-base';
+import { DataTablesOptions } from "../../models/data-tables/data-tables.options"
+import { DataTablesResponse } from "../../models/data-tables/datatables.response"
+import { CompanyBase } from '../../models/company/company-base';
 
 @Injectable({
   providedIn: 'root'

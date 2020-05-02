@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Action } from './../../common/action.enum';
+import { Action } from '../../core/enums/action.enum';
 
 @Component({
   selector: 'app-data-tables-crud-buttons',

@@ -1,25 +1,26 @@
-import { Subject } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { Company } from 'src/app/company/shared/company';
-import { CompanyService } from './shared/company.service';
+import { Subject } from 'rxjs';
+
+import { Company } from 'src/app/core/models/company/company';
+import { CompanyService } from '../core/services/company/company.service';
 import { CompanyModalComponent } from './company-modal/company-modal.component';
 import { DataTableDirective } from 'angular-datatables';
-import { DataTableSelect } from '../datatables-extensions/common/data-table-select.service';
+import { DataTableSelect } from '../core/services/data-tables/data-table-select.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Confirmation } from 'src/app/common/confirmation.enum';
+import { Confirmation } from 'src/app/core/enums/confirmation.enum';
 import { ConfirmComponent } from './../confirm/confirm.component';
-import { Action } from './../common/action.enum';
-import { Mode } from '../common/mode.enum';
+import { Action } from '../core/enums/action.enum';
+import { Mode } from '../core/enums/mode.enum';
 
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
-  styleUrls: ['./company.component.scss'],
-  providers: [ DataTableSelect ]
+  styleUrls: ['./company.component.scss']
 })
 export class CompanyComponent implements OnInit {
+  
   @ViewChild(DataTableDirective, { static: true })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};

@@ -3,11 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CompanyModalComponent } from './company-modal.component';
 import { NgbDatepickerModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CompanyService } from '../shared/company.service';
-import { NgbDatepickerConfigExtension } from 'src/app/common/ngb-datepicker-config.extension';
-import { Mode } from 'src/app/common/mode.enum';
+import { CompanyService } from '../../core/services/company/company.service';
+import { NgbDatepickerConfigExtension } from 'src/app/shared/ngb-datepicker-config.extension';
+import { Mode } from 'src/app/core/enums/mode.enum';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { Company } from '../shared/company';
+import { Company } from '../../core/models/company/company';
 
 describe('CompanyModalComponent', () => {
   let component: CompanyModalComponent;

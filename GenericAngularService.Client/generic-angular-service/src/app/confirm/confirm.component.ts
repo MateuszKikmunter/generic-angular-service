@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Confirmation } from './../common/confirmation.enum';
+import { Confirmation } from '../core/enums/confirmation.enum';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

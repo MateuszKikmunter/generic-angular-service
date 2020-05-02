@@ -4,8 +4,8 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpResponse, HttpRequest } from "@angul
 
 import { CacheInterceptor } from "./cache-interceptor";
 import { HttpCacheService } from './http-cache.service';
-import { CacheEntry } from "./cache.entry";
-import { DataTablesOptions } from "../../datatables-extensions/common/data-tables.options";
+import { DataTablesOptions } from "../../models/data-tables/data-tables.options";
+import { CacheEntry } from '../../models/cache.entry';
 
 describe("cache-interceptor", () => {
     let dataTableUrl = "api/GetTableData";

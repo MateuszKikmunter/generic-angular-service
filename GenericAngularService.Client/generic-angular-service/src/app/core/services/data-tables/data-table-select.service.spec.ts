@@ -1,4 +1,4 @@
-import { Company } from 'src/app/company/shared/company';
+import { Company } from 'src/app/core/models/company/company';
 
 import { DataTableSelect } from './data-table-select.service';
 

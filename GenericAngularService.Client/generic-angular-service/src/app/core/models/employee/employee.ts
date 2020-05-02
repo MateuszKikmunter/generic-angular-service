@@ -1,4 +1,4 @@
-import { BaseEntity } from './../../common/base.entity';
+import { BaseEntity } from '../base.entity';
 import { EmployeeBase } from './employee-base';
 
 export class Employee extends EmployeeBase implements BaseEntity {
