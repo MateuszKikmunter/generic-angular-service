@@ -20,7 +20,7 @@ import { Mode } from '../common/mode.enum';
   providers: [ DataTableSelect ]
 })
 export class CompanyComponent implements OnInit {
-  @ViewChild(DataTableDirective)
+  @ViewChild(DataTableDirective, { static: true })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
   public companies: Company[] = [];

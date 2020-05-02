@@ -77,12 +77,7 @@ import { ConfirmComponent } from './confirm/confirm.component';
     HttpCacheService,
     NgbDatepickerConfigExtension
   ],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    EmployeeModalComponent,
-    CompanyModalComponent,
-    ConfirmComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor() { }

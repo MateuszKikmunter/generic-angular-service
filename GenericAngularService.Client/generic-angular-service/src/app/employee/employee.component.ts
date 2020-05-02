@@ -21,7 +21,7 @@ import { Action } from './../common/action.enum';
   providers: [ DataTableSelect ]
 })
 export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild(DataTableDirective)
+  @ViewChild(DataTableDirective, { static: true })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
   public employees: Employee[] = [];
