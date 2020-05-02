@@ -16,7 +16,7 @@ import { AboutComponent } from './about.component';
     RouterModule
   ],
   exports: [
-    AboutComponent
+    //AboutComponent
   ]
 })
 export class AboutModule { }

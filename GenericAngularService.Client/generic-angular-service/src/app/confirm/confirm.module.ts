@@ -9,9 +9,6 @@ import { ConfirmComponent } from './confirm.component';
   ],
   imports: [
     CommonModule
-  ],
-  exports: [
-    ConfirmComponent
   ]
 })
 export class ConfirmModule { }

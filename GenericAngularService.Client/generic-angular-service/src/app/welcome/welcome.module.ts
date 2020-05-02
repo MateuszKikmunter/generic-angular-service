@@ -12,9 +12,6 @@ import { WelcomeComponent } from './welcome.component';
   imports: [
     CommonModule,
     RouterModule
-  ],
-  exports: [
-    WelcomeComponent
   ]
 })
 export class WelcomeModule { }
