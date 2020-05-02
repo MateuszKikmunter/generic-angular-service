@@ -10,7 +10,7 @@ import { DataTableSelect } from '../core/services/data-tables/data-table-select.
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Confirmation } from 'src/app/core/enums/confirmation.enum';
-import { ConfirmComponent } from './../confirm/confirm.component';
+import { ConfirmComponent } from '../shared/components/confirm/confirm.component';
 import { Action } from '../core/enums/action.enum';
 import { Mode } from '../core/enums/mode.enum';
 

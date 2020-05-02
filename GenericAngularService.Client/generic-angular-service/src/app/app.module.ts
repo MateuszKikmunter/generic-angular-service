@@ -3,10 +3,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 
-import { appRoutes } from './routes';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { EnsureAcceptHeaderInterceptor } from './core/services/ensure-accept-header.interceptor';
 import { HandleHttpErrorInterceptor } from './core/services/handle-http-error.interceptor';
 import { CacheInterceptor } from './core/services/cache/cache-interceptor';
@@ -16,7 +15,6 @@ import { WelcomeModule } from './welcome/welcome.module';
 import { FooterModule } from './footer/footer.module';
 import { AboutModule } from './about/about.module';
 import { NavModule } from './nav/nav.module';
-import { ConfirmModule } from './confirm/confirm.module';
 import { EmployeeModule } from './employee/employee.module';
 import { CompanyModule } from './company/company.module';
 
@@ -25,19 +23,14 @@ import { CompanyModule } from './company/company.module';
     AppComponent
   ],
   imports: [
-    AboutModule,
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
-    CompanyModule,
-    ConfirmModule,
-    EmployeeModule,
     HttpClientModule,
     FooterModule,
     NavModule,
-    RouterModule.forRoot(appRoutes),
-    ToastrModule.forRoot(),
-    WelcomeModule
+    ToastrModule.forRoot()
   ],
   providers: [
     {

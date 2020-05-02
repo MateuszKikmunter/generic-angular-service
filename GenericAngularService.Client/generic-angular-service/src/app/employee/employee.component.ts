@@ -11,7 +11,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeModalComponent } from './employee-modal/employee-modal.component';
 import { Mode } from '../core/enums/mode.enum';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmComponent } from './../confirm/confirm.component';
+import { ConfirmComponent } from '../shared/components/confirm/confirm.component';
 import { Confirmation } from 'src/app/core/enums/confirmation.enum';
 import { Action } from '../core/enums/action.enum';
 
