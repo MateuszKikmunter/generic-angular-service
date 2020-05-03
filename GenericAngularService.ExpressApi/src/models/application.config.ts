@@ -1,5 +1,5 @@
 export interface ApplicationConfig {
-    port: number;
+    port: string | number;
     controllers?: any[];
     middleware?: any[];
 }
