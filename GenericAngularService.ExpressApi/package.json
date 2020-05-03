@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/MateuszKikmunter/generic-angular-service/issues"
   },
-  "homepage": "https://github.com/MateuszKikmunter/generic-angular-service#readme"
+  "homepage": "https://github.com/MateuszKikmunter/generic-angular-service#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
