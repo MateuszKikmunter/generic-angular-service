@@ -1,0 +1,24 @@
+{
+  "name": "generic.angular.service.express.api",
+  "version": "1.0.0",
+  "description": "Simplified GenericAngularService.Api web api project rewritten (for fun) with NodeJS, ExpressJS and TypeScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MateuszKikmunter/generic-angular-service.git"
+  },
+  "keywords": [
+    "Node",
+    "Express",
+    "TypeScript"
+  ],
+  "author": "Mateusz Kikmunter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MateuszKikmunter/generic-angular-service/issues"
+  },
+  "homepage": "https://github.com/MateuszKikmunter/generic-angular-service#readme"
+}
