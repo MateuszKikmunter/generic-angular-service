@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/app.js",
-    "dev": "nodemon scr/app.ts",
+    "dev": "nodemon src/app.ts",
     "build": "tsc -p ."
   },
   "repository": {
