@@ -1,5 +1,4 @@
-import express from "express";
-import { Application } from "express";
+import express, { Application } from "express";
 
 import helmet from "helmet";
 import cors from "cors";
