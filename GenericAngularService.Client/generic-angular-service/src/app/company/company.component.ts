@@ -51,9 +51,15 @@ export class CompanyComponent implements OnInit {
         }, err => this.toastr.error(err));
       },
       columns: [
-        { data: "id" },
+        { 
+          data: "id",
+          searchable: false
+        },
         { data: "name" },
-        { data: "industry" },
+        { 
+          data: "industry",
+          searchable: false
+        },
         {
           data: "founded",
           searchable: false

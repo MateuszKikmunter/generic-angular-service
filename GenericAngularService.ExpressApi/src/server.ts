@@ -1,12 +1,12 @@
 import * as bodyParser from "body-parser";
 
-import { HelloController } from './controllers/hello.controller';
 import { App } from "./app";
+import { CompanyController } from "./controllers/company.controller";
 
 const app: App = new App({
     port: process.env.PORT || 4000,
     controllers: [
-        new HelloController()
+        new CompanyController()
     ],
     middleware: [       
         bodyParser.json(),
