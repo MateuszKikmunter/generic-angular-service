@@ -1,4 +1,7 @@
 import { Request, Response, Router } from 'express'
+import { ConnectionPool } from "mssql";
+
+import { SqlConfiguration } from './../utils/sql.configuration';
 
 export class HelloController {
 
@@ -9,11 +12,22 @@ export class HelloController {
         this.initRoutes();
     }
 
-    private initRoutes(): void {
-        this.router.get(this.baseUrl, this.helloWorld);
+    private initRoutes() {
+        this.router.get(this.baseUrl, async (req, res, next) => {
+            await this.helloWorld(req, res);
+            return next();
+        });
     }
 
-    private helloWorld(req: Request, res: Response): void {
+    private async helloWorld(req: Request, res: Response) {
+            try {
+                const connection = await new ConnectionPool(SqlConfiguration.defaultConfig()).connect();
+                const result = await connection.query(`select * from Companies`);
+                res.send(JSON.stringify(result.recordset));
+            } catch (err) {
+                console.log(err);
+            }
+
         res.send({ message: "Hello world!" });
     }
 }
