@@ -1,5 +1,6 @@
 import express, { Application } from "express";
 
+import * as dotenv from "dotenv";
 import helmet from "helmet";
 import cors from "cors";
 
@@ -14,6 +15,7 @@ export class App {
         this._application = express();
         this._port = configuration.port;
 
+        this.initializeDefaultConfiguration();
         this.initializeSecurityMiddleware();
         this.registerMiddleware(configuration?.middleware || []);
         this.registerRoutes(configuration?.controllers || []);
@@ -39,5 +41,9 @@ export class App {
         this._application.use(helmet.noCache());
         this._application.use(helmet.referrerPolicy({ policy: "same-origin" }));
         this._application.use(cors());
+    }
+
+    private initializeDefaultConfiguration(): void {
+        dotenv.config();
     }
 }
