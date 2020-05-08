@@ -4,39 +4,43 @@
 
 export const environment = {
   production: false,
-  apiUrl: "https://localhost:44309/api",
+  apiUrl: "http://localhost:4000/api",
   companyColumns: [
-    { 
-      data: "id"
+    {
+      data: "id",
+      searchable: false,
     },
-    { 
-      data: "name"
+    {
+      data: "name",
     },
-    { 
-      data: "industry"
+    {
+      data: "industry",
+      searchable: false,
     },
     {
       data: "founded",
-      searchable: false
-    }
+      searchable: false,
+    },
   ],
   employeeComlumns: [
-    { data: "id"
+    {
+      data: "id",
+      searchable: false
     },
-    { 
-      data: "firstName"
+    {
+      data: "firstName",
     },
-    { 
-      data: "lastName"
+    {
+      data: "lastName",
     },
-    { 
-      data: "company"
+    {
+      data: "company",
     },
     {
       data: "active",
-      searchable: false
-    }
-  ]
+      searchable: false,
+    },
+  ],
 };
 
 /*

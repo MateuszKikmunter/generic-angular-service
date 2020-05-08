@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmComponent } from '../shared/components/confirm/confirm.component';
 import { Confirmation } from 'src/app/core/enums/confirmation.enum';
 import { Action } from '../core/enums/action.enum';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-employee',
@@ -54,16 +55,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit, OnDestroy {
           });
         }, err => this.toastr.error(err));
       },
-      columns: [
-        { data: "id" },
-        { data: "firstName" },
-        { data: "lastName" },
-        { data: "company" },
-        {
-          data: "active",
-          searchable: false
-        }
-      ]
+      columns: [...environment.employeeComlumns]
     };
   }
 

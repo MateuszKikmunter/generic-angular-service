@@ -13,6 +13,7 @@ import { Confirmation } from 'src/app/core/enums/confirmation.enum';
 import { ConfirmComponent } from '../shared/components/confirm/confirm.component';
 import { Action } from '../core/enums/action.enum';
 import { Mode } from '../core/enums/mode.enum';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-company',
@@ -50,21 +51,7 @@ export class CompanyComponent implements OnInit {
           });
         }, err => this.toastr.error(err));
       },
-      columns: [
-        { 
-          data: "id",
-          searchable: false
-        },
-        { data: "name" },
-        { 
-          data: "industry",
-          searchable: false
-        },
-        {
-          data: "founded",
-          searchable: false
-        }
-      ]
+      columns: [...environment.companyColumns]
     }
   }
 
