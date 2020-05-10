@@ -41,7 +41,7 @@ export class CompanyRepository {
                 }),
                 draw: dtOptions.draw,
                 recordsFiltered: result.recordset.length,
-                recordsTotal: result.recordset.length
+                recordsTotal: result.recordset.length //TODO: fix returned total
             }
 
             return new Promise((res, rej) => res(dtResult));
