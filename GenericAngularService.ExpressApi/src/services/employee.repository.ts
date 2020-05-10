@@ -4,9 +4,9 @@ import { SqlConfiguration } from '../utils/sql.configuration';
 import { DataTablesResponse } from '../models/data-tables/datatables.response';
 import { DataTablesOptions } from '../models/data-tables/data-tables.options';
 import { QueryBuilder } from './query.builder';
-import { Company } from '../models/company/company';
+import { Employee } from './../models/employee/employee';
 
-export class CompanyRepository {
+export class EmployeeRepository {
 
     private _queryBuilder: QueryBuilder;
 
@@ -14,13 +14,15 @@ export class CompanyRepository {
         this._queryBuilder = new QueryBuilder();
     }
 
-    public async getAll(dtOptions: DataTablesOptions): Promise<DataTablesResponse<Company>> {
+    public async getAll(dtOptions: DataTablesOptions): Promise<DataTablesResponse<Employee>> {
         try {
 
             const query: string = this._queryBuilder
-                .select("*")
-                .from("Companies")
-                .where("Name", dtOptions.search.value)
+                .select("Employees.*", "Companies.Name as Company")
+                .from("Employees")
+                .leftJoin("Companies", "Employees.CompanyId", "Companies.Id")
+                .where("FirstName", dtOptions.search.value)
+                .or("LastName", dtOptions.search.value)
                 .orderBy(dtOptions.columns[dtOptions.order[0].column].data, dtOptions.order[0].dir)
                 .skip(dtOptions.start)
                 .take(dtOptions.length)
@@ -30,18 +32,21 @@ export class CompanyRepository {
             const connection = await pool.connect();
             const result = await connection.query(query);
 
-            const dtResult: DataTablesResponse<Company> = {
+            const dtResult: DataTablesResponse<Employee> = {
                 data: result.recordset.map(row => {
                     return {
                         id: row.Id,
-                        name: row.Name,
-                        industry: row.Industry,
-                        founded: row.Founded
+                        firstName: row.FirstName,
+                        lastName: row.LastName,
+                        company: row.Company,
+                        email: row.Email,
+                        active: row.Active,
+                        fullName: `${row.FirstName} ${row.LastName}`
                     }
                 }),
                 draw: dtOptions.draw,
                 recordsFiltered: result.recordset.length,
-                recordsTotal: result.recordset.length
+                recordsTotal: result.recordset.length //TODO: fix returned total
             }
 
             return new Promise((res, rej) => res(dtResult));

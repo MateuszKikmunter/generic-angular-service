@@ -25,8 +25,13 @@ export class QueryBuilder {
         return this;
     }
 
+    public leftJoin(tableToJoin: string, sourceColumn: string, columnToJoin: string): QueryBuilder {
+        this._query = `${this._query} LEFT JOIN ${tableToJoin} ON ${sourceColumn} = ${columnToJoin}`;
+        return this;
+    }
+
     public or(column: string, term: string): QueryBuilder {
-        this._query = `${this._query} OR ${column} LIKE %${term}% \n`;
+        this._query = `${this._query} OR ${column} LIKE '%${term}%' \n`;
         return this;
     }
 
