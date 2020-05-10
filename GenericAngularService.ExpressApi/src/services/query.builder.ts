@@ -1,0 +1,58 @@
+export class QueryBuilder {    
+
+    private _query: string;
+
+    constructor() {
+        this._query = "";
+    }
+
+    public select(...params: string[]): QueryBuilder {
+        const parameters: string = params.length > 1 
+            ? params.join(",") 
+            : params[0];
+
+        this._query = `SELECT ${parameters}\n`;
+        return this;
+    }
+
+    public from(from: string): QueryBuilder {
+        this._query = `${this._query} FROM ${from}\n`;
+        return this;
+    }
+
+    public where(column: string, term: string): QueryBuilder {
+        this._query = `${this._query} WHERE ${column} LIKE '%${term}%' \n`;
+        return this;
+    }
+
+    public or(column: string, term: string): QueryBuilder {
+        this._query = `${this._query} OR ${column} LIKE %${term}% \n`;
+        return this;
+    }
+
+    public and(column: string, term: string): QueryBuilder {
+        this._query = `${this._query} AND ${column} LIKE %${term}%`;
+        return this;
+    }
+
+    public skip(rowsToSkip: number): QueryBuilder {
+        this._query = `${this._query} OFFSET ${rowsToSkip} ROWS \n`;
+        return this;
+    }
+
+    public take(rowsToTake: number): QueryBuilder {
+        this._query = `${this._query} FETCH NEXT ${rowsToTake} ROWS ONLY \n`;
+        return this;
+    }
+
+    public orderBy(column: string, order: string): QueryBuilder {
+        this._query = `${this._query} ORDER BY ${column} ${order}\n`;
+        return this;
+    }
+
+    public build(): string {
+        const query: string = this._query;
+        this._query = "";
+        return query;
+    }
+}

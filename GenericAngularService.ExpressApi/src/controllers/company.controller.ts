@@ -1,19 +1,14 @@
-import { Company } from './../models/company/company';
-import { DataTablesResponse } from './../models/data-tables/datatables.response';
 import { DataTablesOptions } from './../models/data-tables/data-tables.options';
 import { Request, Response, Router, NextFunction } from 'express'
-import { ConnectionPool, NText } from "mssql";
 
-import { SqlConfiguration } from './../utils/sql.configuration';
-import { Repository } from '../services/repository';
-
+import { CompanyRepository } from '../services/company.repository';
 
 export class CompanyController {
 
     readonly baseUrl: string = "/api/companies";
     readonly router: Router = Router();
 
-    private _repository: Repository = new Repository();
+    private _repository: CompanyRepository = new CompanyRepository();
 
     constructor() {
         this.initRoutes();
