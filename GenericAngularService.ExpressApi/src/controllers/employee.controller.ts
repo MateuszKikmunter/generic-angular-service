@@ -1,5 +1,6 @@
+import { Request, Response, Router, NextFunction } from 'express';
+
 import { DataTablesOptions } from './../models/data-tables/data-tables.options';
-import { Request, Response, Router, NextFunction } from 'express'
 import { EmployeeRepository } from '../services/employee.repository';
 
 export class EmployeeController {
