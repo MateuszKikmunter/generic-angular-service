@@ -14,7 +14,37 @@ export class CompanyRepository {
         this._queryBuilder = new QueryBuilder();
     }
 
-    public async getAll(dtOptions: DataTablesOptions): Promise<DataTablesResponse<Company>> {
+    public async getAll(): Promise<Company[]> {
+        try {
+
+            const query: string = this._queryBuilder
+                .select("*")
+                .from("Companies")
+                .build();
+
+            const pool = await new ConnectionPool(SqlConfiguration.defaultConfig());
+            const connection = await pool.connect();
+            const result = await connection.query(query);
+
+            const companies: Company[] = result.recordset.map(row => {
+                return {
+                    id: row.Id,
+                    name: row.Name,
+                    industry: row.Industry,
+                    founded: row.Founded
+                };
+            });
+
+            return new Promise((res, rej) => res(companies));
+
+        } catch (error) {
+            console.log(error); 
+        }
+
+        return new Promise((res, rej) => {});
+    }
+
+    public async getDataTablesData(dtOptions: DataTablesOptions): Promise<DataTablesResponse<Company>> {
         try {
 
             const query: string = this._queryBuilder

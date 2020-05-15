@@ -20,8 +20,8 @@ export class QueryBuilder {
         return this;
     }
 
-    public where(column: string, term: string): QueryBuilder {
-        this._query = `${this._query} WHERE ${column} LIKE '%${term}%' \n`;
+    public where(column: string, term: string, equals?: boolean): QueryBuilder {
+        this._query = `${this._query} WHERE ${column} ${equals ? '= ' + term : ` LIKE '%${term}%'`}\n`;
         return this;
     }
 
