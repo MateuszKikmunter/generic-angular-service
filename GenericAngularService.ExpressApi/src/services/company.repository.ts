@@ -3,15 +3,13 @@ import { ConnectionPool } from 'mssql';
 import { SqlConfiguration } from '../utils/sql.configuration';
 import { DataTablesResponse } from '../models/data-tables/datatables.response';
 import { DataTablesOptions } from '../models/data-tables/data-tables.options';
-import { QueryBuilder } from './query.builder';
 import { Company } from '../models/company/company';
+import { Reposiory } from './repository';
 
-export class CompanyRepository {
-
-    private _queryBuilder: QueryBuilder;
+export class CompanyRepository extends Reposiory {
 
     constructor() {
-        this._queryBuilder = new QueryBuilder();
+        super();
     }
 
     public async getAll(): Promise<Company[]> {
@@ -59,6 +57,9 @@ export class CompanyRepository {
             const pool = await new ConnectionPool(SqlConfiguration.defaultConfig());
             const connection = await pool.connect();
             const result = await connection.query(query);
+            const count = dtOptions.search.value === "" ? await this.getCount(connection, "Companies") : result.recordset.length;
+
+            connection.close();
 
             const dtResult: DataTablesResponse<Company> = {
                 data: result.recordset.map(row => {
@@ -70,8 +71,8 @@ export class CompanyRepository {
                     }
                 }),
                 draw: dtOptions.draw,
-                recordsFiltered: result.recordset.length,
-                recordsTotal: result.recordset.length //TODO: fix returned total
+                recordsFiltered: count,
+                recordsTotal: count
             }
 
             return new Promise((res, rej) => res(dtResult));
