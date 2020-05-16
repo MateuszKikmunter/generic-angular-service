@@ -2,7 +2,10 @@ import { SqlConnection } from '../utils/sql.connection';
 
 import { DataTablesResponse } from '../models/data-tables/datatables.response';
 import { DataTablesOptions } from '../models/data-tables/data-tables.options';
+
 import { Employee } from './../models/employee/employee';
+import { EmployeeForManipulation } from './../models/employee/employee-for-manipulation';
+
 import { Reposiory } from './repository';
 
 export class EmployeeRepository extends Reposiory {
@@ -20,7 +23,7 @@ export class EmployeeRepository extends Reposiory {
                 .take(dtOptions.length)
                 .build();
 
-            const connection = await SqlConnection.pool().connect();
+            const connection = await SqlConnection.connectionPool().connect();
             const result = await connection.query(query);
             const count = dtOptions.search.value === "" ? await this.getCount("Employees") : result.recordset.length;
 
@@ -50,4 +53,22 @@ export class EmployeeRepository extends Reposiory {
 
         return new Promise((res, rej) => {});
     }
+
+    public async add(employee: EmployeeForManipulation) {
+        try {
+
+            const query = this._queryBuilder
+                .insert("Employees", "Active", "CompanyId", "Email", "FirstName", "LastName")
+                .values(Object.values(employee).map(value => value !== null && value !== undefined ? `'${value}'` : "NULL"))
+                .build();
+
+            const connection = await SqlConnection.connectionPool().connect();
+            await connection.query(query);
+            connection.close();
+
+        } catch (error) {
+            console.log(error);
+        }        
+    }
+
 }

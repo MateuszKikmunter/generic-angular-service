@@ -55,6 +55,16 @@ export class QueryBuilder {
         return this;
     }
 
+    public insert(table: string, ...columns: string[]): QueryBuilder {
+        this._query = `INSERT INTO ${table} ${ columns?.length > 0 ? "(" + columns.join(",") + ")" : ""}\n`;
+        return this;
+    }
+
+    public values(...values: any[]) {
+        this._query = `${this._query} VALUES (${values.join(",")})\n`;
+        return this;
+    }
+
     public build(): string {
         const query: string = this._query;
         this._query = "";

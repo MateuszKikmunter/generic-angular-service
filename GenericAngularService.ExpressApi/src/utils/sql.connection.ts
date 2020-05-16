@@ -23,7 +23,7 @@ export class SqlConnection {
         return SqlConnection._instance;
     }
 
-    public static pool(): ConnectionPool {
+    public static connectionPool(): ConnectionPool {
         if(!SqlConnection._instance || !SqlConnection._pool) {
             this.instance();
         }

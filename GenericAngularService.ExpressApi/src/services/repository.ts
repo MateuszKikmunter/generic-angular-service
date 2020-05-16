@@ -12,7 +12,7 @@ export abstract class Reposiory {
 
     protected async getCount(table: string): Promise<number> {
         const query = `SELECT COUNT(*) as count FROM ${ table }`;
-        const connection = await SqlConnection.pool().connect();
+        const connection = await SqlConnection.connectionPool().connect();
         const result =  await connection.query(query);
         connection.close();
         return result.recordset[0].count as number;
