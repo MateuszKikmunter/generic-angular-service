@@ -1,6 +1,5 @@
-import { ConnectionPool } from 'mssql';
+import { SqlConnection } from '../utils/sql.connection';
 
-import { SqlConfiguration } from '../utils/sql.configuration';
 import { DataTablesResponse } from '../models/data-tables/datatables.response';
 import { DataTablesOptions } from '../models/data-tables/data-tables.options';
 import { Company } from '../models/company/company';
@@ -16,13 +15,13 @@ export class CompanyRepository extends Reposiory {
         try {
 
             const query: string = this._queryBuilder
-                .select("*")
-                .from("Companies")
-                .build();
+            .select("*")
+            .from("Companies")
+            .build();
 
-            const pool = await new ConnectionPool(SqlConfiguration.defaultConfig());
-            const connection = await pool.connect();
+            const connection = await SqlConnection.pool().connect();
             const result = await connection.query(query);
+            connection.close();
 
             const companies: Company[] = result.recordset.map(row => {
                 return {
@@ -54,10 +53,9 @@ export class CompanyRepository extends Reposiory {
                 .take(dtOptions.length)
                 .build();
 
-            const pool = await new ConnectionPool(SqlConfiguration.defaultConfig());
-            const connection = await pool.connect();
+            const connection = await SqlConnection.pool().connect();
             const result = await connection.query(query);
-            const count = dtOptions.search.value === "" ? await this.getCount(connection, "Companies") : result.recordset.length;
+            const count = dtOptions.search.value === "" ? await this.getCount("Companies") : result.recordset.length;
 
             connection.close();
 

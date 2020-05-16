@@ -1,6 +1,5 @@
-import { ConnectionPool } from 'mssql';
+import { SqlConnection } from '../utils/sql.connection';
 
-import { SqlConfiguration } from '../utils/sql.configuration';
 import { DataTablesResponse } from '../models/data-tables/datatables.response';
 import { DataTablesOptions } from '../models/data-tables/data-tables.options';
 import { Employee } from './../models/employee/employee';
@@ -21,10 +20,9 @@ export class EmployeeRepository extends Reposiory {
                 .take(dtOptions.length)
                 .build();
 
-            const pool = await new ConnectionPool(SqlConfiguration.defaultConfig());
-            const connection = await pool.connect();
+            const connection = await SqlConnection.pool().connect();
             const result = await connection.query(query);
-            const count = dtOptions.search.value === "" ? await this.getCount(connection, "Employees") : result.recordset.length;
+            const count = dtOptions.search.value === "" ? await this.getCount("Employees") : result.recordset.length;
 
             connection.close();
 

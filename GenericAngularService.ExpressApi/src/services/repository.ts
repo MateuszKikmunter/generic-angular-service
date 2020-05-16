@@ -1,5 +1,6 @@
+import { SqlConnection } from '../utils/sql.connection';
+
 import { QueryBuilder } from './query.builder';
-import { ConnectionPool } from "mssql";
 
 export abstract class Reposiory {
 
@@ -9,9 +10,11 @@ export abstract class Reposiory {
         this._queryBuilder = new QueryBuilder();
     }
 
-    protected async getCount(connection: ConnectionPool, table: string): Promise<number> {
+    protected async getCount(table: string): Promise<number> {
         const query = `SELECT COUNT(*) as count FROM ${ table }`;
+        const connection = await SqlConnection.pool().connect();
         const result =  await connection.query(query);
+        connection.close();
         return result.recordset[0].count as number;
     }
 }
