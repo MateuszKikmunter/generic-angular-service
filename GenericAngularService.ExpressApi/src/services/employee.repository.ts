@@ -3,20 +3,13 @@ import { ConnectionPool } from 'mssql';
 import { SqlConfiguration } from '../utils/sql.configuration';
 import { DataTablesResponse } from '../models/data-tables/datatables.response';
 import { DataTablesOptions } from '../models/data-tables/data-tables.options';
-import { QueryBuilder } from './query.builder';
 import { Employee } from './../models/employee/employee';
+import { Reposiory } from './repository';
 
-export class EmployeeRepository {
-
-    private _queryBuilder: QueryBuilder;
-
-    constructor() {
-        this._queryBuilder = new QueryBuilder();
-    }
+export class EmployeeRepository extends Reposiory {
 
     public async getAll(dtOptions: DataTablesOptions): Promise<DataTablesResponse<Employee>> {
         try {
-
             const query: string = this._queryBuilder
                 .select("Employees.*", "Companies.Name as Company")
                 .from("Employees")
@@ -31,6 +24,9 @@ export class EmployeeRepository {
             const pool = await new ConnectionPool(SqlConfiguration.defaultConfig());
             const connection = await pool.connect();
             const result = await connection.query(query);
+            const count = dtOptions.search.value === "" ? await this.getCount(connection, "Employees") : result.recordset.length;
+
+            connection.close();
 
             const dtResult: DataTablesResponse<Employee> = {
                 data: result.recordset.map(row => {
@@ -45,8 +41,8 @@ export class EmployeeRepository {
                     }
                 }),
                 draw: dtOptions.draw,
-                recordsFiltered: result.recordset.length,
-                recordsTotal: result.recordset.length //TODO: fix returned total
+                recordsFiltered: count,
+                recordsTotal: count
             }
 
             return new Promise((res, rej) => res(dtResult));
