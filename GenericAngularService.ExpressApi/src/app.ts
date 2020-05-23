@@ -17,8 +17,8 @@ export class App {
 
         this.initializeDefaultConfiguration();
         this.initializeSecurityMiddleware();
-        this.registerMiddleware(configuration?.middleware || []);
-        this.registerRoutes(configuration?.controllers || []);
+        this.registerMiddleware(configuration?.middleware ?? []);
+        this.registerRoutes(configuration?.controllers ?? []);
     }
 
     public listen(): void {
