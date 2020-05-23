@@ -1,4 +1,4 @@
-import { SqlConnection } from '../utils/sql.connection';
+import { SqlConnection } from '../utils/sql/sql.connection';
 
 import { DataTablesResponse } from '../models/data-tables/datatables.response';
 import { DataTablesOptions } from '../models/data-tables/data-tables.options';
@@ -7,7 +7,7 @@ import { Employee } from './../models/employee/employee';
 import { EmployeeForManipulation } from './../models/employee/employee-for-manipulation';
 
 import { Repository } from './repository';
-import "../utils/string.extensions";
+import "../utils/extensions/string.extensions";
 
 export class EmployeeRepository extends Repository {
 

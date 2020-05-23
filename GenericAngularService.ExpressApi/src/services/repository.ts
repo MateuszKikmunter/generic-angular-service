@@ -1,4 +1,4 @@
-import { SqlConnection } from '../utils/sql.connection';
+import { SqlConnection } from '../utils/sql/sql.connection';
 
 import { QueryBuilder } from './query.builder';
 

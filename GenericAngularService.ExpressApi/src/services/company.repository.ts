@@ -1,4 +1,4 @@
-import { SqlConnection } from '../utils/sql.connection';
+import { SqlConnection } from '../utils/sql/sql.connection';
 
 import { DataTablesResponse } from '../models/data-tables/datatables.response';
 import { DataTablesOptions } from '../models/data-tables/data-tables.options';
