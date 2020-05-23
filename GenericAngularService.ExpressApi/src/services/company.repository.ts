@@ -4,7 +4,7 @@ import { DataTablesResponse } from '../models/data-tables/datatables.response';
 import { DataTablesOptions } from '../models/data-tables/data-tables.options';
 
 import { Company } from '../models/company/company';
-
+import { CompanyForManipulation } from './../models/company/company-for-manipulation';
 import { Repository } from './repository';
 
 export class CompanyRepository extends Repository {
@@ -81,5 +81,18 @@ export class CompanyRepository extends Repository {
         }
 
         return new Promise((res, rej) => {});
+    }
+
+    
+    public async edit(id: string, company: CompanyForManipulation): Promise<void> {
+        try {            
+            await super.update("Companies", id, company);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    public async companyExists(id: string): Promise<boolean> {
+        return await super.getById<Company>(id, "Companies") !== null;
     }
 }
