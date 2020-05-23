@@ -66,7 +66,12 @@ export class QueryBuilder {
     }
 
     public update(table: string, columnsWithValues: [string, any][]): QueryBuilder {
-        const dataSet = columnsWithValues.map(column => `${column[0].capitalizeFirst()}='${column[1]}'`).join(",");
+        const dataSet = columnsWithValues.map(c => {
+            const column = c[0].capitalizeFirst();
+            const value = c[1] ?? null;
+            return `${column}=${value === null ? null : `'${value}'`}`;
+        }).join(",");
+
         this._query = `UPDATE ${table} SET ${dataSet}\n`;    
         return this;
     }
