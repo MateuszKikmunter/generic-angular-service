@@ -17,4 +17,18 @@ export abstract class Reposiory {
         connection.close();
         return result.recordset[0].count as number;
     }
+
+    protected async getById<T>(id: string, table: string): Promise<T> {
+        const query = this._queryBuilder
+            .select("*")
+            .from(table)
+            .where("Id", id, true)
+            .build();
+
+        const connection = await SqlConnection.connectionPool().connect();
+        const result = await connection.query(query);
+        connection.close();
+
+        return result.rowsAffected[0] === 1 ? result.recordset[0] : null;
+    }
 }
