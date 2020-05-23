@@ -58,14 +58,9 @@ export class EmployeeRepository extends Repository {
     public async add(employee: EmployeeForManipulation): Promise<void> {
         try {
 
-            const query = this._queryBuilder
-                .insert("Employees", "Active", "CompanyId", "Email", "FirstName", "LastName")
-                .values(Object.values(employee).map(value => value !== null && value !== undefined ? `'${value}'` : "NULL"))
-                .build();
-
-            const connection = await SqlConnection.connectionPool().connect();
-            await connection.query(query);
-            connection.close();
+            const columns = Object.keys(employee).map(key => `${key.capitalizeFirst()}`);
+            const values = Object.values(employee);
+            await super.insert("Employees", columns, values);
 
         } catch (error) {
             console.log(error);

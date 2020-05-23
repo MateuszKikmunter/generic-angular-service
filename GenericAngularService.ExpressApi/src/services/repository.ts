@@ -42,4 +42,15 @@ export abstract class Repository {
         await connection.query(query);
         connection.close();
     }
+
+    protected async insert(table: string, columns: string[], values: string[]): Promise<void> {
+        const query = this._queryBuilder
+            .insert(table, ...columns)
+            .values(values.map(value => value !== null && value !== undefined ? `'${value}'` : "NULL"))
+            .build();
+
+        const connection = await SqlConnection.connectionPool().connect();
+        await connection.query(query);
+        connection.close();
+    }
 }
