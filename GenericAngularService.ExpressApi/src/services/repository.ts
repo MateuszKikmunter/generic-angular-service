@@ -31,4 +31,15 @@ export abstract class Repository {
 
         return result.rowsAffected[0] === 1 ? result.recordset[0] : null;
     }
+
+    protected async deleteById(id: string, table: string): Promise<void> {
+        const query = this._queryBuilder
+            .delete("Employees")
+            .where("Id", id, true)
+            .build();
+
+        const connection = await SqlConnection.connectionPool().connect();
+        await connection.query(query);
+        connection.close();
+    }
 }

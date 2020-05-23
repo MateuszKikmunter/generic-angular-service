@@ -60,14 +60,19 @@ export class QueryBuilder {
         return this;
     }
 
-    public values(...values: any[]) {
+    public values(...values: any[]): QueryBuilder {
         this._query = `${this._query} VALUES (${values.join(",")})\n`;
         return this;
     }
 
-    public update(table: string, columnsWithValues: [string, any][]) {
+    public update(table: string, columnsWithValues: [string, any][]): QueryBuilder {
         const dataSet = columnsWithValues.map(column => `${column[0].capitalizeFirst()}='${column[1]}'`).join(",");
         this._query = `UPDATE ${table} SET ${dataSet}\n`;    
+        return this;
+    }
+
+    public delete(table: string): QueryBuilder {
+        this._query = `DELETE FROM ${table}\n`;
         return this;
     }
 

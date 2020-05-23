@@ -91,4 +91,8 @@ export class EmployeeRepository extends Repository {
     public async employeeExists(id: string): Promise<boolean> {
         return await super.getById<Employee>(id, "Employees") !== null;
     }
+
+    public async delete(id: string): Promise<void> {
+        await super.deleteById(id, "Employees");
+    }
 }

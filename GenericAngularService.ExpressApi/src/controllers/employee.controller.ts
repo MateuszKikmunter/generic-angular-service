@@ -32,6 +32,15 @@ export class EmployeeController {
                 await this.edit(req, res, next);
             }            
         });
+
+        this.router.delete(`${this.baseUrl}/:id`, async(req, res, next) => {
+            const employeeExists = await this._repository.employeeExists(req.params.id);
+            if(!employeeExists) {
+                res.status(HttpCode.NOT_FOUND).send();
+            } else {
+                await this.delete(req, res, next);
+            }
+        });
     }
 
     private async getAllEmployees(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -63,6 +72,16 @@ export class EmployeeController {
         } catch (error) {
             console.log(error);
             res.status(HttpCode.SERVER_ERROR).send(error.message);
+        }
+    }
+
+    private async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            await this._repository.delete(req.params.id);
+            res.status(HttpCode.NO_CONTENT).send();
+        } catch (error) {
+            console.log(error);
+            res.status(HttpCode.BAD_REQUEST).send(error.message);
         }
     }
 }
