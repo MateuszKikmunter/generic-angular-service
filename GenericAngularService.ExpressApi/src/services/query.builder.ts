@@ -65,6 +65,12 @@ export class QueryBuilder {
         return this;
     }
 
+    public update(table: string, columnsWithValues: [string, any][]) {
+        const dataSet = columnsWithValues.map(column => `${column[0].capitalizeFirst()}='${column[1]}'`).join(",");
+        this._query = `UPDATE ${table} SET ${dataSet}\n`;    
+        return this;
+    }
+
     public build(): string {
         const query: string = this._query;
         this._query = "";
