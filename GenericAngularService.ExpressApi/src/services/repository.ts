@@ -2,7 +2,7 @@ import { SqlConnection } from '../utils/sql.connection';
 
 import { QueryBuilder } from './query.builder';
 
-export abstract class Reposiory {
+export abstract class Repository {
 
     protected _queryBuilder: QueryBuilder;
 

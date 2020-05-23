@@ -5,9 +5,9 @@ import { DataTablesOptions } from '../models/data-tables/data-tables.options';
 
 import { Company } from '../models/company/company';
 
-import { Reposiory } from './repository';
+import { Repository } from './repository';
 
-export class CompanyRepository extends Reposiory {
+export class CompanyRepository extends Repository {
 
     constructor() {
         super();

@@ -6,9 +6,10 @@ import { DataTablesOptions } from '../models/data-tables/data-tables.options';
 import { Employee } from './../models/employee/employee';
 import { EmployeeForManipulation } from './../models/employee/employee-for-manipulation';
 
-import { Reposiory } from './repository';
+import { Repository } from './repository';
+import "../utils/string.extensions";
 
-export class EmployeeRepository extends Reposiory {
+export class EmployeeRepository extends Repository {
 
     public async getAll(dtOptions: DataTablesOptions): Promise<DataTablesResponse<Employee>> {
         try {
@@ -47,14 +48,14 @@ export class EmployeeRepository extends Reposiory {
             }
 
             return new Promise((res, rej) => res(dtResult));
-        } catch (err) {
-            console.log(err);
+        } catch (error) {
+            console.log(error);
         }
 
         return new Promise((res, rej) => {});
     }
 
-    public async add(employee: EmployeeForManipulation) {
+    public async add(employee: EmployeeForManipulation): Promise<void> {
         try {
 
             const query = this._queryBuilder
@@ -71,4 +72,23 @@ export class EmployeeRepository extends Reposiory {
         }        
     }
 
+    public async edit(id: string, employee: EmployeeForManipulation): Promise<void> {
+        try {            
+            const query = this._queryBuilder
+                .update("Employees", Object.entries(employee))
+                .where("Id", id, true)
+                .build();
+
+                const connection = await SqlConnection.connectionPool().connect();
+                await connection.query(query);
+                connection.close();
+                
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    public async employeeExists(id: string): Promise<boolean> {
+        return await super.getById<Employee>(id, "Employees") !== null;
+    }
 }
