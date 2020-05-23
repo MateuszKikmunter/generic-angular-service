@@ -69,15 +69,7 @@ export class EmployeeRepository extends Repository {
 
     public async edit(id: string, employee: EmployeeForManipulation): Promise<void> {
         try {            
-            const query = this._queryBuilder
-                .update("Employees", Object.entries(employee))
-                .where("Id", id, true)
-                .build();
-
-                const connection = await SqlConnection.connectionPool().connect();
-                await connection.query(query);
-                connection.close();
-                
+            await super.update("Employees", id, employee);
         } catch (error) {
             console.log(error);
         }

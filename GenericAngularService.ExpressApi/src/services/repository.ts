@@ -53,4 +53,15 @@ export abstract class Repository {
         await connection.query(query);
         connection.close();
     }
+
+    protected async update<T>(table: string, id: string, entity: T): Promise<void> {
+        const quuery = this._queryBuilder
+            .update(table, Object.entries(entity))
+            .where("Id", id, true)
+            .build();
+
+        const connection = await SqlConnection.connectionPool().connect();
+        await connection.query(quuery);
+        connection.close();
+    }
 }
