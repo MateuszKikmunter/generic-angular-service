@@ -92,6 +92,14 @@ export class CompanyRepository extends Repository {
         }
     }
 
+    public async delete(id: string): Promise<void> {
+        try {
+            await super.deleteById(id, "Companies");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     public async companyExists(id: string): Promise<boolean> {
         return await super.getById<Company>(id, "Companies") !== null;
     }

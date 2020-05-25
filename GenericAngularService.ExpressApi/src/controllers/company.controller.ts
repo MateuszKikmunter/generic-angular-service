@@ -27,13 +27,22 @@ export class CompanyController {
         });
 
         this.router.put(`${this.baseUrl}/:id`, async(req, res, next) => {
-            const employeeExists = await this._repository.companyExists(req.params.id);
-            if(!employeeExists) {
+            const companyExists = await this._repository.companyExists(req.params.id);
+            if(!companyExists) {
                 res.status(HttpCode.NOT_FOUND).send();
             } else{
                 await this.edit(req, res, next);
             }            
         });
+
+        this.router.delete(`${this.baseUrl}/:id`, async(req, res, next) => {
+            const companyExists = await this._repository.companyExists(req.params.id);
+            if(!companyExists) {
+                res.status(HttpCode.NOT_FOUND).send();
+            } else {
+                await this.delete(req, res, next);
+            }
+        })
     }
 
     private async getDataTablesData(req: Request, res: Response, next: NextFunction) {
@@ -61,6 +70,16 @@ export class CompanyController {
     private async edit(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             await this._repository.edit(req.params.id, req.body);
+            res.status(HttpCode.NO_CONTENT).send();
+        } catch (error) {
+            console.log(error);
+            res.status(HttpCode.SERVER_ERROR).send(error.message);
+        }
+    }
+
+    private async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            await this._repository.delete(req.params.id);
             res.status(HttpCode.NO_CONTENT).send();
         } catch (error) {
             console.log(error);
