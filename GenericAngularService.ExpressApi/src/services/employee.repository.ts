@@ -57,7 +57,6 @@ export class EmployeeRepository extends Repository {
 
     public async add(employee: EmployeeForManipulation): Promise<void> {
         try {
-
             const columns = Object.keys(employee).map(key => `${key.capitalizeFirst()}`);
             const values = Object.values(employee);
             await super.insert("Employees", columns, values);

@@ -21,6 +21,11 @@ export class CompanyController {
             return next();
         });
 
+        this.router.post(this.baseUrl, async (req, res, next) => {
+            await this.add(req, res, next);
+            return next();
+        });
+
         this.router.get(this.baseUrl, async (req, res, next) => {
             await this.getAll(req, res, next);
             return next();
@@ -74,6 +79,16 @@ export class CompanyController {
         } catch (error) {
             console.log(error);
             res.status(HttpCode.SERVER_ERROR).send(error.message);
+        }
+    }
+
+    private async add(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            await this._repository.add(req.body);
+            res.status(HttpCode.CREATED).send();
+        } catch (error) {
+            console.log();
+            res.status(HttpCode.SERVER_ERROR).send();
         }
     }
 

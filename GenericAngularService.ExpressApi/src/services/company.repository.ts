@@ -92,6 +92,16 @@ export class CompanyRepository extends Repository {
         }
     }
 
+    public async add(company: CompanyForManipulation): Promise<void> {
+        try {
+            const columns = Object.keys(company).map(key => `${key.capitalizeFirst()}`);
+            const values = Object.values(company);
+            await super.insert("Companies", columns, values);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     public async delete(id: string): Promise<void> {
         try {
             await super.deleteById(id, "Companies");
@@ -100,7 +110,7 @@ export class CompanyRepository extends Repository {
         }
     }
 
-    public async companyExists(id: string): Promise<boolean> {
+    public async companyExists(id: string): Promise<boolean> {               
         return await super.getById<Company>(id, "Companies") !== null;
     }
 }
