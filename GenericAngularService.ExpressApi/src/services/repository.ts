@@ -34,7 +34,7 @@ export abstract class Repository {
 
     protected async deleteById(id: string, table: string): Promise<void> {
         const query = this._queryBuilder
-            .delete("Employees")
+            .delete(table)
             .where("Id", id, true)
             .build();
 
