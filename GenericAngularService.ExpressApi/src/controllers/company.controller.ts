@@ -18,17 +18,14 @@ export class CompanyController {
     private initRoutes() {
         this.router.post(`${this.baseUrl}/GetTableData`, async (req, res, next) => {
             await this.getDataTablesData(req, res, next);
-            return next();
         });
 
         this.router.post(this.baseUrl, async (req, res, next) => {
             await this.add(req, res, next);
-            return next();
         });
 
         this.router.get(this.baseUrl, async (req, res, next) => {
             await this.getAll(req, res, next);
-            return next();
         });
 
         this.router.put(`${this.baseUrl}/:id`, async(req, res, next) => {
@@ -50,25 +47,25 @@ export class CompanyController {
         })
     }
 
-    private async getDataTablesData(req: Request, res: Response, next: NextFunction) {
+    private async getDataTablesData(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const dtOptions: DataTablesOptions = req.body;
             const result = await this._repository.getDataTablesData(dtOptions);
 
-            res.send(result);
-        } catch (err) {
-            console.log(err);
-            return next(err);
+            res.status(HttpCode.OK).json(result);
+        } catch (error) {
+            console.log(error);
+            res.status(HttpCode.SERVER_ERROR).send(error.message);
         }
     }
 
-    private async getAll(req: Request, res: Response, next: NextFunction) {
+    private async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const result = await this._repository.getAll();
-            res.send(result);
+            res.status(HttpCode.OK).json(result);
         } catch (error) {
-            console.log(error);
-            return next();
+            console.log(error);            
+            res.status(HttpCode.SERVER_ERROR).send(error.messsage);
         }
     }
 
@@ -87,8 +84,8 @@ export class CompanyController {
             await this._repository.add(req.body);
             res.status(HttpCode.CREATED).send();
         } catch (error) {
-            console.log();
-            res.status(HttpCode.SERVER_ERROR).send();
+            console.log(error);
+            res.status(HttpCode.SERVER_ERROR).send(error.messsage);
         }
     }
 
@@ -101,5 +98,4 @@ export class CompanyController {
             res.status(HttpCode.SERVER_ERROR).send(error.message);
         }
     }
-
 }
