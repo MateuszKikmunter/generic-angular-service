@@ -104,7 +104,6 @@ export class EmployeeController {
             check("firstName").isLength({ min: 1, max: 255 }).withMessage("First Name cannot be empty"),
             check("lastName").isLength({ min: 1, max: 255 }).withMessage("Last Name cannot be empty"),
             check("email").isLength({ min: 1, max: 255 }).withMessage("Email cannot be empty").isEmail().withMessage("Please provide correct email"),
-            check("companyId").toInt().notEmpty().withMessage("Company cannot be empty"),
             check("active").notEmpty().withMessage("Active cannot be empty"),
         ]
     }
