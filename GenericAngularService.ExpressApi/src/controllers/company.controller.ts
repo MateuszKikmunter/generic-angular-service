@@ -1,5 +1,7 @@
 import { Request, Response, Router, NextFunction } from 'express';
 
+import { validationResult, check, ValidationChain } from "express-validator";
+
 import { DataTablesOptions } from './../models/data-tables/data-tables.options';
 import { CompanyRepository } from '../services/company.repository';
 import { HttpCode } from '../utils/enums/http.code';
@@ -16,19 +18,31 @@ export class CompanyController {
     }
 
     private initRoutes() {
-        this.router.post(`${this.baseUrl}/GetTableData`, async (req, res, next) => {
+        this.router.post(`${this.baseUrl}/GetTableData`, async (req: Request, res: Response, next: NextFunction) => {
             await this.getDataTablesData(req, res, next);
         });
 
-        this.router.post(this.baseUrl, async (req, res, next) => {
+        this.router.post(this.baseUrl, this.getValidationChain(), async (req: Request, res: Response, next: NextFunction) => {
+
+            const validationErrors = validationResult(req);
+            if(!validationErrors.isEmpty()) {
+                return res.status(HttpCode.UNPROCESSABLE_ENTITY).json(validationErrors.array().map(e => e.msg));
+            }
+
             await this.add(req, res, next);
         });
 
-        this.router.get(this.baseUrl, async (req, res, next) => {
+        this.router.get(this.baseUrl, async (req: Request, res: Response, next: NextFunction) => {
             await this.getAll(req, res, next);
         });
 
-        this.router.put(`${this.baseUrl}/:id`, async(req, res, next) => {
+        this.router.put(`${this.baseUrl}/:id`, this.getValidationChain(), async(req: Request, res: Response, next: NextFunction) => {
+
+            const validationErrors = validationResult(req);
+            if(!validationErrors.isEmpty()) {
+                return res.status(HttpCode.UNPROCESSABLE_ENTITY).json(validationErrors.array().map(e => e.msg));
+            }
+
             const companyExists = await this._repository.companyExists(req.params.id);
             if(!companyExists) {
                 res.status(HttpCode.NOT_FOUND).send();
@@ -37,7 +51,7 @@ export class CompanyController {
             }            
         });
 
-        this.router.delete(`${this.baseUrl}/:id`, async(req, res, next) => {
+        this.router.delete(`${this.baseUrl}/:id`, async(req: Request, res: Response, next: NextFunction) => {
             const companyExists = await this._repository.companyExists(req.params.id);
             if(!companyExists) {
                 res.status(HttpCode.NOT_FOUND).send();
@@ -97,5 +111,13 @@ export class CompanyController {
             console.log(error);
             res.status(HttpCode.SERVER_ERROR).send(error.message);
         }
+    }
+
+    private getValidationChain(): ValidationChain[] {
+        return [ 
+            check("name").isLength({ min: 1, max: 255 }).withMessage("Name cannot be empty"),
+            check("industry").isLength({ min: 1, max: 255 }).withMessage("Industry cannot be empty"),
+            check("founded").notEmpty().toDate().withMessage("Founded cannot be empty") 
+        ];
     }
 }
