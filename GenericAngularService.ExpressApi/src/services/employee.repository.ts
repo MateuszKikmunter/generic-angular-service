@@ -50,9 +50,8 @@ export class EmployeeRepository extends Repository {
             return new Promise((res, rej) => res(dtResult));
         } catch (error) {
             console.log(error);
+            throw new Error("Cannot get data, please try again.")
         }
-
-        return new Promise((res, rej) => {});
     }
 
     public async add(employee: EmployeeForManipulation): Promise<void> {
@@ -63,6 +62,7 @@ export class EmployeeRepository extends Repository {
 
         } catch (error) {
             console.log(error);
+            throw new Error("Insert failed, please try again.")
         }        
     }
 
@@ -71,14 +71,25 @@ export class EmployeeRepository extends Repository {
             await super.update("Employees", id, employee);
         } catch (error) {
             console.log(error);
+            throw new Error("Update failed, please try again.")
         }
     }
 
     public async employeeExists(id: string): Promise<boolean> {
-        return await super.getById<Employee>(id, "Employees") !== null;
+        try {
+            return await super.getById<Employee>(id, "Employees") !== null;    
+        } catch (error) {
+            console.log(error);
+            throw new Error("Cannot get data, please try again.")            
+        }        
     }
 
     public async delete(id: string): Promise<void> {
-        await super.deleteById(id, "Employees");
+        try {
+            await super.deleteById(id, "Employees");   
+        } catch (error) {
+            console.log(error);
+            throw new Error("Cannot get data, please try again.");
+        }
     }
 }

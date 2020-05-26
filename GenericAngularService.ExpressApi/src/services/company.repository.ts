@@ -38,9 +38,8 @@ export class CompanyRepository extends Repository {
 
         } catch (error) {
             console.log(error); 
+            throw new Error("Cannot get data, please try again.")
         }
-
-        return new Promise((res, rej) => {});
     }
 
     public async getDataTablesData(dtOptions: DataTablesOptions): Promise<DataTablesResponse<Company>> {
@@ -78,9 +77,8 @@ export class CompanyRepository extends Repository {
             return new Promise((res, rej) => res(dtResult));
         } catch (err) {
             console.log(err);
+            throw new Error("Cannot get data, please try again.");
         }
-
-        return new Promise((res, rej) => {});
     }
 
     
@@ -89,6 +87,7 @@ export class CompanyRepository extends Repository {
             await super.update("Companies", id, company);
         } catch (error) {
             console.log(error);
+            throw new Error("Update failed, please try again.");
         }
     }
 
@@ -99,6 +98,7 @@ export class CompanyRepository extends Repository {
             await super.insert("Companies", columns, values);
         } catch (error) {
             console.log(error);
+            throw new Error("Insert failed, please try again.");
         }
     }
 
@@ -107,10 +107,16 @@ export class CompanyRepository extends Repository {
             await super.deleteById(id, "Companies");
         } catch (error) {
             console.log(error);
+            throw new Error("Deletion failed, please try again.");
         }
     }
 
-    public async companyExists(id: string): Promise<boolean> {               
-        return await super.getById<Company>(id, "Companies") !== null;
+    public async companyExists(id: string): Promise<boolean> {    
+        try {
+            return await super.getById<Company>(id, "Companies") !== null;
+        } catch (error) {
+            console.log(error);
+            throw new Error("Cannot get data, please try again.");
+        }           
     }
 }
