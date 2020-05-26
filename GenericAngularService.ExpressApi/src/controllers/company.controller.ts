@@ -117,7 +117,7 @@ export class CompanyController {
         return [ 
             check("name").isLength({ min: 1, max: 255 }).withMessage("Name cannot be empty"),
             check("industry").isLength({ min: 1, max: 255 }).withMessage("Industry cannot be empty"),
-            check("founded").notEmpty().toDate().withMessage("Founded cannot be empty") 
+            check("founded").notEmpty().withMessage("Founded cannot be empty") 
         ];
     }
 }
