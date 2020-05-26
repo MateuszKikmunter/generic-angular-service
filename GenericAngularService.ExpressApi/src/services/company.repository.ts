@@ -17,9 +17,9 @@ export class CompanyRepository extends Repository {
         try {
 
             const query: string = this._queryBuilder
-            .select("*")
-            .from("Companies")
-            .build();
+                .select("*")
+                .from("Companies")
+                .build();
 
             const connection = await SqlConnection.connectionPool().connect();
             const result = await connection.query(query);
