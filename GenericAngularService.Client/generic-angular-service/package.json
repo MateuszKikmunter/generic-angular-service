@@ -30,7 +30,7 @@
     "angular-datatables": "^6.0.1",
     "bootstrap": "^4.4.1",
     "core-js": "^2.6.11",
-    "datatables.net": "^1.10.20",
+    "datatables.net": "^1.10.22",
     "datatables.net-bs4": "^1.10.20",
     "datatables.net-dt": "^1.10.20",
     "jasmine": "^3.5.0",
