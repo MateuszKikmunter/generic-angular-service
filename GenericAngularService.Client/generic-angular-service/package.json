@@ -43,7 +43,7 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.901.4",
+    "@angular-devkit/build-angular": "~15.0.4",
     "@angular/language-service": "^9.1.4",
     "@types/datatables.net": "^1.10.19",
     "@types/jasmine": "^2.8.16",
